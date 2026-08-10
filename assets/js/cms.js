@@ -1,5 +1,5 @@
 /* ==========================================================================
-   INDIAN PRO LEAGUE ALLIANCE - ADMIN CMS DASHBOARD LOGIC
+   INDIAN PRO LEAGUE ALLIANCE - ADMIN CMS DASHBOARD LOGIC (SUPABASE ENABLED)
    ========================================================================== */
 
 const CMS_STORAGE_KEY = 'ipl_alliance_submissions';
@@ -14,7 +14,21 @@ const initialSampleData = [
   { id: 'IPL-2026-1046', timestamp: '10 Aug 2026, 05:30 PM', type: 'Player', name: 'Devendra Yadav', mobile: '9630088771', location: 'Rewa, MP', details: 'Kabaddi & Wrestling', status: 'Pending Review', notes: 'District level mat wrestler.' }
 ];
 
-function getSubmissions() {
+async function getSubmissions() {
+  // If Supabase client is configured, fetch live from Supabase table 'submissions'
+  if (typeof supabaseClient !== 'undefined' && supabaseClient) {
+    try {
+      const { data, error } = await supabaseClient.from('submissions').select('*').order('created_at', { ascending: false });
+      if (!error && data && data.length > 0) {
+        saveSubmissions(data);
+        return data;
+      }
+    } catch (err) {
+      console.warn('Supabase fetch error, fallback to localStorage:', err);
+    }
+  }
+
+  // Fallback to LocalStorage
   const stored = localStorage.getItem(CMS_STORAGE_KEY);
   if (!stored) {
     localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(initialSampleData));
@@ -34,12 +48,12 @@ function saveSubmissions(data) {
 function filterCMSCategory(cat) {
   currentCMSCategory = cat;
   document.querySelectorAll('.cms-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('cms-filter-' + cat.toLowerCase()).classList.add('active');
+  document.getElementById('cms-filter-' + cat.toLowerCase())?.classList.add('active');
   renderCMSTable();
 }
 
-function renderCMSTable() {
-  const list = getSubmissions();
+async function renderCMSTable() {
+  const list = await getSubmissions();
   const searchQuery = (document.getElementById('cms-search-input')?.value || '').toLowerCase();
 
   // Calculate statistics
@@ -96,27 +110,53 @@ function renderCMSTable() {
   `).join('');
 }
 
-function updateCMSStatus(id, newStatus) {
-  const list = getSubmissions();
-  const item = list.find(i => i.id === id);
-  if (item) {
-    item.status = newStatus;
+async function updateCMSStatus(id, newStatus) {
+  // Update in LocalStorage
+  const stored = localStorage.getItem(CMS_STORAGE_KEY);
+  if (stored) {
+    let list = JSON.parse(stored);
+    const item = list.find(i => i.id === id);
+    if (item) item.status = newStatus;
     saveSubmissions(list);
-    renderCMSTable();
   }
+
+  // Update in Supabase Cloud
+  if (typeof supabaseClient !== 'undefined' && supabaseClient) {
+    try {
+      await supabaseClient.from('submissions').update({ status: newStatus }).eq('id', id);
+    } catch (err) {
+      console.warn('Supabase update error:', err);
+    }
+  }
+
+  renderCMSTable();
 }
 
-function deleteCMSEntry(id) {
+async function deleteCMSEntry(id) {
   if (confirm('Are you sure you want to delete registration record ' + id + '?')) {
-    let list = getSubmissions();
-    list = list.filter(i => i.id !== id);
-    saveSubmissions(list);
+    // Delete in LocalStorage
+    const stored = localStorage.getItem(CMS_STORAGE_KEY);
+    if (stored) {
+      let list = JSON.parse(stored);
+      list = list.filter(i => i.id !== id);
+      saveSubmissions(list);
+    }
+
+    // Delete in Supabase Cloud
+    if (typeof supabaseClient !== 'undefined' && supabaseClient) {
+      try {
+        await supabaseClient.from('submissions').delete().eq('id', id);
+      } catch (err) {
+        console.warn('Supabase delete error:', err);
+      }
+    }
+
     renderCMSTable();
   }
 }
 
-function viewCMSDetails(id) {
-  const list = getSubmissions();
+async function viewCMSDetails(id) {
+  const list = await getSubmissions();
   const item = list.find(i => i.id === id);
   if (!item) return;
 
@@ -142,15 +182,22 @@ function closeCMSDetailModal() {
   document.getElementById('cms-detail-modal').classList.remove('active');
 }
 
-function seedSampleCMSData() {
+async function seedSampleCMSData() {
   if (confirm('Reset CMS database to sample registrations?')) {
     localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(initialSampleData));
+    if (typeof supabaseClient !== 'undefined' && supabaseClient) {
+      try {
+        await supabaseClient.from('submissions').upsert(initialSampleData);
+      } catch (err) {
+        console.warn('Supabase seed error:', err);
+      }
+    }
     renderCMSTable();
   }
 }
 
-function exportCMSToCSV() {
-  const list = getSubmissions();
+async function exportCMSToCSV() {
+  const list = await getSubmissions();
   if (!list.length) { alert('No records to export.'); return; }
 
   const headers = ['Submission ID', 'Date & Time', 'Type', 'Name/Business', 'Mobile', 'Location', 'Category/Discipline', 'Status', 'Notes'];

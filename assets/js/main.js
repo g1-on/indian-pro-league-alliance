@@ -1,5 +1,5 @@
 /* ==========================================================================
-   INDIAN PRO LEAGUE ALLIANCE - MAIN WEBSITE INTERACTIVE LOGIC
+   INDIAN PRO LEAGUE ALLIANCE - MAIN WEBSITE INTERACTIVE LOGIC (SUPABASE READY)
    ========================================================================== */
 
 const CMS_STORAGE_KEY = 'ipl_alliance_submissions';
@@ -26,7 +26,7 @@ function openTab(name) {
   document.getElementById('register')?.scrollIntoView({ behavior: 'smooth' });
 }
 
-function handleSubmit(e, formType) {
+async function handleSubmit(e, formType) {
   e.preventDefault();
   const form = e.target;
   const inputs = form.querySelectorAll('input, select, textarea');
@@ -56,12 +56,26 @@ function handleSubmit(e, formType) {
 
   if (!submissionData.name) submissionData.name = 'Registrant (' + submissionData.type + ')';
 
-  // Save to LocalStorage for cms.html to access
+  // 1. Save locally for instant UI update
   const list = getSubmissions();
   list.unshift(submissionData);
   saveSubmissions(list);
 
-  // Show Confirmation Box
+  // 2. Save to Supabase Cloud Database if client is connected
+  if (typeof supabaseClient !== 'undefined' && supabaseClient) {
+    try {
+      const { data, error } = await supabaseClient.from('submissions').insert([submissionData]);
+      if (error) {
+        console.warn('Supabase Insert Warning:', error.message);
+      } else {
+        console.log('✅ Registration saved to Supabase Cloud Database');
+      }
+    } catch (err) {
+      console.warn('Supabase Insert Error:', err);
+    }
+  }
+
+  // 3. Show Confirmation Box
   const confirmBox = document.getElementById('confirm-' + formType);
   if (confirmBox) {
     confirmBox.style.display = 'flex';
