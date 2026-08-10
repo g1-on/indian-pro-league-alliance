@@ -1,5 +1,5 @@
 /* ==========================================================================
-   INDIAN PRO LEAGUE ALLIANCE - MAIN WEBSITE INTERACTIVE LOGIC (SUPABASE READY)
+   INDIAN PRO LEAGUE ALLIANCE - MAIN WEBSITE INTERACTIVE LOGIC (BULLETPROOF SYNC)
    ========================================================================== */
 
 const CMS_STORAGE_KEY = 'ipl_alliance_submissions';
@@ -70,19 +70,21 @@ function handleSubmit(e, formType) {
   const list = getSubmissions();
   list.unshift(submissionData);
   saveSubmissions(list);
-  console.log('✅ Form submission saved locally:', submissionData);
+  console.log('✅ Local storage updated:', submissionData);
 
-  // 2. Save to Supabase Cloud asynchronously
-  if (typeof supabaseClient !== 'undefined' && supabaseClient) {
-    supabaseClient.from('submissions').insert([submissionData])
-      .then(({ data, error }) => {
-        if (error) {
-          console.warn('⚠️ Supabase Cloud insert notice:', error.message);
-        } else {
-          console.log('☁️ Successfully synced submission to Supabase Cloud Database');
-        }
-      })
-      .catch(err => console.warn('Supabase network error:', err));
+  // 2. Direct REST API Call to Supabase Cloud Database (Bulletproof Native Fetch)
+  if (typeof supabaseRestRequest === 'function') {
+    supabaseRestRequest('submissions', {
+      method: 'POST',
+      headers: { 'Prefer': 'return=minimal' },
+      body: JSON.stringify(submissionData)
+    }).then(res => {
+      if (res) {
+        console.log('☁️ Registration successfully synced to Supabase Cloud Database!');
+      } else {
+        console.warn('⚠️ Cloud sync returned null, local copy preserved.');
+      }
+    });
   }
 
   // 3. Show Confirmation Box

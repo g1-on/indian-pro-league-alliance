@@ -1,5 +1,5 @@
 /* ==========================================================================
-   INDIAN PRO LEAGUE ALLIANCE - ADMIN CMS DASHBOARD LOGIC (SUPABASE & LOCAL MERGED)
+   INDIAN PRO LEAGUE ALLIANCE - ADMIN CMS DASHBOARD LOGIC (BULLETPROOF SYNC)
    ========================================================================== */
 
 const CMS_STORAGE_KEY = 'ipl_alliance_submissions';
@@ -35,19 +35,15 @@ async function getSubmissions() {
   const localList = getLocalSubmissions();
   let supabaseList = [];
 
-  // Try fetching live entries from Supabase Cloud
-  if (typeof supabaseClient !== 'undefined' && supabaseClient) {
-    try {
-      const { data, error } = await supabaseClient.from('submissions').select('*').order('created_at', { ascending: false });
-      if (!error && data && data.length > 0) {
-        supabaseList = data;
-      }
-    } catch (err) {
-      console.warn('Supabase fetch notice:', err);
+  // Direct REST API fetch to Supabase Cloud
+  if (typeof supabaseRestRequest === 'function') {
+    const cloudData = await supabaseRestRequest('submissions?select=*&order=created_at.desc');
+    if (Array.isArray(cloudData)) {
+      supabaseList = cloudData;
     }
   }
 
-  // Merge Supabase entries with LocalStorage entries (avoid duplicates by id)
+  // Merge Supabase Cloud entries with LocalStorage entries (avoid duplicates by id)
   const map = new Map();
   localList.forEach(item => map.set(item.id, item));
   supabaseList.forEach(item => map.set(item.id, item));
@@ -128,13 +124,12 @@ async function updateCMSStatus(id, newStatus) {
   if (item) item.status = newStatus;
   saveLocalSubmissions(stored);
 
-  // Update in Supabase Cloud
-  if (typeof supabaseClient !== 'undefined' && supabaseClient) {
-    try {
-      await supabaseClient.from('submissions').update({ status: newStatus }).eq('id', id);
-    } catch (err) {
-      console.warn('Supabase update notice:', err);
-    }
+  // Update in Supabase Cloud via Direct REST
+  if (typeof supabaseRestRequest === 'function') {
+    supabaseRestRequest(`submissions?id=eq.${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ status: newStatus })
+    });
   }
 
   renderCMSTable();
@@ -147,13 +142,11 @@ async function deleteCMSEntry(id) {
     stored = stored.filter(i => i.id !== id);
     saveLocalSubmissions(stored);
 
-    // Delete in Supabase Cloud
-    if (typeof supabaseClient !== 'undefined' && supabaseClient) {
-      try {
-        await supabaseClient.from('submissions').delete().eq('id', id);
-      } catch (err) {
-        console.warn('Supabase delete notice:', err);
-      }
+    // Delete in Supabase Cloud via Direct REST
+    if (typeof supabaseRestRequest === 'function') {
+      supabaseRestRequest(`submissions?id=eq.${id}`, {
+        method: 'DELETE'
+      });
     }
 
     renderCMSTable();
@@ -190,12 +183,12 @@ function closeCMSDetailModal() {
 async function seedSampleCMSData() {
   if (confirm('Reset CMS database to sample registrations?')) {
     localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(initialSampleData));
-    if (typeof supabaseClient !== 'undefined' && supabaseClient) {
-      try {
-        await supabaseClient.from('submissions').upsert(initialSampleData);
-      } catch (err) {
-        console.warn('Supabase seed notice:', err);
-      }
+    if (typeof supabaseRestRequest === 'function') {
+      supabaseRestRequest('submissions', {
+        method: 'POST',
+        headers: { 'Prefer': 'resolution=merge-duplicates' },
+        body: JSON.stringify(initialSampleData)
+      });
     }
     renderCMSTable();
   }
