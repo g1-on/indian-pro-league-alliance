@@ -96,40 +96,66 @@
 
   /* ---------- HERO ---------- */
   .hero{
-    background:
-      radial-gradient(circle at 82% 12%, rgba(212,149,47,0.22), transparent 42%),
-      linear-gradient(180deg,var(--navy-deep) 0%, var(--navy) 100%);
+    background:var(--navy-deep);
     color:#fff;
-    padding:96px 0 70px;
+    padding:110px 0 80px;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
     position:relative;
     overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute;inset:0;z-index:0;overflow:hidden;
+  }
+  .hero-bg-track{
+    display:flex;height:100%;position:absolute;top:0;left:0;
+    animation:hero-bg-scroll 60s linear infinite;
+    will-change:transform;
+  }
+  .hero-bg-track img{
+    height:100%;width:auto;min-width:340px;object-fit:cover;flex-shrink:0;
+    filter:brightness(0.95) saturate(1.1);
+  }
+  @keyframes hero-bg-scroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  .hero-overlay{
+    position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg, rgba(4,26,77,0.25) 0%, rgba(0,0,0,0.1) 50%, rgba(4,26,77,0.35) 100%);
+    pointer-events:none;
   }
   .hero-track{
     position:absolute;right:-140px;top:-40px;width:640px;height:640px;
     opacity:0.5;
     pointer-events:none;
+    z-index:1;
   }
   .hero-grid{
     display:grid;grid-template-columns:1.15fr 0.85fr;gap:50px;align-items:center;
     position:relative;z-index:2;
+    width:100%;
   }
   .hero h1{
     font-size:clamp(40px,5.2vw,68px);
     color:#fff;
     margin-top:18px;
-    text-shadow:0 2px 10px rgba(0,0,0,0.3);
+    text-shadow:0 3px 18px rgba(0,0,0,0.85), 0 1px 4px rgba(0,0,0,0.9);
   }
   .hero h1 em{
     font-style:normal;
-    background:linear-gradient(120deg,#FFE599,#F0C875);
-    -webkit-background-clip:text;background-clip:text;color:transparent;
+    color:#F0C875;
+    text-shadow:0 3px 18px rgba(0,0,0,0.95), 0 0 14px rgba(240,200,117,0.65);
   }
   .hero p.lead{
-    color:#CBD6F2;
-    font-size:17px;
+    color:#FFFFFF;
+    font-size:17.5px;
+    font-weight:500;
     line-height:1.65;
     max-width:540px;
     margin-top:22px;
+    text-shadow:0 2px 12px rgba(0,0,0,0.85), 0 1px 3px rgba(0,0,0,0.9);
   }
   .hero-ctas{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
   .btn{
@@ -142,18 +168,18 @@
   }
   .btn:hover{transform:translateY(-2px);}
   .btn-gold{background:linear-gradient(120deg,var(--gold) 0%,var(--gold-deep) 100%);color:var(--navy-deep);box-shadow:0 4px 14px rgba(212,149,47,0.3);}
-  .btn-outline{border-color:rgba(255,255,255,0.45);color:#ffffff;background:rgba(255,255,255,0.05);}
-  .btn-outline:hover{border-color:var(--gold-light);color:var(--gold-light);background:rgba(255,255,255,0.12);}
+  .btn-outline{border-color:rgba(255,255,255,0.7);color:#ffffff;background:rgba(4,26,77,0.6);backdrop-filter:blur(6px);}
+  .btn-outline:hover{border-color:var(--gold-light);color:var(--gold-light);background:rgba(4,26,77,0.85);}
   .btn-navy{background:var(--navy-deep);color:#ffffff;}
   .btn-navy:hover{background:var(--navy);}
 
   .hero-stats{
     display:grid;grid-template-columns:1fr 1fr;gap:1px;
-    background:rgba(255,255,255,0.2);
+    background:rgba(255,255,255,0.25);
     margin-top:52px;
-    border-top:1px solid rgba(255,255,255,0.2);
+    border-top:1px solid rgba(255,255,255,0.25);
   }
-  .hero-stats div{background:var(--navy-deep);padding:20px 12px 20px 12px;}
+  .hero-stats div{background:rgba(4,26,77,0.88);backdrop-filter:blur(8px);padding:20px 12px 20px 12px;}
   .hero-stats .num{
     font-family:'Big Shoulders Display',sans-serif;font-weight:800;
     font-size:36px;color:#F8D178;
@@ -161,12 +187,13 @@
   .hero-stats .lbl{font-size:12.5px;color:#CBD6F2;margin-top:4px;font-weight:500;}
 
   .hero-card{
-    background:linear-gradient(160deg,rgba(255,255,255,0.1),rgba(255,255,255,0.03));
-    border:1px solid rgba(255,255,255,0.2);
+    background:rgba(4,26,77,0.82);
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,0.25);
     padding:32px;
     position:relative;
-    border-radius:4px;
-    box-shadow:0 12px 30px rgba(0,0,0,0.25);
+    border-radius:6px;
+    box-shadow:0 16px 40px rgba(0,0,0,0.45);
   }
   .hero-card .tag{
     display:inline-block;background:rgba(212,149,47,0.25);color:#FDE68A;
@@ -184,8 +211,9 @@
   .section-head{max-width:680px;margin-bottom:52px;}
   .section-head h2{font-size:clamp(30px,3.8vw,46px);color:var(--navy-deep);margin-top:12px;letter-spacing:0.01em;}
   .section-head p{margin-top:16px;font-size:16.5px;color:#475569;line-height:1.6;}
-  .on-dark .section-head h2{color:#ffffff;}
-  .on-dark .section-head p{color:#CBD6F2;}
+  .section-head.on-dark h2, .on-dark .section-head h2{color:#ffffff !important;}
+  .section-head.on-dark p, .on-dark .section-head p{color:#F1F5F9 !important;font-size:17px;font-weight:500;}
+  .section-head.on-dark .eyebrow, .on-dark .section-head .eyebrow{color:var(--gold-light) !important;}
 
   /* ---------- ABOUT / MISSION ---------- */
   .mission{background:var(--cream);}
@@ -219,76 +247,157 @@
     box-shadow:0 2px 6px rgba(0,0,0,0.05);
   }
 
-  /* ---------- SPORTS GRID WITH GENERATED IMAGES ---------- */
-  .sports{background:#F8FAFC;padding:96px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
-  .sports-grid{
-    display:grid;grid-template-columns:repeat(4,1fr);gap:22px;
-    margin-top:40px;
-  }
-  .sport-card{
-    position:relative;
-    border-radius:6px;
+  /* ---------- SPORTS VERTICAL STRIPE GRID (One-By-One Drop-Down Reveal) ---------- */
+  .sports{
+    background:#041A4D;
+    background:linear-gradient(180deg, #041A4D 0%, #082870 50%, #041A4D 100%);
+    padding:100px 0 120px;
+    border-top:1px solid rgba(255,255,255,0.12);
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    color:#ffffff;
     overflow:hidden;
-    background:var(--navy-deep);
-    height:280px;
+  }
+  .sports .section-head h2{color:#ffffff !important;}
+  .sports .section-head p{color:#E2E8F0 !important;}
+
+  .sports-stripe-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+    gap:24px;
+    margin-top:48px;
+    perspective:1400px;
+  }
+  .stripe-card{
+    background:#020C24;
+    border-radius:10px;
+    overflow:hidden;
+    border:1px solid rgba(212,149,47,0.35);
+    box-shadow:0 16px 40px rgba(0,0,0,0.5);
     display:flex;
     flex-direction:column;
-    justify-content:flex-end;
-    box-shadow:0 8px 24px rgba(4,26,77,0.14);
-    transition:transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    border:1px solid rgba(10,45,107,0.15);
+    height:500px;
+    position:relative;
+    opacity:0;
+    transform:translateY(-140px) rotateX(18deg) scale(0.88);
+    transform-origin:top center;
+    transition:opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.4s ease, 
+                border-color 0.4s ease;
+    will-change:transform, opacity;
   }
-  .sport-card:hover{
-    transform:translateY(-6px);
-    box-shadow:0 16px 36px rgba(4,26,77,0.26);
-    border-color:var(--gold);
+  .stripe-card::before{
+    content:"";
+    position:absolute;
+    top:0;left:0;right:0;
+    height:4px;
+    background:linear-gradient(90deg, var(--gold-light), var(--gold-deep));
+    z-index:5;
   }
-  .sport-card img{
-    position:absolute;top:0;left:0;width:100%;height:100%;
+  .stripe-card.dropped{
+    opacity:1;
+    transform:translateY(0) rotateX(0deg) scale(1);
+  }
+  .stripe-card:hover{
+    transform:translateY(-12px) scale(1.03);
+    box-shadow:0 26px 52px rgba(212,149,47,0.25);
+    border-color:var(--gold-light);
+  }
+  .stripe-media{
+    position:relative;
+    height:310px;
+    width:100%;
+    overflow:hidden;
+  }
+  .stripe-media img{
+    width:100%;
+    height:100%;
     object-fit:cover;
-    transition:transform 0.5s ease;
+    transition:transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .sport-card:hover img{
-    transform:scale(1.08);
+  .stripe-card:hover .stripe-media img{
+    transform:scale(1.12);
   }
-  .sport-card-overlay{
-    position:absolute;top:0;left:0;right:0;bottom:0;
-    background:linear-gradient(180deg, rgba(4,26,77,0.15) 0%, rgba(4,26,77,0.85) 60%, rgba(4,26,77,0.98) 100%);
-    pointer-events:none;
+  .stripe-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg, rgba(4,26,77,0.15) 0%, rgba(2,12,36,0.92) 100%);
   }
-  .sport-card-content{
-    position:relative;z-index:2;
-    padding:20px;
-    color:#ffffff;
+  .stripe-top-bar{
+    position:absolute;
+    top:14px;
+    left:14px;
+    right:14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:3;
   }
-  .sport-badge{
-    display:inline-block;
+  .stripe-num{
     font-family:'IBM Plex Mono',monospace;
-    font-size:10.5px;
+    font-size:12.5px;
+    font-weight:800;
+    color:#041A4D;
+    background:var(--gold-light);
+    padding:4px 10px;
+    border-radius:4px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.4);
+  }
+  .stripe-tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
     font-weight:700;
     letter-spacing:0.08em;
     text-transform:uppercase;
-    background:rgba(212,149,47,0.95);
-    color:#041A4D;
-    padding:4px 9px;
-    border-radius:3px;
-    margin-bottom:8px;
-    box-shadow:0 2px 6px rgba(0,0,0,0.3);
+    background:rgba(4, 26, 77, 0.9);
+    color:var(--gold-light);
+    padding:5px 10px;
+    border-radius:4px;
+    border:1px solid rgba(212,149,47,0.4);
+    backdrop-filter:blur(6px);
   }
-  .sport-card h3{
+  .stripe-tag-new{
+    background:var(--gold);
+    color:#041A4D;
+    border:none;
+    font-weight:800;
+  }
+  .stripe-content{
+    padding:20px 18px;
+    display:flex;
+    flex-direction:column;
+    flex-grow:1;
+    background:#020C24;
+    position:relative;
+    z-index:2;
+  }
+  .stripe-content h3{
     font-family:'Big Shoulders Display',sans-serif;
     font-weight:800;
-    font-size:22px;
+    font-size:25px;
     letter-spacing:0.02em;
     color:#ffffff;
-    margin:0 0 4px 0;
-    text-shadow:0 2px 4px rgba(0,0,0,0.6);
+    margin:0 0 6px 0;
   }
-  .sport-card p{
-    font-size:12.5px;
-    color:#E2E8F0;
-    margin:0;
+  .stripe-content p{
+    font-size:13px;
+    color:#CBD6F2;
+    margin:0 0 14px 0;
     line-height:1.45;
+    flex-grow:1;
+  }
+  .stripe-footer{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:10px;
+    border-top:1px solid rgba(255,255,255,0.12);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    color:var(--gold-light);
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    font-weight:600;
   }
 
   /* ---------- PATHWAY ---------- */
@@ -357,46 +466,56 @@
 
   /* ---------- REGISTRATION ---------- */
   .register{background:linear-gradient(180deg,var(--navy-deep),var(--navy));color:#fff;}
-  .tabs{display:flex;gap:2px;margin-bottom:0;border-bottom:1px solid rgba(255,255,255,0.14);}
+  .tabs{display:flex;gap:4px;margin-bottom:0;border-bottom:2px solid rgba(255,255,255,0.2);}
   .tab-btn{
-    flex:1;background:rgba(255,255,255,0.04);border:none;color:#CBD6F2;
-    padding:20px 16px;font-family:'IBM Plex Mono',monospace;font-size:13px;
-    letter-spacing:0.06em;text-transform:uppercase;font-weight:600;
-    border-bottom:3px solid transparent;transition:all .2s;
+    flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);border-bottom:none;
+    color:#E2E8F0;
+    padding:18px 16px;font-family:'IBM Plex Mono',monospace;font-size:13.5px;
+    letter-spacing:0.08em;text-transform:uppercase;font-weight:700;
+    cursor:pointer;
+    transition:all .2s ease;
   }
-  .tab-btn.active{color:#fff;background:rgba(255,255,255,0.08);border-bottom-color:var(--gold);}
-  .tab-btn:hover{color:#fff;}
-  .form-panel{display:none;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-top:none;padding:44px;}
+  .tab-btn.active{
+    color:#041A4D;
+    background:linear-gradient(120deg,var(--gold-light) 0%,var(--gold) 100%);
+    font-weight:800;
+    border-color:var(--gold-light);
+    box-shadow:0 4px 16px rgba(212,149,47,0.4);
+  }
+  .tab-btn:hover:not(.active){color:#ffffff;background:rgba(255,255,255,0.18);}
+  .form-panel{display:none;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.18);border-top:none;padding:44px;border-bottom-left-radius:6px;border-bottom-right-radius:6px;}
   .form-panel.active{display:block;}
   .form-intro{max-width:640px;margin-bottom:30px;}
-  .form-intro h3{font-size:24px;color:#fff;margin-bottom:10px;}
-  .form-intro p{color:#CBD6F2;font-size:15px;}
-  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .form-intro h3{font-size:26px;color:#ffffff;margin-bottom:10px;letter-spacing:0.02em;}
+  .form-intro p{color:#E2E8F0;font-size:15.5px;line-height:1.55;}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
   .form-grid .full{grid-column:1/-1;}
   .field label{
-    display:block;font-family:'IBM Plex Mono',monospace;font-size:12px;
-    letter-spacing:0.06em;text-transform:uppercase;color:#CBD6F2;margin-bottom:8px;font-weight:600;
+    display:block;font-family:'IBM Plex Mono',monospace;font-size:12.5px;
+    letter-spacing:0.08em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px;font-weight:700;
   }
   .field input,.field select,.field textarea{
-    width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.22);
-    color:#fff;padding:12px 14px;font-family:'Manrope',sans-serif;font-size:14.5px;
+    width:100%;background:rgba(255,255,255,0.14);border:1.5px solid rgba(255,255,255,0.32);
+    color:#ffffff;padding:14px 16px;font-family:'Manrope',sans-serif;font-size:15px;font-weight:500;
+    border-radius:4px;
+    transition:border-color 0.2s, background 0.2s, box-shadow 0.2s;
   }
-  .field input::placeholder,.field textarea::placeholder{color:#94A3B8;}
-  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold);}
-  .field textarea{resize:vertical;min-height:90px;}
-  .field select option{color:#000;}
+  .field input::placeholder,.field textarea::placeholder{color:#CBD5E1;font-weight:400;}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold-light);background:rgba(255,255,255,0.22);box-shadow:0 0 0 3px rgba(240,200,117,0.3);}
+  .field textarea{resize:vertical;min-height:100px;}
+  .field select option{color:#0E1830;background:#ffffff;font-weight:600;}
   .form-submit{
-    margin-top:30px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+    margin-top:34px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;
   }
-  .form-note{font-size:13px;color:#94A3B8;max-width:420px;}
+  .form-note{font-size:13.5px;color:#E2E8F0;max-width:440px;line-height:1.5;}
   .confirm-box{
-    display:none;margin-top:26px;border:1px solid rgba(212,149,47,0.5);
-    background:rgba(212,149,47,0.08);padding:20px 22px;
+    display:none;margin-top:26px;border:1px solid var(--gold);
+    background:rgba(212,149,47,0.14);padding:22px 24px;border-radius:4px;
   }
   .confirm-box.show{display:flex;gap:14px;align-items:flex-start;}
-  .confirm-box svg{width:22px;height:22px;stroke:var(--gold-light);flex-shrink:0;margin-top:2px;}
-  .confirm-box h4{font-size:15px;color:var(--gold-light);text-transform:none;font-weight:700;letter-spacing:0;}
-  .confirm-box p{font-size:13.5px;color:#C6CFE6;margin-top:6px;}
+  .confirm-box svg{width:24px;height:24px;stroke:var(--gold-light);flex-shrink:0;margin-top:2px;}
+  .confirm-box h4{font-size:16px;color:var(--gold-light);text-transform:none;font-weight:800;letter-spacing:0;}
+  .confirm-box p{font-size:14px;color:#F3F4F6;margin-top:6px;}
 
   /* ---------- FOOTER ---------- */
   footer{background:var(--navy-deep);color:#CBD6F2;padding:64px 0 30px;border-top:1px solid rgba(255,255,255,0.08);}
@@ -412,13 +531,10 @@
     display:flex;justify-content:space-between;font-size:12.5px;color:#94A3B8;flex-wrap:wrap;gap:10px;
   }
 
-  @media(max-width:1024px){
-    .sports-grid{grid-template-columns:repeat(3,1fr);}
-  }
   @media(max-width:768px){
     .hero-grid{grid-template-columns:1fr;}
     .mission-grid{grid-template-columns:1fr;gap:36px;}
-    .sports-grid{grid-template-columns:repeat(2,1fr);}
+    .sports-stripe-grid{grid-template-columns:1fr;gap:22px;}
     .pathway-stages{grid-template-columns:repeat(2,1fr);row-gap:34px;}
     .pathway-connector{display:none;}
     .doors-grid{grid-template-columns:1fr;}
@@ -428,9 +544,8 @@
     .foot-grid{grid-template-columns:1fr 1fr;}
     .nav-links{display:none;}
     .nav-toggle{display:block;}
-  }
-  @media(max-width:480px){
-    .sports-grid{grid-template-columns:1fr;}
+    .hero{min-height:auto;padding:100px 0 60px;}
+    .hero-bg-track img{min-width:220px;}
   }
 </style>
 </head>
@@ -456,10 +571,40 @@
 
 <!-- ================= HERO ================= -->
 <header class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-bg-track">
+      <img src="assets/images/badminton.png" alt="">
+      <img src="assets/images/athletics.png" alt="">
+      <img src="assets/images/swimming.png" alt="">
+      <img src="assets/images/kabaddi.png" alt="">
+      <img src="assets/images/volleyball.png" alt="">
+      <img src="assets/images/basketball.png" alt="">
+      <img src="assets/images/khokho.png" alt="">
+      <img src="assets/images/wrestling.png" alt="">
+      <img src="assets/images/tabletennis.png" alt="">
+      <img src="assets/images/handball.png" alt="">
+      <img src="assets/images/judomartialarts.png" alt="">
+      <img src="assets/images/weightlifting.png" alt="">
+      <!-- duplicate set for a seamless loop -->
+      <img src="assets/images/badminton.png" alt="">
+      <img src="assets/images/athletics.png" alt="">
+      <img src="assets/images/swimming.png" alt="">
+      <img src="assets/images/kabaddi.png" alt="">
+      <img src="assets/images/volleyball.png" alt="">
+      <img src="assets/images/basketball.png" alt="">
+      <img src="assets/images/khokho.png" alt="">
+      <img src="assets/images/wrestling.png" alt="">
+      <img src="assets/images/tabletennis.png" alt="">
+      <img src="assets/images/handball.png" alt="">
+      <img src="assets/images/judomartialarts.png" alt="">
+      <img src="assets/images/weightlifting.png" alt="">
+    </div>
+  </div>
+  <div class="hero-overlay" aria-hidden="true"></div>
   <div class="wrap hero-grid">
     <div>
       <span class="eyebrow light">Tier-3 &amp; Panchayat-Level Sports Infrastructure &mdash; Madhya Pradesh</span>
-      <h1>From village grounds<br>to the <em>Pro League</em>.</h1>
+      <h1>From Grassroots Arenas<br>to the <em>Pro League</em>.</h1>
       <p class="lead">Indian Pro League Alliance Corp builds and operates multi-sport infrastructure at the panchayat and government-school level &mdash; opening every outdoor and indoor discipline to athletes who've never had a proper ground to train on. Cricket and football already have their ecosystems; we build where the gap is.</p>
       <div class="hero-ctas">
         <button class="btn btn-gold" onclick="openTab('player')">Register as a Player</button>
@@ -529,154 +674,329 @@
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Every other sport, indoors and outdoors</span>
-      <h2>Fifteen+ disciplines. <br>One infrastructure model.</h2>
-      <p>From a badminton court behind a government school to a full athletics track at panchayat level &mdash; if it isn't cricket or football, it's on our primary build list.</p>
+      <h2>Fifteen disciplines. <br>One infrastructure model.</h2>
+      <p>From a badminton court behind a government school to a full athletics track at panchayat level &mdash; if it isn't cricket or football, it's on our build list. Scroll to see each one drop into place.</p>
     </div>
   </div>
   <div class="wrap">
-    <div class="sports-grid">
-      <div class="sport-card">
-        <img src="assets/images/badminton.png" alt="Badminton">
-        <div class="sport-card-overlay"></div>
-        <div class="sport-card-content">
-          <span class="sport-badge">Indoor Court</span>
+    <div class="sports-stripe-grid" id="sports-grid">
+      <!-- Stripe 1 -->
+      <div class="stripe-card">
+        <div class="stripe-media">
+          <img src="assets/images/badminton.png" alt="Badminton" loading="lazy">
+          <div class="stripe-overlay"></div>
+          <div class="stripe-top-bar">
+            <span class="stripe-num">01</span>
+            <span class="stripe-tag">Indoor Court</span>
+          </div>
+        </div>
+        <div class="stripe-content">
           <h3>Badminton</h3>
-          <p>Wooden &amp; Synthetic Courts at Govt Schools</p>
+          <p>Wooden &amp; synthetic courts built inside government school campuses.</p>
+          <div class="stripe-footer">
+            <span>Panchayat Level</span>
+            <span>★ Active</span>
+          </div>
         </div>
       </div>
-      <div class="sport-card">
-        <img src="assets/images/athletics.png" alt="Athletics &amp; Track">
-        <div class="sport-card-overlay"></div>
-        <div class="sport-card-content">
-          <span class="sport-badge">Outdoor Track</span>
+
+      <!-- Stripe 2 -->
+      <div class="stripe-card">
+        <div class="stripe-media">
+          <img src="assets/images/athletics.png" alt="Athletics &amp; Track" loading="lazy">
+          <div class="stripe-overlay"></div>
+          <div class="stripe-top-bar">
+            <span class="stripe-num">02</span>
+            <span class="stripe-tag">Outdoor Track</span>
+          </div>
+        </div>
+        <div class="stripe-content">
           <h3>Athletics &amp; Track</h3>
-          <p>Synthetic 400m &amp; 200m Running Tracks</p>
+          <p>Synthetic 200m &amp; 400m running tracks at panchayat-level grounds.</p>
+          <div class="stripe-footer">
+            <span>Panchayat Level</span>
+            <span>★ Active</span>
+          </div>
         </div>
       </div>
-      <div class="sport-card">
-        <img src="assets/images/swimming.png" alt="Swimming">
-        <div class="sport-card-overlay"></div>
-        <div class="sport-card-content">
-          <span class="sport-badge">Aquatics</span>
+
+      <!-- Stripe 3 -->
+      <div class="stripe-card">
+        <div class="stripe-media">
+          <img src="assets/images/swimming.png" alt="Swimming" loading="lazy">
+          <div class="stripe-overlay"></div>
+          <div class="stripe-top-bar">
+            <span class="stripe-num">03</span>
+            <span class="stripe-tag">Aquatics</span>
+          </div>
+        </div>
+        <div class="stripe-content">
           <h3>Swimming</h3>
-          <p>Semi-Olympic Panchayat &amp; School Pools</p>
+          <p>Semi-Olympic pools built for panchayats and partner schools.</p>
+          <div class="stripe-footer">
+            <span>Semi-Olympic</span>
+            <span>★ Active</span>
+          </div>
         </div>
       </div>
-      <div class="sport-card">
-        <img src="assets/images/volleyball.png" alt="Volleyball">
-        <div class="sport-card-overlay"></div>
-        <div class="sport-card-content">
-          <span class="sport-badge">Outdoor Court</span>
+
+      <!-- Stripe 4 -->
+      <div class="stripe-card">
+        <div class="stripe-media">
+          <img src="assets/images/hockey.png" alt="Field Hockey" loading="lazy">
+          <div class="stripe-overlay"></div>
+          <div class="stripe-top-bar">
+            <span class="stripe-num">04</span>
+            <span class="stripe-tag">Turf Field</span>
+          </div>
+        </div>
+        <div class="stripe-content">
+          <h3>Field Hockey</h3>
+          <p>Synthetic turf mini-fields for grassroot hockey training in MP.</p>
+          <div class="stripe-footer">
+            <span>Turf Facility</span>
+            <span>★ Active</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stripe 5 -->
+      <div class="stripe-card">
+        <div class="stripe-media">
+          <img src="assets/images/volleyball.png" alt="Volleyball" loading="lazy">
+          <div class="stripe-overlay"></div>
+          <div class="stripe-top-bar">
+            <span class="stripe-num">05</span>
+            <span class="stripe-tag">Outdoor Court</span>
+          </div>
+        </div>
+        <div class="stripe-content">
           <h3>Volleyball</h3>
-          <p>Floodlit Clay &amp; Synthetic Courts</p>
+          <p>Floodlit clay &amp; synthetic courts for evening community play.</p>
+          <div class="stripe-footer">
+            <span>Floodlit Court</span>
+            <span>★ Active</span>
+          </div>
         </div>
       </div>
-      <div class="sport-card">
-        <img src="assets/images/basketball.png" alt="Basketball">
-        <div class="sport-card-overlay"></div>
-        <div class="sport-card-content">
-          <span class="sport-badge">Indoor &amp; Outdoor</span>
+
+      <!-- Stripe 6 -->
+      <div class="stripe-card">
+        <div class="stripe-media">
+          <img src="assets/images/basketball.png" alt="Basketball" loading="lazy">
+          <div class="stripe-overlay"></div>
+          <div class="stripe-top-bar">
+            <span class="stripe-num">06</span>
+            <span class="stripe-tag">Indoor &amp; Outdoor</span>
+          </div>
+        </div>
+        <div class="stripe-content">
           <h3>Basketball</h3>
-          <p>Standard High-Friction Hard Courts</p>
+          <p>Standard high-friction hard courts for schools and open grounds.</p>
+          <div class="stripe-footer">
+            <span>Hard Court</span>
+            <span>★ Active</span>
+          </div>
         </div>
       </div>
-      <div class="sport-card">
-        <img src="assets/images/kabaddi.png" alt="Kabaddi">
-        <div class="sport-card-overlay"></div>
-        <div class="sport-card-content">
-          <span class="sport-badge">Traditional &amp; Pro</span>
+
+      <!-- Stripe 7 -->
+      <div class="stripe-card">
+        <div class="stripe-media">
+          <img src="assets/images/kabaddi.png" alt="Kabaddi" loading="lazy">
+          <div class="stripe-overlay"></div>
+          <div class="stripe-top-bar">
+            <span class="stripe-num">07</span>
+            <span class="stripe-tag">Traditional &amp; Pro</span>
+          </div>
+        </div>
+        <div class="stripe-content">
           <h3>Kabaddi</h3>
-          <p>Indoor Mat Courts &amp; Panchayat Grounds</p>
+          <p>Indoor mat courts and open panchayat akhadas alike.</p>
+          <div class="stripe-footer">
+            <span>Pro &amp; Clay Mat</span>
+            <span>★ Active</span>
+          </div>
         </div>
       </div>
-      <div class="sport-card">
-        <img src="assets/images/khokho.png" alt="Kho-Kho">
-        <div class="sport-card-overlay"></div>
-        <div class="sport-card-content">
-          <span class="sport-badge">Traditional Sport</span>
+
+      <!-- Stripe 8 -->
+      <div class="stripe-card">
+        <div class="stripe-media">
+          <img src="assets/images/khokho.png" alt="Kho-Kho" loading="lazy">
+          <div class="stripe-overlay"></div>
+          <div class="stripe-top-bar">
+            <span class="stripe-num">08</span>
+            <span class="stripe-tag">Traditional Sport</span>
+          </div>
+        </div>
+        <div class="stripe-content">
           <h3>Kho-Kho</h3>
-          <p>Standardized Clay &amp; Synthetic Arenas</p>
+          <p>Standardised clay &amp; synthetic arenas at the panchayat level.</p>
+          <div class="stripe-footer">
+            <span>Panchayat Arena</span>
+            <span>★ Active</span>
+          </div>
         </div>
       </div>
-      <div class="sport-card">
-        <img src="assets/images/tabletennis.png" alt="Table Tennis">
-        <div class="sport-card-overlay"></div>
-        <div class="sport-card-content">
-          <span class="sport-badge">Indoor Discipline</span>
+
+      <!-- Stripe 9 -->
+      <div class="stripe-card">
+        <div class="stripe-media">
+          <img src="assets/images/tabletennis.png" alt="Table Tennis" loading="lazy">
+          <div class="stripe-overlay"></div>
+          <div class="stripe-top-bar">
+            <span class="stripe-num">09</span>
+            <span class="stripe-tag">Indoor Discipline</span>
+          </div>
+        </div>
+        <div class="stripe-content">
           <h3>Table Tennis</h3>
-          <p>Tournament-Grade TT Tables &amp; Facilities</p>
+          <p>Tournament-grade tables inside school sports halls.</p>
+          <div class="stripe-footer">
+            <span>Sports Hall</span>
+            <span>★ Active</span>
+          </div>
         </div>
       </div>
-      <div class="sport-card">
-        <img src="assets/images/hockey.png" alt="Hockey">
-        <div class="sport-card-overlay"></div>
-        <div class="sport-card-content">
-          <span class="sport-badge">Field Sport</span>
-          <h3>Hockey</h3>
-          <p>Grass &amp; AstroTurf Practice Grounds</p>
+
+      <!-- Stripe 10 -->
+      <div class="stripe-card">
+        <div class="stripe-media">
+          <img src="assets/images/wrestling.png" alt="Wrestling" loading="lazy">
+          <div class="stripe-overlay"></div>
+          <div class="stripe-top-bar">
+            <span class="stripe-num">10</span>
+            <span class="stripe-tag">Combat Mat</span>
+          </div>
         </div>
-      </div>
-      <div class="sport-card">
-        <img src="assets/images/wrestling.png" alt="Wrestling">
-        <div class="sport-card-overlay"></div>
-        <div class="sport-card-content">
-          <span class="sport-badge">Combat Mat</span>
+        <div class="stripe-content">
           <h3>Wrestling</h3>
-          <p>Modern Mat Akhadas &amp; Training Hubs</p>
+          <p>Modern mat akhadas replacing traditional mud pits.</p>
+          <div class="stripe-footer">
+            <span>Modern Akhada</span>
+            <span>★ Active</span>
+          </div>
         </div>
       </div>
-      <div class="sport-card">
-        <img src="assets/images/handball.png" alt="Handball">
-        <div class="sport-card-overlay"></div>
-        <div class="sport-card-content">
-          <span class="sport-badge">Team Sport</span>
+
+      <!-- Stripe 11 -->
+      <div class="stripe-card">
+        <div class="stripe-media">
+          <img src="assets/images/handball.png" alt="Handball" loading="lazy">
+          <div class="stripe-overlay"></div>
+          <div class="stripe-top-bar">
+            <span class="stripe-num">11</span>
+            <span class="stripe-tag">Team Sport</span>
+          </div>
+        </div>
+        <div class="stripe-content">
           <h3>Handball</h3>
-          <p>Multi-purpose Indoor &amp; Outdoor Courts</p>
+          <p>Multi-purpose indoor &amp; outdoor courts shared with basketball.</p>
+          <div class="stripe-footer">
+            <span>Multi-Court</span>
+            <span>★ Active</span>
+          </div>
         </div>
       </div>
-      <div class="sport-card">
-        <img src="assets/images/judomartialarts.png" alt="Judo &amp; Martial Arts">
-        <div class="sport-card-overlay"></div>
-        <div class="sport-card-content">
-          <span class="sport-badge">Martial Arts</span>
+
+      <!-- Stripe 12 -->
+      <div class="stripe-card">
+        <div class="stripe-media">
+          <img src="assets/images/judomartialarts.png" alt="Judo &amp; Martial Arts" loading="lazy">
+          <div class="stripe-overlay"></div>
+          <div class="stripe-top-bar">
+            <span class="stripe-num">12</span>
+            <span class="stripe-tag">Martial Arts</span>
+          </div>
+        </div>
+        <div class="stripe-content">
           <h3>Judo &amp; Martial Arts</h3>
-          <p>Tatami Mat Halls &amp; Safety Gear</p>
+          <p>Tatami mat halls with proper safety gear on site.</p>
+          <div class="stripe-footer">
+            <span>Tatami Hall</span>
+            <span>★ Active</span>
+          </div>
         </div>
       </div>
-      <div class="sport-card">
-        <img src="assets/images/weightlifting.png" alt="Weightlifting">
-        <div class="sport-card-overlay"></div>
-        <div class="sport-card-content">
-          <span class="sport-badge">Strength &amp; Power</span>
+
+      <!-- Stripe 13 -->
+      <div class="stripe-card">
+        <div class="stripe-media">
+          <img src="assets/images/weightlifting.png" alt="Weightlifting" loading="lazy">
+          <div class="stripe-overlay"></div>
+          <div class="stripe-top-bar">
+            <span class="stripe-num">13</span>
+            <span class="stripe-tag">Strength &amp; Power</span>
+          </div>
+        </div>
+        <div class="stripe-content">
           <h3>Weightlifting</h3>
-          <p>Calibrated Barbells &amp; Rubber Platforms</p>
+          <p>Calibrated barbells and rubber platforms for structured coaching.</p>
+          <div class="stripe-footer">
+            <span>Strength Hub</span>
+            <span>★ Active</span>
+          </div>
         </div>
       </div>
-      <div class="sport-card">
-        <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=800&auto=format&fit=crop" alt="Boxing">
-        <div class="sport-card-overlay"></div>
-        <div class="sport-card-content">
-          <span class="sport-badge">Combat Sport</span>
+
+      <!-- Stripe 14 -->
+      <div class="stripe-card">
+        <div class="stripe-media">
+          <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Boxing" loading="lazy">
+          <div class="stripe-overlay"></div>
+          <div class="stripe-top-bar">
+            <span class="stripe-num">14</span>
+            <span class="stripe-tag">Combat Sport</span>
+          </div>
+        </div>
+        <div class="stripe-content">
           <h3>Boxing</h3>
-          <p>Elevated Rings &amp; Heavy Bag Stations</p>
+          <p>Elevated rings and heavy-bag stations at district facilities.</p>
+          <div class="stripe-footer">
+            <span>Ring Facility</span>
+            <span>★ Active</span>
+          </div>
         </div>
       </div>
-      <div class="sport-card">
-        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=800&auto=format&fit=crop" alt="Gymnastics">
-        <div class="sport-card-overlay"></div>
-        <div class="sport-card-content">
-          <span class="sport-badge">Artistic &amp; Flex</span>
+
+      <!-- Stripe 15 -->
+      <div class="stripe-card">
+        <div class="stripe-media">
+          <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Gymnastics" loading="lazy">
+          <div class="stripe-overlay"></div>
+          <div class="stripe-top-bar">
+            <span class="stripe-num">15</span>
+            <span class="stripe-tag">Artistic &amp; Flex</span>
+          </div>
+        </div>
+        <div class="stripe-content">
           <h3>Gymnastics</h3>
-          <p>Vaulting Tables, Bars &amp; Safety Foam</p>
+          <p>Vaulting tables, bars and safety foam for early-age training.</p>
+          <div class="stripe-footer">
+            <span>Foam Pit Arena</span>
+            <span>★ Active</span>
+          </div>
         </div>
       </div>
-      <div class="sport-card">
-        <img src="https://images.unsplash.com/photo-1517649763962-0c623266010b?q=80&w=800&auto=format&fit=crop" alt="Cycling">
-        <div class="sport-card-overlay"></div>
-        <div class="sport-card-content">
-          <span class="sport-badge">Endurance</span>
-          <h3>Cycling</h3>
-          <p>Velodrome &amp; District Road Pathways</p>
+
+      <!-- Stripe 16 -->
+      <div class="stripe-card">
+        <div class="stripe-media" style="background: linear-gradient(135deg, var(--navy-deep), #062266); display:flex; align-items:center; justify-content:center;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:64px; height:64px; color:var(--gold-light);"><path d="M6 17V7M4 9h4M4 15h4M18 17V7M16 9h4M16 15h4M10 12h4"/></svg>
+          <div class="stripe-overlay"></div>
+          <div class="stripe-top-bar">
+            <span class="stripe-num">16</span>
+            <span class="stripe-tag stripe-tag-new">Newly Added</span>
+          </div>
+        </div>
+        <div class="stripe-content">
+          <h3>Hyrox Academy</h3>
+          <p>Hybrid fitness-racing stations &mdash; the newest discipline joining the alliance's build-out.</p>
+          <div class="stripe-footer">
+            <span>Hybrid Fitness</span>
+            <span style="color:var(--gold-light)">★ New Discipline</span>
+          </div>
         </div>
       </div>
     </div>
@@ -745,11 +1065,11 @@
     <div class="split-row">
       <div class="split-col">
         <span class="eyebrow">Vendor Network</span>
-        <h3>Fair rates, direct access.</h3>
+        <h3>Fair deals, direct access.</h3>
         <p>Local and regional vendors &mdash; badminton equipment, swim costumes, footwear, jerseys and general sports kits &mdash; register with the corporation to become approved suppliers.</p>
-        <p>Once verified, a vendor gets standing access to every facility we operate, at rates fixed in advance so pricing stays consistent and fair for players and parents at panchayat level.</p>
+        <p>Once verified, a vendor gets standing access to every facility we operate, at rates fixed in advance &mdash; fair deals for the vendor, and consistent pricing for players and parents at panchayat level.</p>
         <div class="split-tags">
-          <span>Badminton equipment</span><span>Swim costumes</span><span>Footwear</span><span>Kits &amp; jerseys</span><span>Training gear</span>
+          <span>Badminton equipment</span><span>Swim costumes</span><span>Footwear</span><span>Kits &amp; jerseys</span><span>Training gear</span><span>Hyrox equipment</span>
         </div>
         <button class="btn btn-navy" onclick="openTab('vendor')">Register as a Vendor</button>
       </div>
@@ -801,9 +1121,9 @@
               <option value="">Select a sport</option>
               <option>Badminton</option><option>Athletics &amp; Track</option><option>Swimming</option>
               <option>Volleyball</option><option>Basketball</option><option>Kabaddi</option><option>Kho-Kho</option>
-              <option>Table Tennis</option><option>Hockey</option><option>Wrestling</option><option>Handball</option>
+              <option>Table Tennis</option><option>Wrestling</option><option>Handball</option>
               <option>Judo &amp; Martial Arts</option><option>Weightlifting</option><option>Boxing</option>
-              <option>Gymnastics</option><option>Cycling</option>
+              <option>Gymnastics</option><option>Hyrox Academy</option>
             </select>
           </div>
           <div class="field"><label>Nearest Facility / School</label><input type="text" placeholder="Government school or ground name, if known"></div>
@@ -956,6 +1276,32 @@
     e.target.reset();
     return false;
   }
+
+  // Vertical Sports Stripe Grid: One-by-one poster drop-down animation on scroll
+  (function(){
+    const stripes = document.querySelectorAll('#sports-grid .stripe-card');
+    if(!stripes.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          const index = Array.from(stripes).indexOf(entry.target);
+          
+          // Trigger one-by-one sequential drop animation as user scrolls
+          setTimeout(() => {
+            entry.target.classList.add('dropped');
+          }, (index % 4) * 180);
+
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    stripes.forEach(stripe => observer.observe(stripe));
+  })();
 </script>
 
 </body>
