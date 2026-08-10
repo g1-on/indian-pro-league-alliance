@@ -641,6 +641,155 @@
     display:flex;justify-content:space-between;font-size:12.5px;color:#94A3B8;flex-wrap:wrap;gap:10px;
   }
 
+  /* ---------- ADMIN CMS PORTAL STYLES ---------- */
+  .cms-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(2, 8, 22, 0.88);
+    backdrop-filter: blur(14px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .cms-modal-overlay.active { display: flex; }
+
+  .cms-modal-container {
+    width: 100%;
+    max-width: 1280px;
+    height: 88vh;
+    background: #041029;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 16px;
+    box-shadow: 0 30px 90px rgba(0,0,0,0.85);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: #ffffff;
+  }
+
+  .cms-header {
+    padding: 22px 30px;
+    background: #020817;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .cms-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    letter-spacing: 0.12em;
+  }
+  .cms-header h2 { margin: 4px 0 0; font-size: 24px; color: #ffffff; }
+
+  .cms-actions { display: flex; align-items: center; gap: 12px; }
+  .cms-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 9px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+  }
+  .cms-btn-green { background: #10B981; color: #041029; }
+  .cms-btn-navy { background: rgba(255,255,255,0.12); color: #ffffff; border: 1px solid rgba(255,255,255,0.25); }
+  .cms-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+
+  .cms-close-btn {
+    background: none; border: none; color: #E2E8F0; font-size: 28px; cursor: pointer; padding: 0 8px; line-height: 1;
+  }
+
+  .cms-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    padding: 20px 30px 10px;
+  }
+  .cms-stat-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .cms-stat-card .lbl { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #94A3B8; text-transform: uppercase; }
+  .cms-stat-card .val { font-family: 'Big Shoulders Display', sans-serif; font-size: 32px; font-weight: 800; color: #ffffff; }
+  .border-player { border-left: 4px solid #00B4D8; }
+  .border-vendor { border-left: 4px solid #F97316; }
+  .border-investor { border-left: 4px solid #F59E0B; }
+
+  .cms-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 30px;
+    background: rgba(255,255,255,0.03);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    gap: 16px;
+  }
+  .cms-filter-tabs { display: flex; gap: 8px; }
+  .cms-tab {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #CBD5E1;
+    padding: 7px 14px; border-radius: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; cursor: pointer;
+  }
+  .cms-tab.active { background: var(--gold-light); color: #041029; font-weight: 800; border-color: var(--gold-light); }
+  .cms-search-box input {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); color: #ffffff;
+    padding: 8px 16px; border-radius: 6px; font-size: 13.5px; width: 280px;
+  }
+
+  .cms-table-wrapper { flex-grow: 1; overflow-y: auto; padding: 0 30px 24px; }
+  .cms-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; }
+  .cms-table th {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase; color: var(--gold-light);
+    padding: 14px 12px; border-bottom: 2px solid rgba(255,255,255,0.15); position: sticky; top: 0; background: #041029;
+  }
+  .cms-table td { padding: 14px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #E2E8F0; }
+  .cms-table tr:hover { background: rgba(255,255,255,0.04); }
+
+  .type-badge {
+    display: inline-block; padding: 3px 8px; border-radius: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 700;
+  }
+  .type-player { background: rgba(0,180,216,0.2); color: #00B4D8; border: 1px solid rgba(0,180,216,0.4); }
+  .type-vendor { background: rgba(249,115,22,0.2); color: #F97316; border: 1px solid rgba(249,115,22,0.4); }
+  .type-investor { background: rgba(245,158,11,0.2); color: #F59E0B; border: 1px solid rgba(245,158,11,0.4); }
+
+  .status-select {
+    background: #020817; color: #ffffff; border: 1px solid rgba(255,255,255,0.25); border-radius: 4px;
+    padding: 4px 8px; font-size: 12px; font-family: 'IBM Plex Mono', monospace; cursor: pointer;
+  }
+
+  .action-btn {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #ffffff;
+    padding: 4px 10px; border-radius: 4px; font-size: 12px; cursor: pointer; transition: all 0.2s ease;
+  }
+  .action-btn:hover { background: var(--gold-light); color: #041029; }
+  .action-btn-del:hover { background: #EF4444; color: #ffffff; }
+
+  .cms-detail-overlay {
+    position: fixed; inset: 0; z-index: 100000; background: rgba(0,0,0,0.8);
+    display: none; align-items: center; justify-content: center; padding: 20px;
+  }
+  .cms-detail-overlay.active { display: flex; }
+  .cms-detail-card {
+    width: 100%; max-width: 600px; background: #041029; border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 14px; padding: 28px; color: #ffffff; box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+  }
+  .cms-detail-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 14px; margin-bottom: 18px; }
+  .cms-detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 14px; }
+  .cms-detail-row .lbl { color: var(--gold-light); font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+
   @media(max-width:768px){
     .hero-grid{grid-template-columns:1fr;}
     .mission-grid{grid-template-columns:1fr;gap:36px;}
@@ -657,6 +806,7 @@
     .nav-toggle{display:block;}
     .hero{min-height:auto;padding:100px 0 60px;}
     .hero-bg-track img{min-width:220px;}
+    .cms-stats-grid{grid-template-columns:repeat(2,1fr);}
   }
 </style>
 </head>
@@ -674,9 +824,12 @@
       <a href="#pathway">The Pathway</a>
       <a href="#vendors-investors">Vendors &amp; Investors</a>
       <a href="#register">Register</a>
-      <a href="#contact">Contact</a>
+      <a href="javascript:void(0)" onclick="openCMSModal()" style="color:var(--gold-light);font-weight:800;display:inline-flex;align-items:center;gap:4px;">📊 Admin CMS</a>
     </div>
-    <button class="nav-cta" onclick="document.getElementById('register').scrollIntoView()">Get Involved</button>
+    <div style="display:flex;gap:10px;">
+      <button class="nav-cta" style="background:transparent;border:1px solid var(--gold-light);color:var(--gold-light);" onclick="openCMSModal()">Admin CMS ⚙️</button>
+      <button class="nav-cta" onclick="document.getElementById('register').scrollIntoView()">Get Involved</button>
+    </div>
   </div>
 </nav>
 
@@ -1352,11 +1505,126 @@
   </div>
   <div class="foot-bottom">
     <span>&copy; 2026 Indian Pro League Alliance Corp. All rights reserved.</span>
-    <span>Empowering Athletes, Elevating Futures.</span>
+    <span><a href="javascript:void(0)" onclick="openCMSModal()" style="color:var(--gold-light);text-decoration:none;font-weight:700;">Access Admin CMS Portal ⚙️</a></span>
   </div>
 </footer>
 
+<!-- ================= ADMIN CMS MODAL ================= -->
+<div class="cms-modal-overlay" id="cms-modal" aria-hidden="true">
+  <div class="cms-modal-container">
+    <div class="cms-header">
+      <div class="cms-title-group">
+        <span class="cms-badge">Alliance Executive Admin Portal</span>
+        <h2>Registration Submissions CMS</h2>
+      </div>
+      <div class="cms-actions">
+        <button class="cms-btn cms-btn-green" onclick="exportCMSToCSV()">📥 Export CSV</button>
+        <button class="cms-btn cms-btn-navy" onclick="seedSampleCMSData()">🔄 Reset / Seed Data</button>
+        <button class="cms-close-btn" onclick="closeCMSModal()">&times;</button>
+      </div>
+    </div>
+
+    <!-- CMS Stats Cards -->
+    <div class="cms-stats-grid">
+      <div class="cms-stat-card">
+        <span class="lbl">Total Submissions</span>
+        <span class="val" id="cms-stat-total">0</span>
+      </div>
+      <div class="cms-stat-card border-player">
+        <span class="lbl">Player Registrations</span>
+        <span class="val" id="cms-stat-players">0</span>
+      </div>
+      <div class="cms-stat-card border-vendor">
+        <span class="lbl">Vendor Applications</span>
+        <span class="val" id="cms-stat-vendors">0</span>
+      </div>
+      <div class="cms-stat-card border-investor">
+        <span class="lbl">Investor Inquiries</span>
+        <span class="val" id="cms-stat-investors">0</span>
+      </div>
+    </div>
+
+    <!-- CMS Filter & Search Bar -->
+    <div class="cms-toolbar">
+      <div class="cms-filter-tabs">
+        <button class="cms-tab active" id="cms-filter-all" onclick="filterCMSCategory('all')">All Submissions</button>
+        <button class="cms-tab" id="cms-filter-player" onclick="filterCMSCategory('Player')">Players</button>
+        <button class="cms-tab" id="cms-filter-vendor" onclick="filterCMSCategory('Vendor')">Vendors</button>
+        <button class="cms-tab" id="cms-filter-investor" onclick="filterCMSCategory('Investor')">Investors</button>
+      </div>
+      <div class="cms-search-box">
+        <input type="text" id="cms-search-input" placeholder="Search name, phone, district, sport..." oninput="renderCMSTable()">
+      </div>
+    </div>
+
+    <!-- CMS Data Table -->
+    <div class="cms-table-wrapper">
+      <table class="cms-table">
+        <thead>
+          <tr>
+            <th>Submission ID</th>
+            <th>Date &amp; Time</th>
+            <th>Type</th>
+            <th>Name / Business</th>
+            <th>Mobile Number</th>
+            <th>District / Location</th>
+            <th>Discipline / Category</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="cms-table-body">
+          <!-- Dynamic Rows -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ================= CMS ENTRY DETAIL MODAL ================= -->
+<div class="cms-detail-overlay" id="cms-detail-modal">
+  <div class="cms-detail-card">
+    <div class="cms-detail-header">
+      <h3 id="cms-detail-title">Registration Record Details</h3>
+      <button class="cms-close-btn" onclick="closeCMSDetailModal()">&times;</button>
+    </div>
+    <div id="cms-detail-content">
+      <!-- Details content -->
+    </div>
+  </div>
+</div>
+
 <script>
+  // ---------- CMS STORAGE & REGISTRATION LOGIC ----------
+  const CMS_STORAGE_KEY = 'ipl_alliance_submissions';
+  let currentCMSCategory = 'all';
+
+  const initialSampleData = [
+    { id: 'IPL-2026-1041', timestamp: '10 Aug 2026, 02:30 PM', type: 'Player', name: 'Aarav Sharma', mobile: '9826012345', location: 'Gwalior, MP', details: 'Badminton (Age 14)', status: 'Verified', notes: 'Wooden court player with school district certificate.' },
+    { id: 'IPL-2026-1042', timestamp: '10 Aug 2026, 03:15 PM', type: 'Vendor', name: 'Sharma Sports Supplies', mobile: '9425198765', location: 'Bhopal, MP', details: 'Badminton Equipment & Kits', status: 'Pending Review', notes: 'Wholesale distributor of synthetic rackets and tournament shuttlecocks.' },
+    { id: 'IPL-2026-1043', timestamp: '10 Aug 2026, 04:00 PM', type: 'Investor', name: 'Vikramaditya Singh', mobile: '9893011223', location: 'Indore, MP', details: 'Capital + Land (₹50L - ₹1Cr)', status: 'Approved', notes: 'Offering 2 acres land near panchayat highway for multi-sport complex.' },
+    { id: 'IPL-2026-1044', timestamp: '10 Aug 2026, 04:45 PM', type: 'Player', name: 'Priya Verma', mobile: '9752044556', location: 'Ujjain, MP', details: 'Athletics & Track (Age 16)', status: 'Contacted', notes: 'Specializes in 200m & 400m sprints.' },
+    { id: 'IPL-2026-1045', timestamp: '10 Aug 2026, 05:10 PM', type: 'Vendor', name: 'Apex Swimwear Pvt Ltd', mobile: '9111099887', location: 'Jabalpur, MP', details: 'Swim Costumes & Gear', status: 'Verified', notes: 'Supplies Olympic grade silicone caps and costumes.' },
+    { id: 'IPL-2026-1046', timestamp: '10 Aug 2026, 05:30 PM', type: 'Player', name: 'Devendra Yadav', mobile: '9630088771', location: 'Rewa, MP', details: 'Kabaddi & Wrestling', status: 'Pending Review', notes: 'District level mat wrestler.' }
+  ];
+
+  function getSubmissions(){
+    const stored = localStorage.getItem(CMS_STORAGE_KEY);
+    if(!stored){
+      localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(initialSampleData));
+      return initialSampleData;
+    }
+    try{
+      return JSON.parse(stored);
+    } catch(e){
+      return initialSampleData;
+    }
+  }
+
+  function saveSubmissions(data){
+    localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(data));
+  }
+
   function openTab(name){
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
     document.querySelectorAll('.form-panel').forEach(p=>p.classList.remove('active'));
@@ -1364,13 +1632,205 @@
     document.getElementById('panel-'+name).classList.add('active');
     document.getElementById('register').scrollIntoView({behavior:'smooth'});
   }
-  function handleSubmit(e,name){
+
+  function handleSubmit(e, formType){
     e.preventDefault();
-    const data = new FormData(e.target);
-    console.log('Submission ('+name+'):', Object.fromEntries(data.entries()));
-    document.getElementById('confirm-'+name).classList.add('show');
-    e.target.reset();
+    const form = e.target;
+    const inputs = form.querySelectorAll('input, select, textarea');
+    
+    let submissionData = {
+      id: 'IPL-2026-' + Math.floor(1000 + Math.random() * 9000),
+      timestamp: new Date().toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true }),
+      type: formType === 'player' ? 'Player' : formType === 'vendor' ? 'Vendor' : 'Investor',
+      status: 'Pending Review'
+    };
+
+    inputs.forEach(input => {
+      const label = input.closest('.field')?.querySelector('label')?.textContent || '';
+      if(label.includes('Name') || label.includes('Business') || label.includes('Contact Person')) {
+        if(!submissionData.name) submissionData.name = input.value;
+      }
+      else if(label.includes('Mobile')) submissionData.mobile = input.value;
+      else if(label.includes('District') || label.includes('City') || label.includes('Panchayat') || label.includes('State')) {
+        if(!submissionData.location) submissionData.location = input.value;
+        else submissionData.location += ', ' + input.value;
+      }
+      else if(label.includes('Sport') || label.includes('Category') || label.includes('Investment Type')) submissionData.details = input.value;
+      else if(label.includes('Background') || label.includes('Products') || label.includes('Notes')) submissionData.notes = input.value;
+    });
+
+    if(!submissionData.name) submissionData.name = 'Registrant (' + submissionData.type + ')';
+
+    // Save to LocalStorage
+    const list = getSubmissions();
+    list.unshift(submissionData);
+    saveSubmissions(list);
+
+    // Show Confirmation Box
+    const confirmBox = document.getElementById('confirm-' + formType);
+    if(confirmBox){
+      confirmBox.style.display = 'flex';
+      setTimeout(() => { confirmBox.scrollIntoView({ behavior: 'smooth' }); }, 100);
+    }
+
+    form.reset();
+    renderCMSTable();
     return false;
+  }
+
+  // Admin CMS Modal Functions
+  function openCMSModal(){
+    renderCMSTable();
+    document.getElementById('cms-modal').classList.add('active');
+  }
+
+  function closeCMSModal(){
+    document.getElementById('cms-modal').classList.remove('active');
+  }
+
+  function filterCMSCategory(cat){
+    currentCMSCategory = cat;
+    document.querySelectorAll('.cms-tab').forEach(t=>t.classList.remove('active'));
+    document.getElementById('cms-filter-' + cat.toLowerCase()).classList.add('active');
+    renderCMSTable();
+  }
+
+  function renderCMSTable(){
+    const list = getSubmissions();
+    const searchQuery = (document.getElementById('cms-search-input')?.value || '').toLowerCase();
+
+    // Stats calculation
+    const total = list.length;
+    const players = list.filter(i => i.type === 'Player').length;
+    const vendors = list.filter(i => i.type === 'Vendor').length;
+    const investors = list.filter(i => i.type === 'Investor').length;
+
+    if(document.getElementById('cms-stat-total')) document.getElementById('cms-stat-total').textContent = total;
+    if(document.getElementById('cms-stat-players')) document.getElementById('cms-stat-players').textContent = players;
+    if(document.getElementById('cms-stat-vendors')) document.getElementById('cms-stat-vendors').textContent = vendors;
+    if(document.getElementById('cms-stat-investors')) document.getElementById('cms-stat-investors').textContent = investors;
+
+    // Filter list
+    const filtered = list.filter(item => {
+      const matchCat = currentCMSCategory === 'all' || item.type === currentCMSCategory;
+      const textStr = `${item.id} ${item.name} ${item.mobile} ${item.location} ${item.details} ${item.status}`.toLowerCase();
+      const matchSearch = !searchQuery || textStr.includes(searchQuery);
+      return matchCat && matchSearch;
+    });
+
+    const tbody = document.getElementById('cms-table-body');
+    if(!tbody) return;
+
+    if(filtered.length === 0){
+      tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:40px;color:#94A3B8;">No registration records found matching your search.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = filtered.map(item => `
+      <tr>
+        <td style="font-family:'IBM Plex Mono',monospace;font-weight:700;color:var(--gold-light);">${item.id}</td>
+        <td style="font-size:12px;color:#CBD5E1;">${item.timestamp}</td>
+        <td><span class="type-badge type-${item.type.toLowerCase()}">${item.type}</span></td>
+        <td><strong>${item.name}</strong></td>
+        <td><a href="tel:${item.mobile}" style="color:#ffffff;text-decoration:none;">${item.mobile}</a></td>
+        <td>${item.location || 'N/A'}</td>
+        <td>${item.details || 'General'}</td>
+        <td>
+          <select class="status-select" onchange="updateCMSStatus('${item.id}', this.value)">
+            <option ${item.status==='Pending Review'?'selected':''}>Pending Review</option>
+            <option ${item.status==='Verified'?'selected':''}>Verified</option>
+            <option ${item.status==='Approved'?'selected':''}>Approved</option>
+            <option ${item.status==='Contacted'?'selected':''}>Contacted</option>
+          </select>
+        </td>
+        <td>
+          <div style="display:flex;gap:6px;">
+            <button class="action-btn" onclick="viewCMSDetails('${item.id}')">View</button>
+            <button class="action-btn action-btn-del" onclick="deleteCMSEntry('${item.id}')">✕</button>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function updateCMSStatus(id, newStatus){
+    const list = getSubmissions();
+    const item = list.find(i => i.id === id);
+    if(item){
+      item.status = newStatus;
+      saveSubmissions(list);
+      renderCMSTable();
+    }
+  }
+
+  function deleteCMSEntry(id){
+    if(confirm('Are you sure you want to delete registration record ' + id + '?')){
+      let list = getSubmissions();
+      list = list.filter(i => i.id !== id);
+      saveSubmissions(list);
+      renderCMSTable();
+    }
+  }
+
+  function viewCMSDetails(id){
+    const list = getSubmissions();
+    const item = list.find(i => i.id === id);
+    if(!item) return;
+
+    document.getElementById('cms-detail-title').textContent = `${item.type} Record Details (${item.id})`;
+    document.getElementById('cms-detail-content').innerHTML = `
+      <div class="cms-detail-row"><span class="lbl">Submission ID:</span> <strong>${item.id}</strong></div>
+      <div class="cms-detail-row"><span class="lbl">Registration Type:</span> <span class="type-badge type-${item.type.toLowerCase()}">${item.type}</span></div>
+      <div class="cms-detail-row"><span class="lbl">Timestamp:</span> <span>${item.timestamp}</span></div>
+      <div class="cms-detail-row"><span class="lbl">Name / Business:</span> <strong>${item.name}</strong></div>
+      <div class="cms-detail-row"><span class="lbl">Mobile Number:</span> <span>${item.mobile}</span></div>
+      <div class="cms-detail-row"><span class="lbl">District / Location:</span> <span>${item.location || 'N/A'}</span></div>
+      <div class="cms-detail-row"><span class="lbl">Category / Discipline:</span> <span>${item.details || 'N/A'}</span></div>
+      <div class="cms-detail-row"><span class="lbl">Status:</span> <strong>${item.status}</strong></div>
+      <div style="margin-top:16px;">
+        <span class="lbl">Notes / Sporting Background:</span>
+        <p style="background:rgba(255,255,255,0.06);padding:12px;border-radius:6px;margin-top:6px;line-height:1.5;">${item.notes || 'No extra notes provided.'}</p>
+      </div>
+    `;
+    document.getElementById('cms-detail-modal').classList.add('active');
+  }
+
+  function closeCMSDetailModal(){
+    document.getElementById('cms-detail-modal').classList.remove('active');
+  }
+
+  function seedSampleCMSData(){
+    if(confirm('Reset CMS database to sample registrations?')){
+      localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(initialSampleData));
+      renderCMSTable();
+    }
+  }
+
+  function exportCMSToCSV(){
+    const list = getSubmissions();
+    if(!list.length){ alert('No records to export.'); return; }
+
+    const headers = ['Submission ID', 'Date & Time', 'Type', 'Name/Business', 'Mobile', 'Location', 'Category/Discipline', 'Status', 'Notes'];
+    const rows = list.map(i => [
+      i.id,
+      `"${i.timestamp}"`,
+      i.type,
+      `"${i.name}"`,
+      `"${i.mobile}"`,
+      `"${i.location || ''}"`,
+      `"${i.details || ''}"`,
+      i.status,
+      `"${(i.notes || '').replace(/"/g, '""')}"`
+    ]);
+
+    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', `IPL_Alliance_Registrations_${new Date().toISOString().slice(0,10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   // Full View Scroll-Driven Pinned Sports Gallery (Mouse Scroll Movement)
