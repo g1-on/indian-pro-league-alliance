@@ -247,78 +247,111 @@
     box-shadow:0 2px 6px rgba(0,0,0,0.05);
   }
 
-  /* ---------- SINGLE FRAME VERTICAL BANNER STAGE (Image #2 Replica) ---------- */
-  .sports{
-    background:#040C1E;
-    background:radial-gradient(circle at 50% 30%, #0A1C44 0%, #040C1E 100%);
-    padding:100px 0 120px;
-    border-top:1px solid rgba(255,255,255,0.12);
-    border-bottom:1px solid rgba(255,255,255,0.12);
-    color:#ffffff;
-    overflow:hidden;
-  }
-  .sports .section-head h2{color:#ffffff !important;}
-  .sports .section-head p{color:#E2E8F0 !important;}
-
-  .sports-stage-frame{
-    position:relative;
-    margin-top:44px;
-    background:rgba(2, 8, 22, 0.75);
-    border:1px solid rgba(255, 255, 255, 0.16);
-    border-radius:20px;
-    padding:32px 24px 28px;
-    box-shadow:inset 0 0 80px rgba(0,0,0,0.6), 0 30px 80px rgba(0,0,0,0.5);
-    backdrop-filter:blur(12px);
+  /* ---------- FULL VIEW SCROLL-DRIVEN PINNED SPORTS GALLERY ---------- */
+  .sports-scroll-section {
+    position: relative;
+    height: 380vh;
+    background: #020817;
+    background: radial-gradient(circle at 50% 40%, #0A1E4A 0%, #020817 100%);
+    color: #ffffff;
   }
 
-  .sports-banner-track{
-    display:flex;
-    gap:22px;
-    overflow-x:auto;
-    scroll-behavior:smooth;
-    padding:20px 10px 30px;
-    scroll-snap-type:x mandatory;
-    scrollbar-width:thin;
-    scrollbar-color:var(--gold-light) transparent;
-  }
-  .sports-banner-track::-webkit-scrollbar{
-    height:6px;
-  }
-  .sports-banner-track::-webkit-scrollbar-thumb{
-    background:var(--gold-light);
-    border-radius:4px;
+  .sports-sticky-viewport {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 32px 0 24px;
+    box-sizing: border-box;
   }
 
-  .sports-poster-banner{
-    flex:0 0 280px;
-    scroll-snap-align:start;
-    position:relative;
-    border-radius:14px;
-    overflow:hidden;
-    height:560px;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    padding:24px 20px;
-    box-shadow:0 20px 50px rgba(0,0,0,0.7);
-    transform-origin:top center;
-    transform:scaleY(0.08) translateY(-60px);
-    opacity:0;
-    transition:transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), 
-                opacity 0.6s ease,
-                box-shadow 0.4s ease;
-    will-change:transform, opacity;
+  .sports-header-bar {
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+    padding: 0 20px;
   }
-  .sports-poster-banner.unrolled{
-    transform:scaleY(1) translateY(0);
-    opacity:1;
+  .sports-header-bar h2 {
+    color: #ffffff !important;
+    font-size: clamp(28px, 3.6vw, 44px) !important;
+    margin: 6px 0 8px 0 !important;
   }
-  .sports-poster-banner:hover{
-    transform:scaleY(1) translateY(-12px) scale(1.03);
-    box-shadow:0 32px 70px rgba(0,0,0,0.85);
+  .sports-header-bar p {
+    color: #CBD5E1 !important;
+    margin: 0 auto !important;
+    max-width: 640px;
+    font-size: 14.5px !important;
   }
 
-  /* Vibrant Color Themes matching World Championship Vertical Poster Banners (Image #2) */
+  .sports-fullview-window {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    margin: 12px 0;
+  }
+
+  .sports-fullview-track {
+    display: flex;
+    gap: 28px;
+    padding: 0 8vw;
+    width: max-content;
+    will-change: transform;
+    transition: transform 0.08s ease-out;
+  }
+
+  .sports-poster-banner {
+    flex: 0 0 310px;
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    height: 54vh;
+    min-height: 480px;
+    max-height: 580px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px 20px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.75);
+    transform-origin: top center;
+    transform: scaleY(0.08) translateY(-60px);
+    opacity: 0;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    will-change: transform, opacity;
+  }
+  .sports-poster-banner.unrolled {
+    transform: scaleY(1) translateY(0);
+    opacity: 1;
+  }
+  .sports-poster-banner:hover {
+    transform: scaleY(1) translateY(-14px) scale(1.04);
+    box-shadow: 0 36px 80px rgba(0,0,0,0.9);
+  }
+
+  .sports-progress-bar-wrap {
+    width: 80%;
+    max-width: 600px;
+    height: 4px;
+    background: rgba(255,255,255,0.15);
+    margin: 0 auto;
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 10;
+  }
+  .sports-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold-light), var(--gold-deep));
+    transition: width 0.1s linear;
+  }
+
+  /* Vibrant Solid Color Banner Backgrounds like Reference Image #2 */
   .theme-cyan{background:linear-gradient(180deg, #00B4D8 0%, #0077B6 40%, #020A1C 100%);border-top:6px solid #00B4D8;}
   .theme-cyan .banner-num{background:#00B4D8;color:#040C1E;}
 
@@ -747,18 +780,17 @@
   </div>
 </section>
 
-<!-- ================= SPORTS GRID ================= -->
-<section class="sports" id="sports">
-  <div class="wrap">
-    <div class="section-head">
+<!-- ================= FULL VIEW SCROLL-DRIVEN PINNED GALLERY ================= -->
+<section class="sports-scroll-section" id="sports">
+  <div class="sports-sticky-viewport">
+    <div class="sports-header-bar">
       <span class="eyebrow">Every other sport, indoors and outdoors</span>
-      <h2>Fifteen disciplines. <br>One infrastructure model.</h2>
-      <p>From a badminton court behind a government school to a full athletics track at panchayat level &mdash; if it isn't cricket or football, it's on our build list. Scroll to see each one drop into place.</p>
+      <h2>Fifteen disciplines. One infrastructure model.</h2>
+      <p>Scroll down with your mouse to reveal each discipline moving across the alliance build-out.</p>
     </div>
-  </div>
-  <div class="wrap">
-    <div class="sports-stage-frame">
-      <div class="sports-banner-track" id="sports-track">
+
+    <div class="sports-fullview-window">
+      <div class="sports-fullview-track" id="sports-full-track">
         <!-- Banner 1: Badminton -->
         <div class="sports-poster-banner theme-cyan">
           <div class="banner-media">
@@ -1079,14 +1111,10 @@
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="stage-controls">
-        <span class="stage-counter" id="stage-counter">01 / 16 DISCIPLINES</span>
-        <div class="stage-btn-group">
-          <button class="stage-btn" id="stage-prev" aria-label="Previous sport">‹</button>
-          <button class="stage-btn" id="stage-next" aria-label="Next sport">›</button>
-        </div>
-      </div>
+    <div class="sports-progress-bar-wrap">
+      <div class="sports-progress-bar" id="sports-progress"></div>
     </div>
   </div>
 </section>
@@ -1365,52 +1393,49 @@
     return false;
   }
 
-  // Single-Frame Vertical Banner Stage Control & Roll-Down Unroll Animation
+  // Full View Scroll-Driven Pinned Sports Gallery (Mouse Scroll Movement)
   (function(){
-    const track = document.getElementById('sports-track');
-    const banners = document.querySelectorAll('#sports-track .sports-poster-banner');
-    const btnPrev = document.getElementById('stage-prev');
-    const btnNext = document.getElementById('stage-next');
-    const counter = document.getElementById('stage-counter');
-    if(!track || !banners.length) return;
+    const section = document.getElementById('sports');
+    const track = document.getElementById('sports-full-track');
+    const progressBar = document.getElementById('sports-progress');
+    const banners = document.querySelectorAll('#sports-full-track .sports-poster-banner');
+    if(!section || !track || !banners.length) return;
 
-    // Trigger unrolling roll-down animation as user scrolls down into the section stage frame
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          banners.forEach((banner, i) => {
-            setTimeout(() => {
-              banner.classList.add('unrolled');
-            }, i * 140);
-          });
-          observer.unobserve(entry.target);
+    function onScroll(){
+      const sectionRect = section.getBoundingClientRect();
+      const sectionHeight = section.offsetHeight;
+      const viewportHeight = window.innerHeight;
+
+      // Calculate scroll progress from 0 to 1 inside section
+      const totalScrollable = sectionHeight - viewportHeight;
+      const currentScroll = -sectionRect.top;
+      let progress = currentScroll / totalScrollable;
+      progress = Math.max(0, Math.min(1, progress));
+
+      // Calculate horizontal translation distance
+      const trackWidth = track.scrollWidth;
+      const windowWidth = window.innerWidth;
+      const maxTranslate = trackWidth - windowWidth + (windowWidth * 0.16);
+
+      const translateX = progress * maxTranslate;
+      track.style.transform = `translateX(-${translateX}px)`;
+
+      if(progressBar){
+        progressBar.style.width = `${progress * 100}%`;
+      }
+
+      // Unroll banners as they enter the screen
+      banners.forEach((banner) => {
+        const bannerRect = banner.getBoundingClientRect();
+        if(bannerRect.left < windowWidth * 0.95 && bannerRect.right > 0){
+          banner.classList.add('unrolled');
         }
-      });
-    }, {
-      threshold: 0.15
-    });
-
-    observer.observe(track);
-
-    // Prev / Next button navigation inside single stage frame
-    if(btnPrev && btnNext){
-      btnPrev.addEventListener('click', () => {
-        track.scrollBy({ left: -310, behavior: 'smooth' });
-      });
-      btnNext.addEventListener('click', () => {
-        track.scrollBy({ left: 310, behavior: 'smooth' });
       });
     }
 
-    // Update progress counter on track scroll
-    track.addEventListener('scroll', () => {
-      const scrollPos = track.scrollLeft;
-      const cardWidth = 302; // 280px + 22px gap
-      const current = Math.min(banners.length, Math.max(1, Math.round(scrollPos / cardWidth) + 1));
-      if(counter){
-        counter.textContent = String(current).padStart(2, '0') + ' / ' + String(banners.length).padStart(2, '0') + ' DISCIPLINES';
-      }
-    });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    onScroll();
   })();
 </script>
 
