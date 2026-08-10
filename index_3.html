@@ -247,10 +247,10 @@
     box-shadow:0 2px 6px rgba(0,0,0,0.05);
   }
 
-  /* ---------- SPORTS VERTICAL COLOR BANNERS (World Championship Roll-Down Unroll) ---------- */
+  /* ---------- SINGLE FRAME VERTICAL BANNER STAGE (Image #2 Replica) ---------- */
   .sports{
     background:#040C1E;
-    background:linear-gradient(180deg, #040C1E 0%, #081838 50%, #040C1E 100%);
+    background:radial-gradient(circle at 50% 30%, #0A1C44 0%, #040C1E 100%);
     padding:100px 0 120px;
     border-top:1px solid rgba(255,255,255,0.12);
     border-bottom:1px solid rgba(255,255,255,0.12);
@@ -260,35 +260,53 @@
   .sports .section-head h2{color:#ffffff !important;}
   .sports .section-head p{color:#E2E8F0 !important;}
 
-  .sports-banner-grid{
-    display:flex;
-    flex-direction:column;
-    gap:56px;
-    max-width:880px;
-    margin:50px auto 0;
-    perspective:1400px;
-  }
-  
-  .sports-poster-banner{
+  .sports-stage-frame{
     position:relative;
-    border-radius:16px;
+    margin-top:44px;
+    background:rgba(2, 8, 22, 0.75);
+    border:1px solid rgba(255, 255, 255, 0.16);
+    border-radius:20px;
+    padding:32px 24px 28px;
+    box-shadow:inset 0 0 80px rgba(0,0,0,0.6), 0 30px 80px rgba(0,0,0,0.5);
+    backdrop-filter:blur(12px);
+  }
+
+  .sports-banner-track{
+    display:flex;
+    gap:22px;
+    overflow-x:auto;
+    scroll-behavior:smooth;
+    padding:20px 10px 30px;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:thin;
+    scrollbar-color:var(--gold-light) transparent;
+  }
+  .sports-banner-track::-webkit-scrollbar{
+    height:6px;
+  }
+  .sports-banner-track::-webkit-scrollbar-thumb{
+    background:var(--gold-light);
+    border-radius:4px;
+  }
+
+  .sports-poster-banner{
+    flex:0 0 280px;
+    scroll-snap-align:start;
+    position:relative;
+    border-radius:14px;
     overflow:hidden;
-    height:640px;
-    width:100%;
+    height:560px;
     display:flex;
     flex-direction:column;
     justify-content:space-between;
-    padding:34px 30px;
-    background:#020A1C;
-    border:1px solid rgba(255,255,255,0.18);
-    box-shadow:0 24px 60px rgba(0,0,0,0.65);
+    padding:24px 20px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.7);
     transform-origin:top center;
-    transform:scaleY(0.06) translateY(-80px);
+    transform:scaleY(0.08) translateY(-60px);
     opacity:0;
-    transition:transform 0.95s cubic-bezier(0.16, 1, 0.3, 1), 
-                opacity 0.65s ease,
-                box-shadow 0.4s ease,
-                border-color 0.4s ease;
+    transition:transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), 
+                opacity 0.6s ease,
+                box-shadow 0.4s ease;
     will-change:transform, opacity;
   }
   .sports-poster-banner.unrolled{
@@ -296,50 +314,39 @@
     opacity:1;
   }
   .sports-poster-banner:hover{
-    transform:scaleY(1) translateY(-8px) scale(1.015);
-    box-shadow:0 34px 75px rgba(0,0,0,0.8);
-    border-color:rgba(255,255,255,0.45);
+    transform:scaleY(1) translateY(-12px) scale(1.03);
+    box-shadow:0 32px 70px rgba(0,0,0,0.85);
   }
 
-  /* Vibrant Color Themes matching World Championship Poster Banners */
-  .theme-cyan{border-top:5px solid #00B4D8;}
-  .theme-cyan .banner-gradient{background:linear-gradient(180deg, rgba(0,180,216,0.35) 0%, rgba(2,10,28,0.95) 85%);}
+  /* Vibrant Color Themes matching World Championship Vertical Poster Banners (Image #2) */
+  .theme-cyan{background:linear-gradient(180deg, #00B4D8 0%, #0077B6 40%, #020A1C 100%);border-top:6px solid #00B4D8;}
   .theme-cyan .banner-num{background:#00B4D8;color:#040C1E;}
 
-  .theme-orange{border-top:5px solid #F97316;}
-  .theme-orange .banner-gradient{background:linear-gradient(180deg, rgba(249,115,22,0.38) 0%, rgba(2,10,28,0.95) 85%);}
+  .theme-orange{background:linear-gradient(180deg, #F97316 0%, #EA580C 40%, #020A1C 100%);border-top:6px solid #F97316;}
   .theme-orange .banner-num{background:#F97316;color:#040C1E;}
 
-  .theme-purple{border-top:5px solid #A855F7;}
-  .theme-purple .banner-gradient{background:linear-gradient(180deg, rgba(168,85,247,0.38) 0%, rgba(2,10,28,0.95) 85%);}
+  .theme-purple{background:linear-gradient(180deg, #A855F7 0%, #7E22CE 40%, #020A1C 100%);border-top:6px solid #A855F7;}
   .theme-purple .banner-num{background:#A855F7;color:#ffffff;}
 
-  .theme-emerald{border-top:5px solid #10B981;}
-  .theme-emerald .banner-gradient{background:linear-gradient(180deg, rgba(16,185,129,0.35) 0%, rgba(2,10,28,0.95) 85%);}
+  .theme-emerald{background:linear-gradient(180deg, #10B981 0%, #047857 40%, #020A1C 100%);border-top:6px solid #10B981;}
   .theme-emerald .banner-num{background:#10B981;color:#040C1E;}
 
-  .theme-crimson{border-top:5px solid #EF4444;}
-  .theme-crimson .banner-gradient{background:linear-gradient(180deg, rgba(239,68,68,0.38) 0%, rgba(2,10,28,0.95) 85%);}
+  .theme-crimson{background:linear-gradient(180deg, #EF4444 0%, #B91C1C 40%, #020A1C 100%);border-top:6px solid #EF4444;}
   .theme-crimson .banner-num{background:#EF4444;color:#ffffff;}
 
-  .theme-gold{border-top:5px solid #F59E0B;}
-  .theme-gold .banner-gradient{background:linear-gradient(180deg, rgba(245,158,11,0.38) 0%, rgba(2,10,28,0.95) 85%);}
+  .theme-gold{background:linear-gradient(180deg, #F59E0B 0%, #D97706 40%, #020A1C 100%);border-top:6px solid #F59E0B;}
   .theme-gold .banner-num{background:#F59E0B;color:#040C1E;}
 
-  .theme-indigo{border-top:5px solid #6366F1;}
-  .theme-indigo .banner-gradient{background:linear-gradient(180deg, rgba(99,102,241,0.38) 0%, rgba(2,10,28,0.95) 85%);}
+  .theme-indigo{background:linear-gradient(180deg, #6366F1 0%, #4338CA 40%, #020A1C 100%);border-top:6px solid #6366F1;}
   .theme-indigo .banner-num{background:#6366F1;color:#ffffff;}
 
-  .theme-magenta{border-top:5px solid #EC4899;}
-  .theme-magenta .banner-gradient{background:linear-gradient(180deg, rgba(236,72,153,0.38) 0%, rgba(2,10,28,0.95) 85%);}
+  .theme-magenta{background:linear-gradient(180deg, #EC4899 0%, #BE185D 40%, #020A1C 100%);border-top:6px solid #EC4899;}
   .theme-magenta .banner-num{background:#EC4899;color:#ffffff;}
 
-  .theme-blue{border-top:5px solid #3B82F6;}
-  .theme-blue .banner-gradient{background:linear-gradient(180deg, rgba(59,130,246,0.38) 0%, rgba(2,10,28,0.95) 85%);}
+  .theme-blue{background:linear-gradient(180deg, #3B82F6 0%, #1D4ED8 40%, #020A1C 100%);border-top:6px solid #3B82F6;}
   .theme-blue .banner-num{background:#3B82F6;color:#ffffff;}
 
-  .theme-amber{border-top:5px solid #D97706;}
-  .theme-amber .banner-gradient{background:linear-gradient(180deg, rgba(217,119,6,0.38) 0%, rgba(2,10,28,0.95) 85%);}
+  .theme-amber{background:linear-gradient(180deg, #D97706 0%, #92400E 40%, #020A1C 100%);border-top:6px solid #D97706;}
   .theme-amber .banner-num{background:#D97706;color:#ffffff;}
 
   .banner-media{
@@ -361,6 +368,7 @@
     position:absolute;
     inset:0;
     z-index:2;
+    background:linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(2,10,28,0.92) 85%);
   }
 
   .banner-top-bar{
@@ -401,32 +409,71 @@
   .banner-title{
     font-family:'Big Shoulders Display',sans-serif;
     font-weight:900;
-    font-size:clamp(36px, 4.8vw, 52px);
+    font-size:28px;
     letter-spacing:0.03em;
     color:#ffffff;
-    margin:0 0 10px 0;
-    text-shadow:0 3px 18px rgba(0,0,0,0.85);
+    margin:0 0 6px 0;
+    text-shadow:0 2px 14px rgba(0,0,0,0.85);
     text-transform:uppercase;
   }
   .banner-desc{
-    font-size:16px;
+    font-size:13px;
     color:#E2E8F0;
-    margin:0 0 22px 0;
-    line-height:1.6;
-    max-width:680px;
-    text-shadow:0 2px 10px rgba(0,0,0,0.85);
+    margin:0 0 16px 0;
+    line-height:1.45;
+    text-shadow:0 1px 8px rgba(0,0,0,0.85);
   }
   .banner-footer{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    padding-top:12px;
+    padding-top:10px;
     border-top:1px solid rgba(255,255,255,0.2);
     font-family:'IBM Plex Mono',monospace;
-    font-size:11px;
+    font-size:10.5px;
     color:var(--gold-light);
     letter-spacing:0.06em;
     text-transform:uppercase;
+    font-weight:700;
+  }
+
+  .stage-controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:16px;
+    padding:0 10px;
+  }
+  .stage-btn-group{
+    display:flex;
+    gap:12px;
+  }
+  .stage-btn{
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.25);
+    color:#ffffff;
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:all 0.3s ease;
+    font-size:20px;
+    user-select:none;
+  }
+  .stage-btn:hover{
+    background:var(--gold);
+    color:#040C1E;
+    border-color:var(--gold);
+    transform:scale(1.1);
+  }
+  .stage-counter{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    color:var(--gold-light);
+    letter-spacing:0.1em;
     font-weight:700;
   }
 
@@ -710,324 +757,334 @@
     </div>
   </div>
   <div class="wrap">
-    <div class="sports-banner-grid" id="sports-grid">
-      <!-- Banner 1: Badminton -->
-      <div class="sports-poster-banner theme-cyan">
-        <div class="banner-media">
-          <img src="assets/images/badminton.png" alt="Badminton" loading="lazy">
-          <div class="banner-gradient"></div>
+    <div class="sports-stage-frame">
+      <div class="sports-banner-track" id="sports-track">
+        <!-- Banner 1: Badminton -->
+        <div class="sports-poster-banner theme-cyan">
+          <div class="banner-media">
+            <img src="assets/images/badminton.png" alt="Badminton" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">01</span>
+            <span class="banner-tag">Indoor Court</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">BADMINTON</h3>
+            <p class="banner-desc">Wooden &amp; synthetic courts built inside government school campuses.</p>
+            <div class="banner-footer">
+              <span>Panchayat Level</span>
+              <span>★ Active</span>
+            </div>
+          </div>
         </div>
-        <div class="banner-top-bar">
-          <span class="banner-num">01</span>
-          <span class="banner-tag">Indoor Court</span>
+
+        <!-- Banner 2: Athletics -->
+        <div class="sports-poster-banner theme-orange">
+          <div class="banner-media">
+            <img src="assets/images/athletics.png" alt="Athletics &amp; Track" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">02</span>
+            <span class="banner-tag">Outdoor Track</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">ATHLETICS &amp; TRACK</h3>
+            <p class="banner-desc">Synthetic 200m &amp; 400m running tracks at panchayat-level grounds.</p>
+            <div class="banner-footer">
+              <span>Panchayat Level</span>
+              <span>★ Active</span>
+            </div>
+          </div>
         </div>
-        <div class="banner-body">
-          <h3 class="banner-title">BADMINTON</h3>
-          <p class="banner-desc">Wooden &amp; synthetic courts built inside government school campuses.</p>
-          <div class="banner-footer">
-            <span>Panchayat Level</span>
-            <span>★ Active</span>
+
+        <!-- Banner 3: Swimming -->
+        <div class="sports-poster-banner theme-purple">
+          <div class="banner-media">
+            <img src="assets/images/swimming.png" alt="Swimming" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">03</span>
+            <span class="banner-tag">Aquatics</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">SWIMMING</h3>
+            <p class="banner-desc">Semi-Olympic pools built for panchayats and partner schools.</p>
+            <div class="banner-footer">
+              <span>Semi-Olympic</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 4: Field Hockey -->
+        <div class="sports-poster-banner theme-emerald">
+          <div class="banner-media">
+            <img src="assets/images/hockey.png" alt="Field Hockey" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">04</span>
+            <span class="banner-tag">Turf Field</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">FIELD HOCKEY</h3>
+            <p class="banner-desc">Synthetic turf mini-fields for grassroot hockey training in MP.</p>
+            <div class="banner-footer">
+              <span>Turf Facility</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 5: Volleyball -->
+        <div class="sports-poster-banner theme-crimson">
+          <div class="banner-media">
+            <img src="assets/images/volleyball.png" alt="Volleyball" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">05</span>
+            <span class="banner-tag">Outdoor Court</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">VOLLEYBALL</h3>
+            <p class="banner-desc">Floodlit clay &amp; synthetic courts for evening community play.</p>
+            <div class="banner-footer">
+              <span>Floodlit Court</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 6: Basketball -->
+        <div class="sports-poster-banner theme-gold">
+          <div class="banner-media">
+            <img src="assets/images/basketball.png" alt="Basketball" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">06</span>
+            <span class="banner-tag">Indoor &amp; Outdoor</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">BASKETBALL</h3>
+            <p class="banner-desc">Standard high-friction hard courts for schools and open grounds.</p>
+            <div class="banner-footer">
+              <span>Hard Court</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 7: Kabaddi -->
+        <div class="sports-poster-banner theme-indigo">
+          <div class="banner-media">
+            <img src="assets/images/kabaddi.png" alt="Kabaddi" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">07</span>
+            <span class="banner-tag">Traditional &amp; Pro</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">KABADDI</h3>
+            <p class="banner-desc">Indoor mat courts and open panchayat akhadas alike.</p>
+            <div class="banner-footer">
+              <span>Pro &amp; Clay Mat</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 8: Kho-Kho -->
+        <div class="sports-poster-banner theme-magenta">
+          <div class="banner-media">
+            <img src="assets/images/khokho.png" alt="Kho-Kho" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">08</span>
+            <span class="banner-tag">Traditional Sport</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">KHO-KHO</h3>
+            <p class="banner-desc">Standardised clay &amp; synthetic arenas at the panchayat level.</p>
+            <div class="banner-footer">
+              <span>Panchayat Arena</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 9: Table Tennis -->
+        <div class="sports-poster-banner theme-blue">
+          <div class="banner-media">
+            <img src="assets/images/tabletennis.png" alt="Table Tennis" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">09</span>
+            <span class="banner-tag">Indoor Discipline</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">TABLE TENNIS</h3>
+            <p class="banner-desc">Tournament-grade tables inside school sports halls.</p>
+            <div class="banner-footer">
+              <span>Sports Hall</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 10: Wrestling -->
+        <div class="sports-poster-banner theme-amber">
+          <div class="banner-media">
+            <img src="assets/images/wrestling.png" alt="Wrestling" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">10</span>
+            <span class="banner-tag">Combat Mat</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">WRESTLING</h3>
+            <p class="banner-desc">Modern mat akhadas replacing traditional mud pits.</p>
+            <div class="banner-footer">
+              <span>Modern Akhada</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 11: Handball -->
+        <div class="sports-poster-banner theme-cyan">
+          <div class="banner-media">
+            <img src="assets/images/handball.png" alt="Handball" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">11</span>
+            <span class="banner-tag">Team Sport</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">HANDBALL</h3>
+            <p class="banner-desc">Multi-purpose indoor &amp; outdoor courts shared with basketball.</p>
+            <div class="banner-footer">
+              <span>Multi-Court</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 12: Judo & Martial Arts -->
+        <div class="sports-poster-banner theme-crimson">
+          <div class="banner-media">
+            <img src="assets/images/judomartialarts.png" alt="Judo &amp; Martial Arts" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">12</span>
+            <span class="banner-tag">Martial Arts</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">JUDO &amp; MARTIAL ARTS</h3>
+            <p class="banner-desc">Tatami mat halls with proper safety gear on site.</p>
+            <div class="banner-footer">
+              <span>Tatami Hall</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 13: Weightlifting -->
+        <div class="sports-poster-banner theme-amber">
+          <div class="banner-media">
+            <img src="assets/images/weightlifting.png" alt="Weightlifting" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">13</span>
+            <span class="banner-tag">Strength &amp; Power</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">WEIGHTLIFTING</h3>
+            <p class="banner-desc">Calibrated barbells and rubber platforms for structured coaching.</p>
+            <div class="banner-footer">
+              <span>Strength Hub</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 14: Boxing -->
+        <div class="sports-poster-banner theme-orange">
+          <div class="banner-media">
+            <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Boxing" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">14</span>
+            <span class="banner-tag">Combat Sport</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">BOXING</h3>
+            <p class="banner-desc">Elevated rings and heavy-bag stations at district facilities.</p>
+            <div class="banner-footer">
+              <span>Ring Facility</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 15: Gymnastics -->
+        <div class="sports-poster-banner theme-purple">
+          <div class="banner-media">
+            <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Gymnastics" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">15</span>
+            <span class="banner-tag">Artistic &amp; Flex</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">GYMNASTICS</h3>
+            <p class="banner-desc">Vaulting tables, bars and safety foam for early-age training.</p>
+            <div class="banner-footer">
+              <span>Foam Pit Arena</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 16: Hyrox Academy -->
+        <div class="sports-poster-banner theme-gold">
+          <div class="banner-media" style="background: linear-gradient(135deg, var(--navy-deep), #062266); display:flex; align-items:center; justify-content:center;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:68px; height:68px; color:var(--gold-light); z-index:3;"><path d="M6 17V7M4 9h4M4 15h4M18 17V7M16 9h4M16 15h4M10 12h4"/></svg>
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">16</span>
+            <span class="banner-tag" style="background:var(--gold); color:#040C1E; border:none; font-weight:800;">Newly Added</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">HYROX ACADEMY</h3>
+            <p class="banner-desc">Hybrid fitness-racing stations &mdash; the newest discipline joining the alliance's build-out.</p>
+            <div class="banner-footer">
+              <span>Hybrid Fitness</span>
+              <span style="color:var(--gold-light)">★ New Discipline</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Banner 2: Athletics -->
-      <div class="sports-poster-banner theme-orange">
-        <div class="banner-media">
-          <img src="assets/images/athletics.png" alt="Athletics &amp; Track" loading="lazy">
-          <div class="banner-gradient"></div>
-        </div>
-        <div class="banner-top-bar">
-          <span class="banner-num">02</span>
-          <span class="banner-tag">Outdoor Track</span>
-        </div>
-        <div class="banner-body">
-          <h3 class="banner-title">ATHLETICS &amp; TRACK</h3>
-          <p class="banner-desc">Synthetic 200m &amp; 400m running tracks at panchayat-level grounds.</p>
-          <div class="banner-footer">
-            <span>Panchayat Level</span>
-            <span>★ Active</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Banner 3: Swimming -->
-      <div class="sports-poster-banner theme-cyan">
-        <div class="banner-media">
-          <img src="assets/images/swimming.png" alt="Swimming" loading="lazy">
-          <div class="banner-gradient"></div>
-        </div>
-        <div class="banner-top-bar">
-          <span class="banner-num">03</span>
-          <span class="banner-tag">Aquatics</span>
-        </div>
-        <div class="banner-body">
-          <h3 class="banner-title">SWIMMING</h3>
-          <p class="banner-desc">Semi-Olympic pools built for panchayats and partner schools.</p>
-          <div class="banner-footer">
-            <span>Semi-Olympic</span>
-            <span>★ Active</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Banner 4: Field Hockey -->
-      <div class="sports-poster-banner theme-emerald">
-        <div class="banner-media">
-          <img src="assets/images/hockey.png" alt="Field Hockey" loading="lazy">
-          <div class="banner-gradient"></div>
-        </div>
-        <div class="banner-top-bar">
-          <span class="banner-num">04</span>
-          <span class="banner-tag">Turf Field</span>
-        </div>
-        <div class="banner-body">
-          <h3 class="banner-title">FIELD HOCKEY</h3>
-          <p class="banner-desc">Synthetic turf mini-fields for grassroot hockey training in MP.</p>
-          <div class="banner-footer">
-            <span>Turf Facility</span>
-            <span>★ Active</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Banner 5: Volleyball -->
-      <div class="sports-poster-banner theme-purple">
-        <div class="banner-media">
-          <img src="assets/images/volleyball.png" alt="Volleyball" loading="lazy">
-          <div class="banner-gradient"></div>
-        </div>
-        <div class="banner-top-bar">
-          <span class="banner-num">05</span>
-          <span class="banner-tag">Outdoor Court</span>
-        </div>
-        <div class="banner-body">
-          <h3 class="banner-title">VOLLEYBALL</h3>
-          <p class="banner-desc">Floodlit clay &amp; synthetic courts for evening community play.</p>
-          <div class="banner-footer">
-            <span>Floodlit Court</span>
-            <span>★ Active</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Banner 6: Basketball -->
-      <div class="sports-poster-banner theme-crimson">
-        <div class="banner-media">
-          <img src="assets/images/basketball.png" alt="Basketball" loading="lazy">
-          <div class="banner-gradient"></div>
-        </div>
-        <div class="banner-top-bar">
-          <span class="banner-num">06</span>
-          <span class="banner-tag">Indoor &amp; Outdoor</span>
-        </div>
-        <div class="banner-body">
-          <h3 class="banner-title">BASKETBALL</h3>
-          <p class="banner-desc">Standard high-friction hard courts for schools and open grounds.</p>
-          <div class="banner-footer">
-            <span>Hard Court</span>
-            <span>★ Active</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Banner 7: Kabaddi -->
-      <div class="sports-poster-banner theme-gold">
-        <div class="banner-media">
-          <img src="assets/images/kabaddi.png" alt="Kabaddi" loading="lazy">
-          <div class="banner-gradient"></div>
-        </div>
-        <div class="banner-top-bar">
-          <span class="banner-num">07</span>
-          <span class="banner-tag">Traditional &amp; Pro</span>
-        </div>
-        <div class="banner-body">
-          <h3 class="banner-title">KABADDI</h3>
-          <p class="banner-desc">Indoor mat courts and open panchayat akhadas alike.</p>
-          <div class="banner-footer">
-            <span>Pro &amp; Clay Mat</span>
-            <span>★ Active</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Banner 8: Kho-Kho -->
-      <div class="sports-poster-banner theme-indigo">
-        <div class="banner-media">
-          <img src="assets/images/khokho.png" alt="Kho-Kho" loading="lazy">
-          <div class="banner-gradient"></div>
-        </div>
-        <div class="banner-top-bar">
-          <span class="banner-num">08</span>
-          <span class="banner-tag">Traditional Sport</span>
-        </div>
-        <div class="banner-body">
-          <h3 class="banner-title">KHO-KHO</h3>
-          <p class="banner-desc">Standardised clay &amp; synthetic arenas at the panchayat level.</p>
-          <div class="banner-footer">
-            <span>Panchayat Arena</span>
-            <span>★ Active</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Banner 9: Table Tennis -->
-      <div class="sports-poster-banner theme-magenta">
-        <div class="banner-media">
-          <img src="assets/images/tabletennis.png" alt="Table Tennis" loading="lazy">
-          <div class="banner-gradient"></div>
-        </div>
-        <div class="banner-top-bar">
-          <span class="banner-num">09</span>
-          <span class="banner-tag">Indoor Discipline</span>
-        </div>
-        <div class="banner-body">
-          <h3 class="banner-title">TABLE TENNIS</h3>
-          <p class="banner-desc">Tournament-grade tables inside school sports halls.</p>
-          <div class="banner-footer">
-            <span>Sports Hall</span>
-            <span>★ Active</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Banner 10: Wrestling -->
-      <div class="sports-poster-banner theme-amber">
-        <div class="banner-media">
-          <img src="assets/images/wrestling.png" alt="Wrestling" loading="lazy">
-          <div class="banner-gradient"></div>
-        </div>
-        <div class="banner-top-bar">
-          <span class="banner-num">10</span>
-          <span class="banner-tag">Combat Mat</span>
-        </div>
-        <div class="banner-body">
-          <h3 class="banner-title">WRESTLING</h3>
-          <p class="banner-desc">Modern mat akhadas replacing traditional mud pits.</p>
-          <div class="banner-footer">
-            <span>Modern Akhada</span>
-            <span>★ Active</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Banner 11: Handball -->
-      <div class="sports-poster-banner theme-blue">
-        <div class="banner-media">
-          <img src="assets/images/handball.png" alt="Handball" loading="lazy">
-          <div class="banner-gradient"></div>
-        </div>
-        <div class="banner-top-bar">
-          <span class="banner-num">11</span>
-          <span class="banner-tag">Team Sport</span>
-        </div>
-        <div class="banner-body">
-          <h3 class="banner-title">HANDBALL</h3>
-          <p class="banner-desc">Multi-purpose indoor &amp; outdoor courts shared with basketball.</p>
-          <div class="banner-footer">
-            <span>Multi-Court</span>
-            <span>★ Active</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Banner 12: Judo & Martial Arts -->
-      <div class="sports-poster-banner theme-crimson">
-        <div class="banner-media">
-          <img src="assets/images/judomartialarts.png" alt="Judo &amp; Martial Arts" loading="lazy">
-          <div class="banner-gradient"></div>
-        </div>
-        <div class="banner-top-bar">
-          <span class="banner-num">12</span>
-          <span class="banner-tag">Martial Arts</span>
-        </div>
-        <div class="banner-body">
-          <h3 class="banner-title">JUDO &amp; MARTIAL ARTS</h3>
-          <p class="banner-desc">Tatami mat halls with proper safety gear on site.</p>
-          <div class="banner-footer">
-            <span>Tatami Hall</span>
-            <span>★ Active</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Banner 13: Weightlifting -->
-      <div class="sports-poster-banner theme-amber">
-        <div class="banner-media">
-          <img src="assets/images/weightlifting.png" alt="Weightlifting" loading="lazy">
-          <div class="banner-gradient"></div>
-        </div>
-        <div class="banner-top-bar">
-          <span class="banner-num">13</span>
-          <span class="banner-tag">Strength &amp; Power</span>
-        </div>
-        <div class="banner-body">
-          <h3 class="banner-title">WEIGHTLIFTING</h3>
-          <p class="banner-desc">Calibrated barbells and rubber platforms for structured coaching.</p>
-          <div class="banner-footer">
-            <span>Strength Hub</span>
-            <span>★ Active</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Banner 14: Boxing -->
-      <div class="sports-poster-banner theme-orange">
-        <div class="banner-media">
-          <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Boxing" loading="lazy">
-          <div class="banner-gradient"></div>
-        </div>
-        <div class="banner-top-bar">
-          <span class="banner-num">14</span>
-          <span class="banner-tag">Combat Sport</span>
-        </div>
-        <div class="banner-body">
-          <h3 class="banner-title">BOXING</h3>
-          <p class="banner-desc">Elevated rings and heavy-bag stations at district facilities.</p>
-          <div class="banner-footer">
-            <span>Ring Facility</span>
-            <span>★ Active</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Banner 15: Gymnastics -->
-      <div class="sports-poster-banner theme-cyan">
-        <div class="banner-media">
-          <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Gymnastics" loading="lazy">
-          <div class="banner-gradient"></div>
-        </div>
-        <div class="banner-top-bar">
-          <span class="banner-num">15</span>
-          <span class="banner-tag">Artistic &amp; Flex</span>
-        </div>
-        <div class="banner-body">
-          <h3 class="banner-title">GYMNASTICS</h3>
-          <p class="banner-desc">Vaulting tables, bars and safety foam for early-age training.</p>
-          <div class="banner-footer">
-            <span>Foam Pit Arena</span>
-            <span>★ Active</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Banner 16: Hyrox Academy -->
-      <div class="sports-poster-banner theme-gold">
-        <div class="banner-media" style="background: linear-gradient(135deg, var(--navy-deep), #062266); display:flex; align-items:center; justify-content:center;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="width:68px; height:68px; color:var(--gold-light); z-index:3;"><path d="M6 17V7M4 9h4M4 15h4M18 17V7M16 9h4M16 15h4M10 12h4"/></svg>
-          <div class="banner-gradient"></div>
-        </div>
-        <div class="banner-top-bar">
-          <span class="banner-num">16</span>
-          <span class="banner-tag" style="background:var(--gold); color:#040C1E; border:none; font-weight:800;">Newly Added</span>
-        </div>
-        <div class="banner-body">
-          <h3 class="banner-title">HYROX ACADEMY</h3>
-          <p class="banner-desc">Hybrid fitness-racing stations &mdash; the newest discipline joining the alliance's build-out.</p>
-          <div class="banner-footer">
-            <span>Hybrid Fitness</span>
-            <span style="color:var(--gold-light)">★ New Discipline</span>
-          </div>
+      <div class="stage-controls">
+        <span class="stage-counter" id="stage-counter">01 / 16 DISCIPLINES</span>
+        <div class="stage-btn-group">
+          <button class="stage-btn" id="stage-prev" aria-label="Previous sport">‹</button>
+          <button class="stage-btn" id="stage-next" aria-label="Next sport">›</button>
         </div>
       </div>
     </div>
@@ -1308,25 +1365,52 @@
     return false;
   }
 
-  // Single-Column Full-Length Poster Banners: Scroll Roll-Down Unroll Animation
+  // Single-Frame Vertical Banner Stage Control & Roll-Down Unroll Animation
   (function(){
-    const banners = document.querySelectorAll('#sports-grid .sports-poster-banner');
-    if(!banners.length) return;
+    const track = document.getElementById('sports-track');
+    const banners = document.querySelectorAll('#sports-track .sports-poster-banner');
+    const btnPrev = document.getElementById('stage-prev');
+    const btnNext = document.getElementById('stage-next');
+    const counter = document.getElementById('stage-counter');
+    if(!track || !banners.length) return;
 
+    // Trigger unrolling roll-down animation as user scrolls down into the section stage frame
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if(entry.isIntersecting){
-          // Unroll poster banner down to full view as soon as user scrolls to it
-          entry.target.classList.add('unrolled');
+          banners.forEach((banner, i) => {
+            setTimeout(() => {
+              banner.classList.add('unrolled');
+            }, i * 140);
+          });
           observer.unobserve(entry.target);
         }
       });
     }, {
-      threshold: 0.15,
-      rootMargin: '0px 0px -50px 0px'
+      threshold: 0.15
     });
 
-    banners.forEach(banner => observer.observe(banner));
+    observer.observe(track);
+
+    // Prev / Next button navigation inside single stage frame
+    if(btnPrev && btnNext){
+      btnPrev.addEventListener('click', () => {
+        track.scrollBy({ left: -310, behavior: 'smooth' });
+      });
+      btnNext.addEventListener('click', () => {
+        track.scrollBy({ left: 310, behavior: 'smooth' });
+      });
+    }
+
+    // Update progress counter on track scroll
+    track.addEventListener('scroll', () => {
+      const scrollPos = track.scrollLeft;
+      const cardWidth = 302; // 280px + 22px gap
+      const current = Math.min(banners.length, Math.max(1, Math.round(scrollPos / cardWidth) + 1));
+      if(counter){
+        counter.textContent = String(current).padStart(2, '0') + ' / ' + String(banners.length).padStart(2, '0') + ' DISCIPLINES';
+      }
+    });
   })();
 </script>
 
