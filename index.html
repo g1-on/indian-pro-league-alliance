@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indian Pro League Alliance Corp | Empowering Athletes, Elevating Futures</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#041A4D;
+    --navy:#0A2D6B;
+    --navy-2:#0F3480;
+    --blue:#2F7CD6;
+    --blue-bright:#4E97ED;
+    --gold-deep:#A97319;
+    --gold:#D4952F;
+    --gold-light:#F0C875;
+    --cream:#FAF7F1;
+    --cream-2:#F1ECE1;
+    --ink:#0E1830;
+    --slate:#5C6478;
+    --slate-light:#8890A1;
+    --line:rgba(10,45,107,0.12);
+    --white:#ffffff;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Manrope',sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Big Shoulders Display',sans-serif;
+    margin:0;
+    letter-spacing:0.01em;
+    text-transform:uppercase;
+    font-weight:800;
+    line-height:0.98;
+  }
+  p{margin:0;line-height:1.6;color:var(--slate);}
+  a{color:inherit;text-decoration:none;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--gold-deep);
+    font-weight:600;
+  }
+  .eyebrow.light{color:var(--gold-light);}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  img{max-width:100%;display:block;}
+  button{font-family:inherit;cursor:pointer;}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky;top:0;z-index:100;
+    background:rgba(4,26,77,0.98);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    box-shadow:0 4px 20px rgba(0,0,0,0.3);
+  }
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:86px;}
+  .nav-logo{display:flex;align-items:center;gap:14px;}
+  .nav-logo img{height:54px;width:auto;filter:brightness(1.25) drop-shadow(0 2px 6px rgba(0,0,0,0.4));}
+  .nav-links{display:flex;align-items:center;gap:28px;}
+  .nav-links a{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:#E2E8F0;
+    transition:color .2s;
+  }
+  .nav-links a:hover{color:var(--gold-light);}
+  .nav-cta{
+    background:linear-gradient(120deg,var(--gold) 0%,var(--gold-deep) 100%);
+    color:var(--navy-deep);
+    padding:12px 24px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    border:none;
+    box-shadow:0 4px 12px rgba(212,149,47,0.3);
+  }
+  .nav-cta:hover{transform:translateY(-1px);background:linear-gradient(120deg,var(--gold-light) 0%,var(--gold) 100%);}
+  .nav-toggle{display:none;background:none;border:none;color:#fff;font-size:26px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(circle at 82% 12%, rgba(212,149,47,0.22), transparent 42%),
+      linear-gradient(180deg,var(--navy-deep) 0%, var(--navy) 100%);
+    color:#fff;
+    padding:96px 0 70px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-track{
+    position:absolute;right:-140px;top:-40px;width:640px;height:640px;
+    opacity:0.5;
+    pointer-events:none;
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.15fr 0.85fr;gap:50px;align-items:center;
+    position:relative;z-index:2;
+  }
+  .hero h1{
+    font-size:clamp(40px,5.2vw,68px);
+    color:#fff;
+    margin-top:18px;
+    text-shadow:0 2px 10px rgba(0,0,0,0.3);
+  }
+  .hero h1 em{
+    font-style:normal;
+    background:linear-gradient(120deg,#FFE599,#F0C875);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lead{
+    color:#CBD6F2;
+    font-size:17px;
+    line-height:1.65;
+    max-width:540px;
+    margin-top:22px;
+  }
+  .hero-ctas{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:14px 26px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+    border:1px solid transparent;
+    transition:transform .18s ease, opacity .18s ease, box-shadow .18s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-gold{background:linear-gradient(120deg,var(--gold) 0%,var(--gold-deep) 100%);color:var(--navy-deep);box-shadow:0 4px 14px rgba(212,149,47,0.3);}
+  .btn-outline{border-color:rgba(255,255,255,0.45);color:#ffffff;background:rgba(255,255,255,0.05);}
+  .btn-outline:hover{border-color:var(--gold-light);color:var(--gold-light);background:rgba(255,255,255,0.12);}
+  .btn-navy{background:var(--navy-deep);color:#ffffff;}
+  .btn-navy:hover{background:var(--navy);}
+
+  .hero-stats{
+    display:grid;grid-template-columns:1fr 1fr;gap:1px;
+    background:rgba(255,255,255,0.2);
+    margin-top:52px;
+    border-top:1px solid rgba(255,255,255,0.2);
+  }
+  .hero-stats div{background:var(--navy-deep);padding:20px 12px 20px 12px;}
+  .hero-stats .num{
+    font-family:'Big Shoulders Display',sans-serif;font-weight:800;
+    font-size:36px;color:#F8D178;
+  }
+  .hero-stats .lbl{font-size:12.5px;color:#CBD6F2;margin-top:4px;font-weight:500;}
+
+  .hero-card{
+    background:linear-gradient(160deg,rgba(255,255,255,0.1),rgba(255,255,255,0.03));
+    border:1px solid rgba(255,255,255,0.2);
+    padding:32px;
+    position:relative;
+    border-radius:4px;
+    box-shadow:0 12px 30px rgba(0,0,0,0.25);
+  }
+  .hero-card .tag{
+    display:inline-block;background:rgba(212,149,47,0.25);color:#FDE68A;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.1em;
+    padding:5px 12px;text-transform:uppercase;margin-bottom:16px;border:1px solid rgba(212,149,47,0.4);
+  }
+  .hero-card h3{color:#ffffff;font-size:24px;margin-bottom:12px;}
+  .hero-card p{color:#CBD6F2;font-size:15px;line-height:1.6;}
+  .hero-card ul{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:12px;}
+  .hero-card li{display:flex;gap:10px;align-items:flex-start;color:#E2E8F0;font-size:14.5px;line-height:1.5;}
+  .hero-card li::before{content:"";width:8px;height:8px;background:var(--gold-light);margin-top:6px;flex-shrink:0;border-radius:1px;}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:96px 0;}
+  .section-head{max-width:680px;margin-bottom:52px;}
+  .section-head h2{font-size:clamp(30px,3.8vw,46px);color:var(--navy-deep);margin-top:12px;letter-spacing:0.01em;}
+  .section-head p{margin-top:16px;font-size:16.5px;color:#475569;line-height:1.6;}
+  .on-dark .section-head h2{color:#ffffff;}
+  .on-dark .section-head p{color:#CBD6F2;}
+
+  /* ---------- ABOUT / MISSION ---------- */
+  .mission{background:var(--cream);}
+  .mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
+  .mission-copy p{font-size:16.5px;color:#334155;margin-bottom:16px;line-height:1.65;}
+  .mission-copy p strong{color:var(--navy-deep);font-weight:700;}
+  .mission-list{margin-top:26px;display:flex;flex-direction:column;gap:20px;}
+  .mission-list .item{display:flex;gap:16px;}
+  .mission-list .idx{
+    font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:28px;
+    color:var(--gold-deep);width:44px;flex-shrink:0;
+  }
+  .mission-list h4{font-size:17px;color:var(--navy-deep);letter-spacing:0;text-transform:none;font-weight:700;}
+  .mission-list p{font-size:15px;color:#475569;margin-top:4px;line-height:1.55;}
+  .not-box{
+    border:2px solid #EF4444;
+    background:linear-gradient(135deg, #FFF5F5 0%, #FEF2F2 100%);
+    padding:28px;margin-top:16px;
+    border-radius:6px;
+    box-shadow:0 6px 20px rgba(239,68,68,0.12);
+  }
+  .not-box .eyebrow{color:#DC2626;font-weight:700;letter-spacing:0.12em;}
+  .not-box h3{color:#991B1B;font-size:20px;margin-top:8px;margin-bottom:10px;font-weight:800;}
+  .not-box p{margin-top:8px;font-size:15px;color:#451A1A;line-height:1.6;}
+  .not-box .excl{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;}
+  .not-box .excl span{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;
+    padding:8px 16px;border:2px solid #EF4444;color:#B91C1C;
+    background:#FFFFFF;
+    border-radius:4px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  }
+
+  /* ---------- SPORTS GRID WITH GENERATED IMAGES ---------- */
+  .sports{background:#F8FAFC;padding:96px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .sports-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:22px;
+    margin-top:40px;
+  }
+  .sport-card{
+    position:relative;
+    border-radius:6px;
+    overflow:hidden;
+    background:var(--navy-deep);
+    height:280px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    box-shadow:0 8px 24px rgba(4,26,77,0.14);
+    transition:transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border:1px solid rgba(10,45,107,0.15);
+  }
+  .sport-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 16px 36px rgba(4,26,77,0.26);
+    border-color:var(--gold);
+  }
+  .sport-card img{
+    position:absolute;top:0;left:0;width:100%;height:100%;
+    object-fit:cover;
+    transition:transform 0.5s ease;
+  }
+  .sport-card:hover img{
+    transform:scale(1.08);
+  }
+  .sport-card-overlay{
+    position:absolute;top:0;left:0;right:0;bottom:0;
+    background:linear-gradient(180deg, rgba(4,26,77,0.15) 0%, rgba(4,26,77,0.85) 60%, rgba(4,26,77,0.98) 100%);
+    pointer-events:none;
+  }
+  .sport-card-content{
+    position:relative;z-index:2;
+    padding:20px;
+    color:#ffffff;
+  }
+  .sport-badge{
+    display:inline-block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    background:rgba(212,149,47,0.95);
+    color:#041A4D;
+    padding:4px 9px;
+    border-radius:3px;
+    margin-bottom:8px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.3);
+  }
+  .sport-card h3{
+    font-family:'Big Shoulders Display',sans-serif;
+    font-weight:800;
+    font-size:22px;
+    letter-spacing:0.02em;
+    color:#ffffff;
+    margin:0 0 4px 0;
+    text-shadow:0 2px 4px rgba(0,0,0,0.6);
+  }
+  .sport-card p{
+    font-size:12.5px;
+    color:#E2E8F0;
+    margin:0;
+    line-height:1.45;
+  }
+
+  /* ---------- PATHWAY ---------- */
+  .pathway{background:linear-gradient(180deg,var(--navy) 0%, var(--navy-deep) 100%);color:#fff;position:relative;overflow:hidden;}
+  .pathway-line-wrap{position:relative;margin-top:60px;}
+  .pathway-stages{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:20px;position:relative;z-index:2;
+  }
+  .stage{display:flex;flex-direction:column;align-items:flex-start;}
+  .stage-node{
+    width:52px;height:52px;border-radius:50%;
+    background:var(--navy-deep);border:2px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--gold-light);font-size:13px;
+    margin-bottom:18px;
+  }
+  .stage:last-child .stage-node{background:linear-gradient(135deg,var(--gold-light),var(--gold-deep));color:var(--navy-deep);}
+  .stage h4{font-size:17px;color:#fff;letter-spacing:0.02em;}
+  .stage p{font-size:13.5px;color:#CBD6F2;margin-top:8px;line-height:1.5;}
+  .pathway-connector{
+    position:absolute;top:26px;left:calc(10% + 26px);right:calc(10% + 26px);height:2px;
+    background:repeating-linear-gradient(90deg,var(--gold) 0,var(--gold) 6px,transparent 6px,transparent 14px);
+    z-index:1;
+  }
+
+  /* ---------- GET INVOLVED (3 doors) ---------- */
+  .doors{background:var(--cream);}
+  .doors-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .door{
+    background:var(--white);border:1px solid var(--line);
+    padding:32px 28px;display:flex;flex-direction:column;
+    transition:border-color .2s, transform .2s;
+  }
+  .door:hover{border-color:var(--gold);transform:translateY(-4px);}
+  .door .icon{
+    width:50px;height:50px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--navy-deep);margin-bottom:20px;
+  }
+  .door .icon svg{width:24px;height:24px;stroke:var(--gold-light);}
+  .door h3{font-size:24px;color:var(--ink);}
+  .door p{font-size:14.5px;color:#475569;margin-top:12px;flex-grow:1;line-height:1.6;}
+  .door .door-cta{
+    margin-top:22px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:700;
+    color:var(--navy);letter-spacing:0.05em;text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:6px;
+    background:none;border:none;padding:0;
+  }
+  .door .door-cta svg{width:14px;height:14px;transition:transform .2s;}
+  .door:hover .door-cta svg{transform:translateX(4px);}
+
+  /* ---------- VENDOR / INVESTOR SPLIT ---------- */
+  .split{background:var(--white);border-top:1px solid var(--line);}
+  .split-row{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);}
+  .split-col{padding:52px 46px;}
+  .split-col + .split-col{border-left:1px solid var(--line);}
+  .split-col .eyebrow{margin-bottom:14px;}
+  .split-col h3{font-size:28px;color:var(--ink);margin-bottom:16px;}
+  .split-col p{font-size:15.5px;color:#475569;margin-bottom:14px;line-height:1.6;}
+  .split-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;}
+  .split-tags span{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 12px;
+    background:var(--cream-2);color:#334155;border:1px solid var(--line);font-weight:600;
+  }
+  .split-col .btn{margin-top:24px;}
+
+  /* ---------- REGISTRATION ---------- */
+  .register{background:linear-gradient(180deg,var(--navy-deep),var(--navy));color:#fff;}
+  .tabs{display:flex;gap:2px;margin-bottom:0;border-bottom:1px solid rgba(255,255,255,0.14);}
+  .tab-btn{
+    flex:1;background:rgba(255,255,255,0.04);border:none;color:#CBD6F2;
+    padding:20px 16px;font-family:'IBM Plex Mono',monospace;font-size:13px;
+    letter-spacing:0.06em;text-transform:uppercase;font-weight:600;
+    border-bottom:3px solid transparent;transition:all .2s;
+  }
+  .tab-btn.active{color:#fff;background:rgba(255,255,255,0.08);border-bottom-color:var(--gold);}
+  .tab-btn:hover{color:#fff;}
+  .form-panel{display:none;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-top:none;padding:44px;}
+  .form-panel.active{display:block;}
+  .form-intro{max-width:640px;margin-bottom:30px;}
+  .form-intro h3{font-size:24px;color:#fff;margin-bottom:10px;}
+  .form-intro p{color:#CBD6F2;font-size:15px;}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .form-grid .full{grid-column:1/-1;}
+  .field label{
+    display:block;font-family:'IBM Plex Mono',monospace;font-size:12px;
+    letter-spacing:0.06em;text-transform:uppercase;color:#CBD6F2;margin-bottom:8px;font-weight:600;
+  }
+  .field input,.field select,.field textarea{
+    width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.22);
+    color:#fff;padding:12px 14px;font-family:'Manrope',sans-serif;font-size:14.5px;
+  }
+  .field input::placeholder,.field textarea::placeholder{color:#94A3B8;}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold);}
+  .field textarea{resize:vertical;min-height:90px;}
+  .field select option{color:#000;}
+  .form-submit{
+    margin-top:30px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  }
+  .form-note{font-size:13px;color:#94A3B8;max-width:420px;}
+  .confirm-box{
+    display:none;margin-top:26px;border:1px solid rgba(212,149,47,0.5);
+    background:rgba(212,149,47,0.08);padding:20px 22px;
+  }
+  .confirm-box.show{display:flex;gap:14px;align-items:flex-start;}
+  .confirm-box svg{width:22px;height:22px;stroke:var(--gold-light);flex-shrink:0;margin-top:2px;}
+  .confirm-box h4{font-size:15px;color:var(--gold-light);text-transform:none;font-weight:700;letter-spacing:0;}
+  .confirm-box p{font-size:13.5px;color:#C6CFE6;margin-top:6px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--navy-deep);color:#CBD6F2;padding:64px 0 30px;border-top:1px solid rgba(255,255,255,0.08);}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;}
+  .foot-logo img{height:48px;filter:brightness(1.25);margin-bottom:16px;}
+  .foot-grid p{font-size:14px;color:#94A3B8;line-height:1.6;}
+  .foot-col h5{font-family:'IBM Plex Mono',monospace;color:#fff;font-size:12.5px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px;font-weight:700;}
+  .foot-col a,.foot-col span{display:block;font-size:14px;color:#CBD6F2;margin-bottom:10px;}
+  .foot-col a:hover{color:var(--gold-light);}
+  .foot-bottom{
+    max-width:1180px;margin:50px auto 0;padding:24px 32px 0;
+    border-top:1px solid rgba(255,255,255,0.08);
+    display:flex;justify-content:space-between;font-size:12.5px;color:#94A3B8;flex-wrap:wrap;gap:10px;
+  }
+
+  @media(max-width:1024px){
+    .sports-grid{grid-template-columns:repeat(3,1fr);}
+  }
+  @media(max-width:768px){
+    .hero-grid{grid-template-columns:1fr;}
+    .mission-grid{grid-template-columns:1fr;gap:36px;}
+    .sports-grid{grid-template-columns:repeat(2,1fr);}
+    .pathway-stages{grid-template-columns:repeat(2,1fr);row-gap:34px;}
+    .pathway-connector{display:none;}
+    .doors-grid{grid-template-columns:1fr;}
+    .split-row{grid-template-columns:1fr;}
+    .split-col + .split-col{border-left:none;border-top:1px solid var(--line);}
+    .form-grid{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+    .nav-links{display:none;}
+    .nav-toggle{display:block;}
+  }
+  @media(max-width:480px){
+    .sports-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<nav class="nav">
+  <div class="wrap">
+    <div class="nav-logo">
+      <img src="assets/logo.svg" alt="Indian Pro League Alliance Corp">
+    </div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#sports">Sports</a>
+      <a href="#pathway">The Pathway</a>
+      <a href="#vendors-investors">Vendors &amp; Investors</a>
+      <a href="#register">Register</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <button class="nav-cta" onclick="document.getElementById('register').scrollIntoView()">Get Involved</button>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow light">Tier-3 &amp; Panchayat-Level Sports Infrastructure &mdash; Madhya Pradesh</span>
+      <h1>From village grounds<br>to the <em>Pro League</em>.</h1>
+      <p class="lead">Indian Pro League Alliance Corp builds and operates multi-sport infrastructure at the panchayat and government-school level &mdash; opening every outdoor and indoor discipline to athletes who've never had a proper ground to train on. Cricket and football already have their ecosystems; we build where the gap is.</p>
+      <div class="hero-ctas">
+        <button class="btn btn-gold" onclick="openTab('player')">Register as a Player</button>
+        <button class="btn btn-outline" onclick="document.getElementById('vendors-investors').scrollIntoView()">Vendors &amp; Investors</button>
+      </div>
+      <div class="hero-stats">
+        <div><div class="num">15+</div><div class="lbl">Non-Cricket &amp; Football Disciplines Supported</div></div>
+        <div><div class="num">Tier&nbsp;3</div><div class="lbl">Starting point: panchayat &amp; govt. school grounds</div></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <span class="tag">Three ways in</span>
+      <h3>One corporation, three doors</h3>
+      <p>Every part of the alliance runs through a simple registration &mdash; our team follows up personally after each one.</p>
+      <ul>
+        <li><strong style="color:#fff">Players</strong> &mdash; join a sport, a ground, a coaching pathway.</li>
+        <li><strong style="color:#fff">Vendors</strong> &mdash; supply kits, footwear, swimwear &amp; equipment at verified, fair rates.</li>
+        <li><strong style="color:#fff">Investors</strong> &mdash; bring capital or land, discuss profit-share directly with the team.</li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<!-- ================= ABOUT / MISSION ================= -->
+<section class="mission" id="about">
+  <div class="wrap">
+    <div class="mission-grid">
+      <div>
+        <span class="eyebrow">About the Corporation</span>
+        <h2 style="margin-top:12px;">Infrastructure first. <br>Everywhere else, last.</h2>
+        <div class="mission-copy" style="margin-top:24px;">
+          <p><strong>Indian Pro League Alliance Corp</strong> exists to build the sporting infrastructure India's smaller towns and villages have never had. We start at Tier-3 and panchayat level &mdash; government schools across Madhya Pradesh &mdash; and grow the same model district by district.</p>
+          <p>Where a national federation already funds and promotes a sport at scale, we stay out of the way. Where nobody is building anything &mdash; badminton courts, swimming pools, athletics tracks, kabaddi akhadas, volleyball and basketball courts &mdash; that's where the corporation puts its capital, its vendors, and its coaching network.</p>
+        </div>
+      </div>
+      <div>
+        <div class="mission-list">
+          <div class="item">
+            <div class="idx">01</div>
+            <div><h4>Government school partnerships</h4><p>We build and upgrade courts, tracks and pools inside existing government school campuses across Madhya Pradesh, so facilities serve students first and the wider panchayat after school hours.</p></div>
+          </div>
+          <div class="item">
+            <div class="idx">02</div>
+            <div><h4>Panchayat-level grounds</h4><p>Outside school campuses, we develop community grounds at the panchayat level &mdash; the first tier of real, structured sports infrastructure most of these villages will have seen.</p></div>
+          </div>
+          <div class="item">
+            <div class="idx">03</div>
+            <div><h4>A verified vendor network</h4><p>Local and regional vendors &mdash; badminton, swimwear, footwear, kits &mdash; register with the corporation and supply every facility at fixed, fair rates.</p></div>
+          </div>
+        </div>
+        <div class="not-box">
+          <span class="eyebrow">⛔ SCOPE BOUNDARY</span>
+          <h3>Cricket &amp; Football Excluded from Scope</h3>
+          <p>Cricket and Football already have well-funded, commercialized ecosystems across India. To focus 100% of our infrastructure capital and coaching networks where grassroot gaps are widest, <strong>Indian Pro League Alliance Corp explicitly does NOT build infrastructure for Cricket or Football.</strong></p>
+          <div class="excl">
+            <span>✖ EXCLUDED: Cricket</span>
+            <span>✖ EXCLUDED: Football</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SPORTS GRID ================= -->
+<section class="sports" id="sports">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Every other sport, indoors and outdoors</span>
+      <h2>Fifteen+ disciplines. <br>One infrastructure model.</h2>
+      <p>From a badminton court behind a government school to a full athletics track at panchayat level &mdash; if it isn't cricket or football, it's on our primary build list.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="sports-grid">
+      <div class="sport-card">
+        <img src="assets/images/badminton.png" alt="Badminton">
+        <div class="sport-card-overlay"></div>
+        <div class="sport-card-content">
+          <span class="sport-badge">Indoor Court</span>
+          <h3>Badminton</h3>
+          <p>Wooden &amp; Synthetic Courts at Govt Schools</p>
+        </div>
+      </div>
+      <div class="sport-card">
+        <img src="assets/images/athletics.png" alt="Athletics &amp; Track">
+        <div class="sport-card-overlay"></div>
+        <div class="sport-card-content">
+          <span class="sport-badge">Outdoor Track</span>
+          <h3>Athletics &amp; Track</h3>
+          <p>Synthetic 400m &amp; 200m Running Tracks</p>
+        </div>
+      </div>
+      <div class="sport-card">
+        <img src="assets/images/swimming.png" alt="Swimming">
+        <div class="sport-card-overlay"></div>
+        <div class="sport-card-content">
+          <span class="sport-badge">Aquatics</span>
+          <h3>Swimming</h3>
+          <p>Semi-Olympic Panchayat &amp; School Pools</p>
+        </div>
+      </div>
+      <div class="sport-card">
+        <img src="assets/images/volleyball.png" alt="Volleyball">
+        <div class="sport-card-overlay"></div>
+        <div class="sport-card-content">
+          <span class="sport-badge">Outdoor Court</span>
+          <h3>Volleyball</h3>
+          <p>Floodlit Clay &amp; Synthetic Courts</p>
+        </div>
+      </div>
+      <div class="sport-card">
+        <img src="assets/images/basketball.png" alt="Basketball">
+        <div class="sport-card-overlay"></div>
+        <div class="sport-card-content">
+          <span class="sport-badge">Indoor &amp; Outdoor</span>
+          <h3>Basketball</h3>
+          <p>Standard High-Friction Hard Courts</p>
+        </div>
+      </div>
+      <div class="sport-card">
+        <img src="assets/images/kabaddi.png" alt="Kabaddi">
+        <div class="sport-card-overlay"></div>
+        <div class="sport-card-content">
+          <span class="sport-badge">Traditional &amp; Pro</span>
+          <h3>Kabaddi</h3>
+          <p>Indoor Mat Courts &amp; Panchayat Grounds</p>
+        </div>
+      </div>
+      <div class="sport-card">
+        <img src="assets/images/khokho.png" alt="Kho-Kho">
+        <div class="sport-card-overlay"></div>
+        <div class="sport-card-content">
+          <span class="sport-badge">Traditional Sport</span>
+          <h3>Kho-Kho</h3>
+          <p>Standardized Clay &amp; Synthetic Arenas</p>
+        </div>
+      </div>
+      <div class="sport-card">
+        <img src="assets/images/tabletennis.png" alt="Table Tennis">
+        <div class="sport-card-overlay"></div>
+        <div class="sport-card-content">
+          <span class="sport-badge">Indoor Discipline</span>
+          <h3>Table Tennis</h3>
+          <p>Tournament-Grade TT Tables &amp; Facilities</p>
+        </div>
+      </div>
+      <div class="sport-card">
+        <img src="assets/images/hockey.png" alt="Hockey">
+        <div class="sport-card-overlay"></div>
+        <div class="sport-card-content">
+          <span class="sport-badge">Field Sport</span>
+          <h3>Hockey</h3>
+          <p>Grass &amp; AstroTurf Practice Grounds</p>
+        </div>
+      </div>
+      <div class="sport-card">
+        <img src="assets/images/wrestling.png" alt="Wrestling">
+        <div class="sport-card-overlay"></div>
+        <div class="sport-card-content">
+          <span class="sport-badge">Combat Mat</span>
+          <h3>Wrestling</h3>
+          <p>Modern Mat Akhadas &amp; Training Hubs</p>
+        </div>
+      </div>
+      <div class="sport-card">
+        <img src="assets/images/handball.png" alt="Handball">
+        <div class="sport-card-overlay"></div>
+        <div class="sport-card-content">
+          <span class="sport-badge">Team Sport</span>
+          <h3>Handball</h3>
+          <p>Multi-purpose Indoor &amp; Outdoor Courts</p>
+        </div>
+      </div>
+      <div class="sport-card">
+        <img src="assets/images/judomartialarts.png" alt="Judo &amp; Martial Arts">
+        <div class="sport-card-overlay"></div>
+        <div class="sport-card-content">
+          <span class="sport-badge">Martial Arts</span>
+          <h3>Judo &amp; Martial Arts</h3>
+          <p>Tatami Mat Halls &amp; Safety Gear</p>
+        </div>
+      </div>
+      <div class="sport-card">
+        <img src="assets/images/weightlifting.png" alt="Weightlifting">
+        <div class="sport-card-overlay"></div>
+        <div class="sport-card-content">
+          <span class="sport-badge">Strength &amp; Power</span>
+          <h3>Weightlifting</h3>
+          <p>Calibrated Barbells &amp; Rubber Platforms</p>
+        </div>
+      </div>
+      <div class="sport-card">
+        <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&w=800&auto=format&fit=crop" alt="Boxing">
+        <div class="sport-card-overlay"></div>
+        <div class="sport-card-content">
+          <span class="sport-badge">Combat Sport</span>
+          <h3>Boxing</h3>
+          <p>Elevated Rings &amp; Heavy Bag Stations</p>
+        </div>
+      </div>
+      <div class="sport-card">
+        <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=800&auto=format&fit=crop" alt="Gymnastics">
+        <div class="sport-card-overlay"></div>
+        <div class="sport-card-content">
+          <span class="sport-badge">Artistic &amp; Flex</span>
+          <h3>Gymnastics</h3>
+          <p>Vaulting Tables, Bars &amp; Safety Foam</p>
+        </div>
+      </div>
+      <div class="sport-card">
+        <img src="https://images.unsplash.com/photo-1517649763962-0c623266010b?q=80&w=800&auto=format&fit=crop" alt="Cycling">
+        <div class="sport-card-overlay"></div>
+        <div class="sport-card-content">
+          <span class="sport-badge">Endurance</span>
+          <h3>Cycling</h3>
+          <p>Velodrome &amp; District Road Pathways</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PATHWAY ================= -->
+<section class="pathway" id="pathway">
+  <div class="wrap">
+    <div class="section-head on-dark">
+      <span class="eyebrow light">The Build-Out Model</span>
+      <h2>Panchayat ground <br>to Pro League.</h2>
+      <p>The same model the logo's runner is chasing toward its star &mdash; a defined pathway, not a one-off donation. Every facility we build sits on this line.</p>
+    </div>
+    <div class="pathway-line-wrap">
+      <div class="pathway-connector"></div>
+      <div class="pathway-stages">
+        <div class="stage"><div class="stage-node">01</div><h4>Panchayat Ground</h4><p>Bare community land identified and cleared at Tier-3, panchayat level.</p></div>
+        <div class="stage"><div class="stage-node">02</div><h4>Govt. School Facility</h4><p>Courts, tracks or pools built inside partner government school campuses across MP.</p></div>
+        <div class="stage"><div class="stage-node">03</div><h4>Coaching &amp; Equipment</h4><p>Registered vendors supply kits at fair rates; coaches run structured sessions.</p></div>
+        <div class="stage"><div class="stage-node">04</div><h4>District Competition</h4><p>Players registered through the corporation compete across district-level meets.</p></div>
+        <div class="stage"><div class="stage-node">★</div><h4>Pro League Pathway</h4><p>Standout athletes are tracked into state academies and pro-level opportunity.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= THREE DOORS ================= -->
+<section class="doors" id="get-involved">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Get Involved</span>
+      <h2>Three doors into <br>the alliance.</h2>
+      <p>Every relationship with the corporation starts with a registration form. Fill in the one that fits, and the team contacts you directly.</p>
+    </div>
+    <div class="doors-grid">
+      <div class="door">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
+        <h3>Player</h3>
+        <p>Register for a sport, a facility, and a coaching pathway near you &mdash; from panchayat ground to district and state-level play.</p>
+        <button class="door-cta" onclick="openTab('player')">Register as a Player <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+      <div class="door">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 9l2-5h14l2 5M3 9v10a1 1 0 001 1h16a1 1 0 001-1V9M3 9h18M9 13a3 3 0 006 0"/></svg></div>
+        <h3>Vendor</h3>
+        <p>Supply badminton gear, swimwear, footwear or kits to the corporation's growing facility network at verified, fair rates.</p>
+        <button class="door-cta" onclick="openTab('vendor')">Register as a Vendor <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+      <div class="door">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <h3>Investor</h3>
+        <p>Bring capital, land, or both &mdash; and sit down with the team to work out the profit-sharing and facility structure directly.</p>
+        <button class="door-cta" onclick="openTab('investor')">Register as an Investor <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VENDOR / INVESTOR EXPLAINER ================= -->
+<section class="split" id="vendors-investors">
+  <div class="wrap" style="padding:0 32px;">
+    <div class="section-head">
+      <span class="eyebrow">How the two programs work</span>
+      <h2>Vendors supply. <br>Investors build.</h2>
+    </div>
+    <div class="split-row">
+      <div class="split-col">
+        <span class="eyebrow">Vendor Network</span>
+        <h3>Fair rates, direct access.</h3>
+        <p>Local and regional vendors &mdash; badminton equipment, swim costumes, footwear, jerseys and general sports kits &mdash; register with the corporation to become approved suppliers.</p>
+        <p>Once verified, a vendor gets standing access to every facility we operate, at rates fixed in advance so pricing stays consistent and fair for players and parents at panchayat level.</p>
+        <div class="split-tags">
+          <span>Badminton equipment</span><span>Swim costumes</span><span>Footwear</span><span>Kits &amp; jerseys</span><span>Training gear</span>
+        </div>
+        <button class="btn btn-navy" onclick="openTab('vendor')">Register as a Vendor</button>
+      </div>
+      <div class="split-col">
+        <span class="eyebrow">Investor Program</span>
+        <h3>Capital, land, or both.</h3>
+        <p>Investors bring money, land, or a combination of the two into a specific facility or district build-out. There's no fixed template &mdash; every investor's situation is different.</p>
+        <p>After registration, the corporation's team reaches out directly to walk through the profit-sharing margin, facility ownership structure, and any additional terms specific to that investment.</p>
+        <div class="split-tags">
+          <span>Cash investment</span><span>Land contribution</span><span>Profit-share discussion</span><span>Team follow-up call</span>
+        </div>
+        <button class="btn btn-navy" onclick="openTab('investor')">Register as an Investor</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REGISTRATION FORMS ================= -->
+<section class="register" id="register">
+  <div class="wrap">
+    <div class="section-head on-dark">
+      <span class="eyebrow light">Registration</span>
+      <h2>Choose your form.</h2>
+      <p>Three short forms, one team reviewing every submission. Pick the one that matches you below.</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabbtn-player" onclick="openTab('player')">Player</button>
+      <button class="tab-btn" id="tabbtn-vendor" onclick="openTab('vendor')">Vendor</button>
+      <button class="tab-btn" id="tabbtn-investor" onclick="openTab('investor')">Investor</button>
+    </div>
+
+    <!-- PLAYER FORM -->
+    <div class="form-panel active" id="panel-player">
+      <div class="form-intro">
+        <h3>Player Registration</h3>
+        <p>For athletes and parents looking to join a sport, ground, or coaching pathway through the corporation.</p>
+      </div>
+      <form onsubmit="return handleSubmit(event,'player')">
+        <div class="form-grid">
+          <div class="field"><label>Full Name</label><input required type="text" placeholder="Athlete's full name"></div>
+          <div class="field"><label>Age</label><input required type="number" min="4" max="60" placeholder="e.g. 14"></div>
+          <div class="field"><label>Guardian Name (if minor)</label><input type="text" placeholder="Parent / guardian name"></div>
+          <div class="field"><label>Mobile Number</label><input required type="tel" placeholder="10-digit mobile number"></div>
+          <div class="field"><label>District / Panchayat</label><input required type="text" placeholder="e.g. Gwalior, Panchayat name"></div>
+          <div class="field"><label>State</label><input required type="text" value="Madhya Pradesh"></div>
+          <div class="field"><label>Preferred Sport</label>
+            <select required>
+              <option value="">Select a sport</option>
+              <option>Badminton</option><option>Athletics &amp; Track</option><option>Swimming</option>
+              <option>Volleyball</option><option>Basketball</option><option>Kabaddi</option><option>Kho-Kho</option>
+              <option>Table Tennis</option><option>Hockey</option><option>Wrestling</option><option>Handball</option>
+              <option>Judo &amp; Martial Arts</option><option>Weightlifting</option><option>Boxing</option>
+              <option>Gymnastics</option><option>Cycling</option>
+            </select>
+          </div>
+          <div class="field"><label>Nearest Facility / School</label><input type="text" placeholder="Government school or ground name, if known"></div>
+          <div class="field full"><label>Sporting Background (optional)</label><textarea placeholder="Any prior training, competitions, or coaching experience"></textarea></div>
+        </div>
+        <div class="form-submit">
+          <button class="btn btn-gold" type="submit">Submit Player Registration</button>
+          <span class="form-note">Our regional coordinator will contact the mobile number above to confirm the nearest active facility.</span>
+        </div>
+        <div class="confirm-box" id="confirm-player">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>
+          <div><h4>Registration received</h4><p>Thank you &mdash; a member of the Indian Pro League Alliance Corp team will contact you within 3–5 business days about the nearest facility and sport-specific pathway.</p></div>
+        </div>
+      </form>
+    </div>
+
+    <!-- VENDOR FORM -->
+    <div class="form-panel" id="panel-vendor">
+      <div class="form-intro">
+        <h3>Vendor Registration</h3>
+        <p>For suppliers of sports equipment, apparel, and accessories looking to become an approved vendor at fixed, fair rates.</p>
+      </div>
+      <form onsubmit="return handleSubmit(event,'vendor')">
+        <div class="form-grid">
+          <div class="field"><label>Business / Shop Name</label><input required type="text" placeholder="Registered business name"></div>
+          <div class="field"><label>Contact Person</label><input required type="text" placeholder="Owner / authorised contact"></div>
+          <div class="field"><label>Mobile Number</label><input required type="tel" placeholder="10-digit mobile number"></div>
+          <div class="field"><label>Email Address</label><input type="email" placeholder="business@example.com"></div>
+          <div class="field"><label>City / District</label><input required type="text" placeholder="e.g. Jhansi"></div>
+          <div class="field"><label>GST / Registration Number</label><input type="text" placeholder="If applicable"></div>
+          <div class="field"><label>Product Category</label>
+            <select required>
+              <option value="">Select a category</option>
+              <option>Badminton Equipment</option>
+              <option>Swim Costumes &amp; Swimwear</option>
+              <option>Sports Footwear</option>
+              <option>Jerseys &amp; Team Kits</option>
+              <option>Training &amp; Gym Equipment</option>
+              <option>General Sports Accessories</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field"><label>Years in Business</label><input type="number" min="0" placeholder="e.g. 5"></div>
+          <div class="field full"><label>Products &amp; Indicative Rates</label><textarea placeholder="List key products you supply and your typical wholesale / bulk rates"></textarea></div>
+        </div>
+        <div class="form-submit">
+          <button class="btn btn-gold" type="submit">Submit Vendor Registration</button>
+          <span class="form-note">Approved vendors are added to the facility supply list; our procurement team will follow up to verify rates.</span>
+        </div>
+        <div class="confirm-box" id="confirm-vendor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>
+          <div><h4>Registration received</h4><p>Thank you &mdash; the procurement team will review your product categories and rates, then contact you to confirm vendor approval.</p></div>
+        </div>
+      </form>
+    </div>
+
+    <!-- INVESTOR FORM -->
+    <div class="form-panel" id="panel-investor">
+      <div class="form-intro">
+        <h3>Investor Registration</h3>
+        <p>For individuals or entities looking to invest capital, land, or both into a facility or district build-out.</p>
+      </div>
+      <form onsubmit="return handleSubmit(event,'investor')">
+        <div class="form-grid">
+          <div class="field"><label>Full Name</label><input required type="text" placeholder="Investor's full name"></div>
+          <div class="field"><label>Company / Entity (if any)</label><input type="text" placeholder="Optional"></div>
+          <div class="field"><label>Mobile Number</label><input required type="tel" placeholder="10-digit mobile number"></div>
+          <div class="field"><label>Email Address</label><input required type="email" placeholder="you@example.com"></div>
+          <div class="field"><label>City / State</label><input required type="text" placeholder="Current location"></div>
+          <div class="field"><label>Investment Type</label>
+            <select required>
+              <option value="">Select an option</option>
+              <option>Capital Investment</option>
+              <option>Land Contribution</option>
+              <option>Capital + Land</option>
+            </select>
+          </div>
+          <div class="field"><label>Approximate Investment Range</label>
+            <select>
+              <option value="">Select a range (optional)</option>
+              <option>Under ₹10 Lakh</option>
+              <option>₹10–50 Lakh</option>
+              <option>₹50 Lakh – ₹1 Crore</option>
+              <option>Above ₹1 Crore</option>
+            </select>
+          </div>
+          <div class="field"><label>Land Location (if applicable)</label><input type="text" placeholder="District / panchayat where land is located"></div>
+          <div class="field full"><label>Notes for the Team</label><textarea placeholder="Preferred district, sport, timeline, or any questions on profit-sharing"></textarea></div>
+        </div>
+        <div class="form-submit">
+          <button class="btn btn-gold" type="submit">Submit Investor Registration</button>
+          <span class="form-note">The corporation's team will schedule a direct call to discuss profit margin, facility structure, and next steps.</span>
+        </div>
+        <div class="confirm-box" id="confirm-investor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>
+          <div><h4>Registration received</h4><p>Thank you &mdash; our investment team will reach out directly to discuss profit-sharing, facility structure, and timelines.</p></div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer id="contact">
+  <div class="wrap foot-grid">
+    <div>
+      <div class="foot-logo"><img src="assets/logo.svg" alt="Indian Pro League Alliance Corp"></div>
+      <p>Building multi-sport infrastructure at panchayat and government-school level across Madhya Pradesh &mdash; empowering athletes, elevating futures.</p>
+    </div>
+    <div class="foot-col">
+      <h5>Explore</h5>
+      <a href="#about">About the Corporation</a>
+      <a href="#sports">Sports We Build</a>
+      <a href="#pathway">The Pathway</a>
+      <a href="#get-involved">Get Involved</a>
+    </div>
+    <div class="foot-col">
+      <h5>Register</h5>
+      <a href="#register" onclick="openTab('player')">Player Registration</a>
+      <a href="#register" onclick="openTab('vendor')">Vendor Registration</a>
+      <a href="#register" onclick="openTab('investor')">Investor Registration</a>
+    </div>
+    <div class="foot-col">
+      <h5>Contact</h5>
+      <span>Madhya Pradesh, India</span>
+      <span>info@indianproleaguealliance.in</span>
+      <span>A Global One Consulting Group company</span>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>&copy; 2026 Indian Pro League Alliance Corp. All rights reserved.</span>
+    <span>Empowering Athletes, Elevating Futures.</span>
+  </div>
+</footer>
+
+<script>
+  function openTab(name){
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.form-panel').forEach(p=>p.classList.remove('active'));
+    document.getElementById('tabbtn-'+name).classList.add('active');
+    document.getElementById('panel-'+name).classList.add('active');
+    document.getElementById('register').scrollIntoView({behavior:'smooth'});
+  }
+  function handleSubmit(e,name){
+    e.preventDefault();
+    const data = new FormData(e.target);
+    console.log('Submission ('+name+'):', Object.fromEntries(data.entries()));
+    document.getElementById('confirm-'+name).classList.add('show');
+    e.target.reset();
+    return false;
+  }
+</script>
+
+</body>
+</html>
