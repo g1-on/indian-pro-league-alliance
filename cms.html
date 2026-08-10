@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin CMS Portal | Indian Pro League Alliance Corp</title>
+  <link rel="stylesheet" href="assets/css/cms.css">
+</head>
+<body>
+
+  <div class="cms-container">
+    <!-- Header Card -->
+    <div class="cms-header-card">
+      <div class="cms-brand">
+        <img src="assets/logo.svg" alt="Indian Pro League Alliance Corp">
+        <div>
+          <span class="cms-badge">Executive Portal</span>
+          <h1>Registration Submissions CMS</h1>
+        </div>
+      </div>
+      <div class="cms-actions">
+        <a href="index_3.html" class="cms-btn cms-btn-navy">🌐 View Website</a>
+        <button class="cms-btn cms-btn-green" onclick="exportCMSToCSV()">📥 Export CSV</button>
+        <button class="cms-btn cms-btn-navy" onclick="seedSampleCMSData()">🔄 Reset / Seed Data</button>
+      </div>
+    </div>
+
+    <!-- Analytics Stats Grid -->
+    <div class="cms-stats-grid">
+      <div class="cms-stat-card">
+        <span class="lbl">Total Submissions</span>
+        <span class="val" id="cms-stat-total">0</span>
+      </div>
+      <div class="cms-stat-card border-player">
+        <span class="lbl">Player Registrations</span>
+        <span class="val" id="cms-stat-players">0</span>
+      </div>
+      <div class="cms-stat-card border-vendor">
+        <span class="lbl">Vendor Applications</span>
+        <span class="val" id="cms-stat-vendors">0</span>
+      </div>
+      <div class="cms-stat-card border-investor">
+        <span class="lbl">Investor Inquiries</span>
+        <span class="val" id="cms-stat-investors">0</span>
+      </div>
+    </div>
+
+    <!-- Data Panel -->
+    <div class="cms-panel">
+      <!-- Toolbar Filter & Search -->
+      <div class="cms-toolbar">
+        <div class="cms-filter-tabs">
+          <button class="cms-tab active" id="cms-filter-all" onclick="filterCMSCategory('all')">All Submissions</button>
+          <button class="cms-tab" id="cms-filter-player" onclick="filterCMSCategory('Player')">Players</button>
+          <button class="cms-tab" id="cms-filter-vendor" onclick="filterCMSCategory('Vendor')">Vendors</button>
+          <button class="cms-tab" id="cms-filter-investor" onclick="filterCMSCategory('Investor')">Investors</button>
+        </div>
+        <div class="cms-search-box">
+          <input type="text" id="cms-search-input" placeholder="Search name, phone, district, sport..." oninput="renderCMSTable()">
+        </div>
+      </div>
+
+      <!-- Data Table -->
+      <div class="cms-table-wrapper">
+        <table class="cms-table">
+          <thead>
+            <tr>
+              <th>Submission ID</th>
+              <th>Date &amp; Time</th>
+              <th>Type</th>
+              <th>Name / Business</th>
+              <th>Mobile Number</th>
+              <th>District / Location</th>
+              <th>Discipline / Category</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="cms-table-body">
+            <!-- Dynamic Rows rendered via cms.js -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Record Detail Modal -->
+  <div class="cms-detail-overlay" id="cms-detail-modal">
+    <div class="cms-detail-card">
+      <div class="cms-detail-header">
+        <h3 id="cms-detail-title">Registration Record Details</h3>
+        <button class="action-btn" onclick="closeCMSDetailModal()">&times;</button>
+      </div>
+      <div id="cms-detail-content">
+        <!-- Details Content -->
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/cms.js"></script>
+</body>
+</html>
