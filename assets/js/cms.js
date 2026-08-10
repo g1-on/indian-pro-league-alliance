@@ -1,5 +1,5 @@
 /* ==========================================================================
-   INDIAN PRO LEAGUE ALLIANCE - ADMIN CMS DASHBOARD LOGIC (SUPABASE ENABLED)
+   INDIAN PRO LEAGUE ALLIANCE - ADMIN CMS DASHBOARD LOGIC (SUPABASE & LOCAL MERGED)
    ========================================================================== */
 
 const CMS_STORAGE_KEY = 'ipl_alliance_submissions';
@@ -14,21 +14,7 @@ const initialSampleData = [
   { id: 'IPL-2026-1046', timestamp: '10 Aug 2026, 05:30 PM', type: 'Player', name: 'Devendra Yadav', mobile: '9630088771', location: 'Rewa, MP', details: 'Kabaddi & Wrestling', status: 'Pending Review', notes: 'District level mat wrestler.' }
 ];
 
-async function getSubmissions() {
-  // If Supabase client is configured, fetch live from Supabase table 'submissions'
-  if (typeof supabaseClient !== 'undefined' && supabaseClient) {
-    try {
-      const { data, error } = await supabaseClient.from('submissions').select('*').order('created_at', { ascending: false });
-      if (!error && data && data.length > 0) {
-        saveSubmissions(data);
-        return data;
-      }
-    } catch (err) {
-      console.warn('Supabase fetch error, fallback to localStorage:', err);
-    }
-  }
-
-  // Fallback to LocalStorage
+function getLocalSubmissions() {
   const stored = localStorage.getItem(CMS_STORAGE_KEY);
   if (!stored) {
     localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(initialSampleData));
@@ -41,8 +27,33 @@ async function getSubmissions() {
   }
 }
 
-function saveSubmissions(data) {
+function saveLocalSubmissions(data) {
   localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(data));
+}
+
+async function getSubmissions() {
+  const localList = getLocalSubmissions();
+  let supabaseList = [];
+
+  // Try fetching live entries from Supabase Cloud
+  if (typeof supabaseClient !== 'undefined' && supabaseClient) {
+    try {
+      const { data, error } = await supabaseClient.from('submissions').select('*').order('created_at', { ascending: false });
+      if (!error && data && data.length > 0) {
+        supabaseList = data;
+      }
+    } catch (err) {
+      console.warn('Supabase fetch notice:', err);
+    }
+  }
+
+  // Merge Supabase entries with LocalStorage entries (avoid duplicates by id)
+  const map = new Map();
+  localList.forEach(item => map.set(item.id, item));
+  supabaseList.forEach(item => map.set(item.id, item));
+
+  const merged = Array.from(map.values());
+  return merged;
 }
 
 function filterCMSCategory(cat) {
@@ -112,20 +123,17 @@ async function renderCMSTable() {
 
 async function updateCMSStatus(id, newStatus) {
   // Update in LocalStorage
-  const stored = localStorage.getItem(CMS_STORAGE_KEY);
-  if (stored) {
-    let list = JSON.parse(stored);
-    const item = list.find(i => i.id === id);
-    if (item) item.status = newStatus;
-    saveSubmissions(list);
-  }
+  const stored = getLocalSubmissions();
+  const item = stored.find(i => i.id === id);
+  if (item) item.status = newStatus;
+  saveLocalSubmissions(stored);
 
   // Update in Supabase Cloud
   if (typeof supabaseClient !== 'undefined' && supabaseClient) {
     try {
       await supabaseClient.from('submissions').update({ status: newStatus }).eq('id', id);
     } catch (err) {
-      console.warn('Supabase update error:', err);
+      console.warn('Supabase update notice:', err);
     }
   }
 
@@ -135,19 +143,16 @@ async function updateCMSStatus(id, newStatus) {
 async function deleteCMSEntry(id) {
   if (confirm('Are you sure you want to delete registration record ' + id + '?')) {
     // Delete in LocalStorage
-    const stored = localStorage.getItem(CMS_STORAGE_KEY);
-    if (stored) {
-      let list = JSON.parse(stored);
-      list = list.filter(i => i.id !== id);
-      saveSubmissions(list);
-    }
+    let stored = getLocalSubmissions();
+    stored = stored.filter(i => i.id !== id);
+    saveLocalSubmissions(stored);
 
     // Delete in Supabase Cloud
     if (typeof supabaseClient !== 'undefined' && supabaseClient) {
       try {
         await supabaseClient.from('submissions').delete().eq('id', id);
       } catch (err) {
-        console.warn('Supabase delete error:', err);
+        console.warn('Supabase delete notice:', err);
       }
     }
 
@@ -189,7 +194,7 @@ async function seedSampleCMSData() {
       try {
         await supabaseClient.from('submissions').upsert(initialSampleData);
       } catch (err) {
-        console.warn('Supabase seed error:', err);
+        console.warn('Supabase seed notice:', err);
       }
     }
     renderCMSTable();

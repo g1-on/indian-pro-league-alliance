@@ -26,7 +26,7 @@ function openTab(name) {
   document.getElementById('register')?.scrollIntoView({ behavior: 'smooth' });
 }
 
-async function handleSubmit(e, formType) {
+function handleSubmit(e, formType) {
   e.preventDefault();
   const form = e.target;
   const inputs = form.querySelectorAll('input, select, textarea');
@@ -35,44 +35,54 @@ async function handleSubmit(e, formType) {
     id: 'IPL-2026-' + Math.floor(1000 + Math.random() * 9000),
     timestamp: new Date().toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true }),
     type: formType === 'player' ? 'Player' : formType === 'vendor' ? 'Vendor' : 'Investor',
-    status: 'Pending Review'
+    status: 'Pending Review',
+    name: '',
+    mobile: '',
+    location: '',
+    details: '',
+    notes: ''
   };
 
   inputs.forEach(input => {
-    const label = input.closest('.field')?.querySelector('label')?.textContent || '';
+    const fieldDiv = input.closest('.field');
+    const label = fieldDiv ? (fieldDiv.querySelector('label')?.textContent || '') : '';
+    const val = input.value ? input.value.trim() : '';
+    if (!val) return;
+
     if (label.includes('Name') || label.includes('Business') || label.includes('Contact Person')) {
-      if (!submissionData.name) submissionData.name = input.value;
+      if (!submissionData.name) submissionData.name = val;
     } else if (label.includes('Mobile')) {
-      submissionData.mobile = input.value;
+      submissionData.mobile = val;
     } else if (label.includes('District') || label.includes('City') || label.includes('Panchayat') || label.includes('State')) {
-      if (!submissionData.location) submissionData.location = input.value;
-      else submissionData.location += ', ' + input.value;
+      if (!submissionData.location) submissionData.location = val;
+      else submissionData.location += ', ' + val;
     } else if (label.includes('Sport') || label.includes('Category') || label.includes('Investment Type')) {
-      submissionData.details = input.value;
-    } else if (label.includes('Background') || label.includes('Products') || label.includes('Notes')) {
-      submissionData.notes = input.value;
+      submissionData.details = val;
+    } else if (label.includes('Background') || label.includes('Products') || label.includes('Notes') || label.includes('Ranges') || label.includes('Land')) {
+      if (!submissionData.notes) submissionData.notes = val;
+      else submissionData.notes += ' | ' + val;
     }
   });
 
   if (!submissionData.name) submissionData.name = 'Registrant (' + submissionData.type + ')';
 
-  // 1. Save locally for instant UI update
+  // 1. Save to LocalStorage immediately
   const list = getSubmissions();
   list.unshift(submissionData);
   saveSubmissions(list);
+  console.log('✅ Form submission saved locally:', submissionData);
 
-  // 2. Save to Supabase Cloud Database if client is connected
+  // 2. Save to Supabase Cloud asynchronously
   if (typeof supabaseClient !== 'undefined' && supabaseClient) {
-    try {
-      const { data, error } = await supabaseClient.from('submissions').insert([submissionData]);
-      if (error) {
-        console.warn('Supabase Insert Warning:', error.message);
-      } else {
-        console.log('✅ Registration saved to Supabase Cloud Database');
-      }
-    } catch (err) {
-      console.warn('Supabase Insert Error:', err);
-    }
+    supabaseClient.from('submissions').insert([submissionData])
+      .then(({ data, error }) => {
+        if (error) {
+          console.warn('⚠️ Supabase Cloud insert notice:', error.message);
+        } else {
+          console.log('☁️ Successfully synced submission to Supabase Cloud Database');
+        }
+      })
+      .catch(err => console.warn('Supabase network error:', err));
   }
 
   // 3. Show Confirmation Box
