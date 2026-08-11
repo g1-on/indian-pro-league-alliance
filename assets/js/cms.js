@@ -248,22 +248,22 @@ function checkAdminAuth() {
 
 async function handleAdminLogin(e) {
   e.preventDefault();
-  const usernameInput = (document.getElementById('login-username')?.value || '').trim();
+  const usernameInput = (document.getElementById('login-username')?.value || '').trim().toLowerCase();
   const passwordInput = (document.getElementById('login-password')?.value || '').trim();
   const errorMsg = document.getElementById('login-error-msg');
 
   const userHash = await _hashText(usernameInput);
   const passHash = await _hashText(passwordInput);
 
-  // SHA-256 Hash matches (No plain-text credentials stored in source code)
+  // Exact SHA-256 Hash matches for admin / ipl2026
   const validUserHashes = [
-    '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918',
-    'fa6b42b934752536c4b92b67faeb270a2a5f7823f66ed973d09a25b2935272a8'
+    '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', // SHA256('admin')
+    'fa6b42b934752536c4b92b67faeb270a2a5f7823f66ed973d09a25b2935272a8'  // SHA256('admin@indianproleaguealliance.in')
   ];
 
   const validPassHashes = [
-    'e56b46440db423cb1eb0e1ffef8262a632ed6ebaa6a56e9c4033320c1ea3dd84',
-    '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'
+    '6363549c666976ebc97e8dc82ffa4ddea9a350f4aae8dcd23e02eb8871dcf757', // SHA256('ipl2026')
+    '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'  // SHA256('admin123')
   ];
 
   if (validUserHashes.includes(userHash) && validPassHashes.includes(passHash)) {
