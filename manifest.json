@@ -1,0 +1,18 @@
+{
+  "name": "IPL Alliance Registration",
+  "short_name": "IPL Alliance",
+  "description": "Official Registration Portal for Indian Pro League Alliance Corp - Players, Vendors & Investors",
+  "start_url": "/index_3.html#register",
+  "display": "standalone",
+  "background_color": "#041A4D",
+  "theme_color": "#041A4D",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/logo.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
