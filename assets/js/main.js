@@ -143,8 +143,9 @@ function handleSubmit(e, formType) {
   onScroll();
 })();
 
-// Full-Screen Stacking Fade Showcase for 3-Tier Network (Tier 3 -> Tier 2 -> Tier 1)
+// Interactive 3-Tier Network Showcase Logic (Tabs, Arrows & Auto Rotation)
 let currentTierIndex = 0;
+let tierAutoInterval = null;
 
 function switchTierPage(pageNum) {
   currentTierIndex = Math.max(0, Math.min(2, pageNum - 1));
@@ -168,13 +169,8 @@ function switchTierPage(pageNum) {
     if (!page) return;
     if (idx === currentTierIndex) {
       page.classList.add('active');
-      page.classList.remove('exit');
-    } else if (idx < currentTierIndex) {
-      page.classList.remove('active');
-      page.classList.add('exit');
     } else {
       page.classList.remove('active');
-      page.classList.remove('exit');
     }
   });
 
@@ -198,38 +194,21 @@ function prevTierPage() {
   switchTierPage(prevIdx + 1);
 }
 
+// Auto-advance tier slides every 6 seconds
 (function () {
   const section = document.getElementById('tier-network');
   if (!section) return;
 
-  function onTierFadeScroll() {
-    const sectionRect = section.getBoundingClientRect();
-    const sectionHeight = section.offsetHeight;
-    const viewportHeight = window.innerHeight;
-
-    const totalScrollable = sectionHeight - viewportHeight;
-    if (totalScrollable <= 0) return;
-
-    let progress = -sectionRect.top / totalScrollable;
-    progress = Math.max(0, Math.min(1, progress));
-
-    let activeIndex = 0;
-    if (progress >= 0.66) {
-      activeIndex = 2;
-    } else if (progress >= 0.33) {
-      activeIndex = 1;
-    } else {
-      activeIndex = 0;
-    }
-
-    if (activeIndex !== currentTierIndex && sectionRect.top <= 0 && sectionRect.bottom >= viewportHeight) {
-      switchTierPage(activeIndex + 1);
-    }
+  function resetTierTimer() {
+    if (tierAutoInterval) clearInterval(tierAutoInterval);
+    tierAutoInterval = setInterval(() => {
+      nextTierPage();
+    }, 6000);
   }
 
-  window.addEventListener('scroll', onTierFadeScroll, { passive: true });
-  window.addEventListener('resize', onTierFadeScroll);
+  resetTierTimer();
 })();
+
 
 
 
