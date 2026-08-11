@@ -26,21 +26,16 @@
 
         <div class="login-field">
           <label>Username / Admin Email</label>
-          <input required type="text" id="login-username" placeholder="e.g. admin" value="admin">
+          <input required type="text" id="login-username" placeholder="Enter admin username" autocomplete="username">
         </div>
 
         <div class="login-field">
           <label>Password</label>
-          <input required type="password" id="login-password" placeholder="Enter admin password">
+          <input required type="password" id="login-password" placeholder="Enter admin password" autocomplete="current-password">
         </div>
 
         <button type="submit" class="login-submit-btn">Sign In to CMS Portal 🔒</button>
       </form>
-
-      <div class="login-hint">
-        <span>Default Credentials:</span><br>
-        Username: <code>admin</code> | Password: <code>ipl2026</code>
-      </div>
     </div>
   </div>
 
@@ -135,9 +130,6 @@
     </div>
   </div>
 
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
-  <script src="assets/js/firebase-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="assets/js/supabase-config.js"></script>
   <script src="assets/js/cms.js"></script>

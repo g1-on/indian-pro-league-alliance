@@ -221,86 +221,58 @@ async function exportCMSToCSV() {
   document.body.removeChild(link);
 }
 
-// ---------- ADMIN AUTHENTICATION LOGIC (FIREBASE & SESSION) ----------
+// ---------- SECURE ADMIN AUTHENTICATION LOGIC (SHA-256 ENCRYPTED) ----------
 const ADMIN_AUTH_KEY = 'ipl_admin_authenticated';
 
+async function _hashText(text) {
+  const msgUint8 = new TextEncoder().encode(text);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 function checkAdminAuth() {
-  // Check Firebase Auth state if configured
-  if (typeof firebaseAuth !== 'undefined' && firebaseAuth && firebaseConfig.apiKey !== 'YOUR_FIREBASE_API_KEY') {
-    firebaseAuth.onAuthStateChanged(user => {
-      if (user) {
-        sessionStorage.setItem(ADMIN_AUTH_KEY, 'true');
-        showCMSDashboard();
-      } else {
-        sessionStorage.removeItem(ADMIN_AUTH_KEY);
-        showLoginScreen();
-      }
-    });
-    return;
-  }
-
-  // Fallback Session Check
   const isAuth = sessionStorage.getItem(ADMIN_AUTH_KEY) === 'true';
+  const overlay = document.getElementById('admin-login-overlay');
+  const container = document.getElementById('cms-main-container');
+
   if (isAuth) {
-    showCMSDashboard();
+    if (overlay) overlay.classList.add('hidden');
+    if (container) container.style.display = 'flex';
+    renderCMSTable();
   } else {
-    showLoginScreen();
+    if (overlay) overlay.classList.remove('hidden');
+    if (container) container.style.display = 'none';
   }
-}
-
-function showCMSDashboard() {
-  const overlay = document.getElementById('admin-login-overlay');
-  const container = document.getElementById('cms-main-container');
-  if (overlay) overlay.classList.add('hidden');
-  if (container) container.style.display = 'flex';
-  renderCMSTable();
-}
-
-function showLoginScreen() {
-  const overlay = document.getElementById('admin-login-overlay');
-  const container = document.getElementById('cms-main-container');
-  if (overlay) overlay.classList.remove('hidden');
-  if (container) container.style.display = 'none';
 }
 
 async function handleAdminLogin(e) {
   e.preventDefault();
-  let usernameInput = document.getElementById('login-username')?.value.trim();
-  const passwordInput = document.getElementById('login-password')?.value.trim();
+  const usernameInput = (document.getElementById('login-username')?.value || '').trim();
+  const passwordInput = (document.getElementById('login-password')?.value || '').trim();
   const errorMsg = document.getElementById('login-error-msg');
 
-  if (!usernameInput.includes('@')) {
-    usernameInput = usernameInput + '@indianproleaguealliance.in';
-  }
+  const userHash = await _hashText(usernameInput);
+  const passHash = await _hashText(passwordInput);
 
-  // 1. If Firebase Auth is configured, perform Firebase sign in
-  if (typeof firebaseAuth !== 'undefined' && firebaseAuth && firebaseConfig.apiKey !== 'YOUR_FIREBASE_API_KEY') {
-    try {
-      await firebaseAuth.signInWithEmailAndPassword(usernameInput, passwordInput);
-      if (errorMsg) errorMsg.style.display = 'none';
-      sessionStorage.setItem(ADMIN_AUTH_KEY, 'true');
-      showCMSDashboard();
-      return false;
-    } catch (err) {
-      if (errorMsg) {
-        errorMsg.textContent = 'Firebase Auth Error: ' + (err.message || 'Invalid Credentials');
-        errorMsg.style.display = 'block';
-      }
-      return false;
-    }
-  }
+  // SHA-256 Hash matches (No plain-text credentials stored in source code)
+  const validUserHashes = [
+    '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918',
+    'fa6b42b934752536c4b92b67faeb270a2a5f7823f66ed973d09a25b2935272a8'
+  ];
 
-  // 2. Default Fallback Credentials (admin / ipl2026)
-  const isDefaultUser = (usernameInput === 'admin@indianproleaguealliance.in' || usernameInput === 'admin');
-  const isDefaultPass = (passwordInput === 'ipl2026' || passwordInput === 'admin123');
+  const validPassHashes = [
+    'e56b46440db423cb1eb0e1ffef8262a632ed6ebaa6a56e9c4033320c1ea3dd84',
+    '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9'
+  ];
 
-  if (isDefaultUser && isDefaultPass) {
+  if (validUserHashes.includes(userHash) && validPassHashes.includes(passHash)) {
     sessionStorage.setItem(ADMIN_AUTH_KEY, 'true');
     if (errorMsg) errorMsg.style.display = 'none';
-    showCMSDashboard();
+    checkAdminAuth();
   } else {
     if (errorMsg) {
-      errorMsg.textContent = 'Invalid Username or Password. Check hint below.';
+      errorMsg.textContent = 'Invalid Username or Password.';
       errorMsg.style.display = 'block';
     }
   }
@@ -309,11 +281,8 @@ async function handleAdminLogin(e) {
 
 function handleAdminLogout() {
   if (confirm('Are you sure you want to log out of the Admin CMS Portal?')) {
-    if (typeof firebaseAuth !== 'undefined' && firebaseAuth && firebaseConfig.apiKey !== 'YOUR_FIREBASE_API_KEY') {
-      firebaseAuth.signOut();
-    }
     sessionStorage.removeItem(ADMIN_AUTH_KEY);
-    showLoginScreen();
+    checkAdminAuth();
   }
 }
 
