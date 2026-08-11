@@ -143,6 +143,29 @@ function handleSubmit(e, formType) {
   onScroll();
 })();
 
+// Global Tier Navigation Helpers
+let currentTierIndex = 0;
+
+function switchTierPage(index) {
+  const section = document.getElementById('tier-network');
+  if (!section) return;
+  const sectionTop = window.scrollY + section.getBoundingClientRect().top;
+  const sectionHeight = section.offsetHeight;
+  const totalScrollable = sectionHeight - window.innerHeight;
+
+  const targetFractions = [0.05, 0.48, 0.85];
+  const targetFraction = targetFractions[index] || 0;
+  const targetScrollY = sectionTop + (targetFraction * totalScrollable);
+
+  window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
+}
+
+function stepTierPage(dir) {
+  let nextIndex = currentTierIndex + dir;
+  nextIndex = Math.max(0, Math.min(2, nextIndex));
+  switchTierPage(nextIndex);
+}
+
 // Full-Screen Stacking Fade Showcase for 3-Tier Network (Tier 3 -> Tier 2 -> Tier 1)
 (function () {
   const section = document.getElementById('tier-network');
@@ -181,8 +204,19 @@ function handleSubmit(e, formType) {
       activeIndex = 0;
     }
 
+    currentTierIndex = activeIndex;
+
     if (counter) {
       counter.textContent = `TIER 0${activeIndex + 1} / 0${pages.length}`;
+    }
+
+    // Update active state on tab buttons
+    for (let i = 0; i < 3; i++) {
+      const tabBtn = document.getElementById('tier-tab-' + i);
+      if (tabBtn) {
+        if (i === activeIndex) tabBtn.classList.add('active');
+        else tabBtn.classList.remove('active');
+      }
     }
 
     pages.forEach((page, idx) => {
@@ -204,6 +238,7 @@ function handleSubmit(e, formType) {
   window.addEventListener('resize', onTierFadeScroll);
   onTierFadeScroll();
 })();
+
 
 
 
