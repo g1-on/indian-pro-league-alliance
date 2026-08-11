@@ -1,14 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin CMS Portal | Indian Pro League Alliance Corp</title>
   <link rel="stylesheet" href="assets/css/cms.css">
 </head>
+
 <body>
 
-  <div class="cms-container">
+  <!-- ================= ADMIN LOGIN SCREEN OVERLAY ================= -->
+  <div class="admin-login-overlay" id="admin-login-overlay">
+    <div class="login-card">
+      <div class="login-header">
+        <img src="assets/logo.svg" alt="Indian Pro League Alliance Corp">
+        <div>
+          <span class="login-badge">Alliance Security Portal</span>
+          <h2>Executive Admin Login</h2>
+        </div>
+      </div>
+
+      <form class="login-form" onsubmit="return handleAdminLogin(event)">
+        <div class="login-error" id="login-error-msg">Invalid Username or Password</div>
+
+        <div class="login-field">
+          <label>Username / Admin Email</label>
+          <input required type="text" id="login-username" placeholder="e.g. admin" value="admin">
+        </div>
+
+        <div class="login-field">
+          <label>Password</label>
+          <input required type="password" id="login-password" placeholder="Enter admin password">
+        </div>
+
+        <button type="submit" class="login-submit-btn">Sign In to CMS Portal 🔒</button>
+      </form>
+
+      <div class="login-hint">
+        <span>Default Credentials:</span><br>
+        Username: <code>admin</code> | Password: <code>ipl2026</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="cms-container" id="cms-main-container">
     <!-- Header Card -->
     <div class="cms-header-card">
       <div class="cms-brand">
@@ -22,6 +58,7 @@
         <a href="index_3.html" class="cms-btn cms-btn-navy">🌐 View Website</a>
         <button class="cms-btn cms-btn-green" onclick="exportCMSToCSV()">📥 Export CSV</button>
         <button class="cms-btn cms-btn-navy" onclick="seedSampleCMSData()">🔄 Reset / Seed Data</button>
+        <button class="cms-btn" style="background:#EF4444;color:#ffffff;" onclick="handleAdminLogout()">Logout 🚪</button>
       </div>
     </div>
 
@@ -56,7 +93,8 @@
           <button class="cms-tab" id="cms-filter-investor" onclick="filterCMSCategory('Investor')">Investors</button>
         </div>
         <div class="cms-search-box">
-          <input type="text" id="cms-search-input" placeholder="Search name, phone, district, sport..." oninput="renderCMSTable()">
+          <input type="text" id="cms-search-input" placeholder="Search name, phone, district, sport..."
+            oninput="renderCMSTable()">
         </div>
       </div>
 
@@ -101,4 +139,5 @@
   <script src="assets/js/supabase-config.js"></script>
   <script src="assets/js/cms.js"></script>
 </body>
+
 </html>

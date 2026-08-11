@@ -221,7 +221,53 @@ async function exportCMSToCSV() {
   document.body.removeChild(link);
 }
 
-// Initial Render on Page Load
+// ---------- ADMIN AUTHENTICATION LOGIC ----------
+const ADMIN_AUTH_KEY = 'ipl_admin_authenticated';
+
+function checkAdminAuth() {
+  const isAuth = sessionStorage.getItem(ADMIN_AUTH_KEY) === 'true';
+  const overlay = document.getElementById('admin-login-overlay');
+  const container = document.getElementById('cms-main-container');
+
+  if (isAuth) {
+    if (overlay) overlay.classList.add('hidden');
+    if (container) container.style.display = 'flex';
+    renderCMSTable();
+  } else {
+    if (overlay) overlay.classList.remove('hidden');
+    if (container) container.style.display = 'none';
+  }
+}
+
+function handleAdminLogin(e) {
+  e.preventDefault();
+  const usernameInput = document.getElementById('login-username')?.value.trim();
+  const passwordInput = document.getElementById('login-password')?.value.trim();
+  const errorMsg = document.getElementById('login-error-msg');
+
+  // Credentials: admin / ipl2026
+  if ((usernameInput === 'admin' || usernameInput === 'admin@indianproleaguealliance.in') && (passwordInput === 'ipl2026' || passwordInput === 'admin123')) {
+    sessionStorage.setItem(ADMIN_AUTH_KEY, 'true');
+    if (errorMsg) errorMsg.style.display = 'none';
+    checkAdminAuth();
+  } else {
+    if (errorMsg) {
+      errorMsg.textContent = 'Invalid Username or Password. Please check default hint.';
+      errorMsg.style.display = 'block';
+    }
+  }
+  return false;
+}
+
+function handleAdminLogout() {
+  if (confirm('Are you sure you want to log out of the Admin CMS Portal?')) {
+    sessionStorage.removeItem(ADMIN_AUTH_KEY);
+    checkAdminAuth();
+  }
+}
+
+// Initial Render and Auth Check on Page Load
 document.addEventListener('DOMContentLoaded', () => {
-  renderCMSTable();
+  checkAdminAuth();
 });
+
