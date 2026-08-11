@@ -577,102 +577,167 @@
   }
   .split-col .btn{margin-top:24px;}
 
-  /* ---------- 3-TIER NETWORK ECOSYSTEM ---------- */
-  .tier-ecosystem {
+  /* ---------- 3-TIER SCROLL-DRIVEN HORIZONTAL SHOWCASE ---------- */
+  .tier-horizontal-section {
+    position: relative;
+    height: 300vh;
     background: #020817;
     color: #ffffff;
-    padding: 90px 0;
-    border-top: 1px solid rgba(255,255,255,0.12);
-    border-bottom: 1px solid rgba(255,255,255,0.12);
   }
-  .tier-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-    margin-top: 48px;
-  }
-  .tier-card {
-    background: #041029;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    border-radius: 16px;
+  .tier-sticky-viewport {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    padding: 32px 0 24px;
+    background: radial-gradient(circle at 50% 40%, #0A1C44 0%, #020817 100%);
   }
-  .tier-card:hover {
-    transform: translateY(-8px);
+  .tier-header-bar {
+    padding: 0 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .tier-header-left .eyebrow {
+    color: var(--gold-light);
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+  }
+  .tier-header-left h2 {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-size: 38px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.1;
+    margin-top: 4px;
+  }
+  .tier-counter-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--gold-light);
+    background: rgba(212, 149, 47, 0.15);
+    padding: 8px 18px;
+    border-radius: 6px;
+    border: 1px solid rgba(240, 200, 117, 0.3);
+    letter-spacing: 0.1em;
+  }
+
+  .tier-track-wrapper {
+    width: 100vw;
+    overflow: hidden;
+    padding: 20px 0;
+  }
+  .tier-slide-track {
+    display: flex;
+    gap: 48px;
+    padding-left: calc(50vw - 340px);
+    padding-right: calc(50vw - 340px);
+    transition: transform 0.15s cubic-bezier(0.1, 0.9, 0.2, 1);
+    will-change: transform;
+  }
+
+  .tier-poster-card {
+    width: 680px;
+    height: 58vh;
+    max-height: 500px;
+    min-height: 420px;
+    background: rgba(4, 16, 41, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.85);
+    flex-shrink: 0;
+    display: flex;
+    overflow: hidden;
+    transition: transform 0.4s ease, opacity 0.4s ease, border-color 0.4s ease;
+    transform: translateY(60px) scale(0.92);
+    opacity: 0.4;
+  }
+  .tier-poster-card.active {
+    transform: translateY(0) scale(1.03);
+    opacity: 1;
     border-color: var(--gold);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 35px 100px rgba(212, 149, 47, 0.25);
   }
-  .tier-image-wrap {
+
+  .tier-poster-media {
+    width: 45%;
     position: relative;
-    height: 230px;
     overflow: hidden;
   }
-  .tier-image-wrap img {
+  .tier-poster-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.6s ease;
   }
-  .tier-card:hover .tier-image-wrap img {
-    transform: scale(1.06);
+  .tier-poster-card.active .tier-poster-media img {
+    transform: scale(1.08);
   }
-  .tier-badge {
+  .tier-poster-gradient {
     position: absolute;
-    top: 14px;
-    left: 14px;
+    inset: 0;
+    background: linear-gradient(to right, transparent 50%, rgba(4, 16, 41, 0.95) 100%);
+  }
+
+  .tier-poster-body {
+    width: 55%;
+    padding: 32px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .tier-tag-pill {
+    align-self: flex-start;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
     font-weight: 800;
     text-transform: uppercase;
     padding: 6px 14px;
     border-radius: 4px;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
   }
-  .badge-tier-3 { background: rgba(59, 130, 246, 0.95); color: #fff; }
-  .badge-tier-2 { background: rgba(168, 85, 247, 0.95); color: #fff; }
-  .badge-tier-1 { background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: #040C1E; }
+  .pill-tier-3 { background: #2563EB; color: #ffffff; }
+  .pill-tier-2 { background: #9333EA; color: #ffffff; }
+  .pill-tier-1 { background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: #040C1E; }
 
-  .tier-content {
-    padding: 24px 24px 30px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-  }
-  .tier-content h3 {
+  .tier-poster-body h3 {
     font-family: 'Big Shoulders Display', sans-serif;
-    font-size: 26px;
+    font-size: 32px;
     font-weight: 800;
     color: #ffffff;
-    margin-bottom: 6px;
+    line-height: 1.1;
+    margin-top: 12px;
   }
-  .tier-location {
+  .tier-poster-location {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
     color: var(--gold-light);
     font-weight: 700;
+    margin-top: 6px;
     margin-bottom: 12px;
   }
-  .tier-content p {
+  .tier-poster-body p {
     font-size: 14.5px;
     color: #CBD6F2;
     line-height: 1.55;
-    margin-bottom: 18px;
   }
-  .tier-features {
+
+  .tier-poster-features {
     list-style: none;
     padding: 0;
-    margin: 0;
+    margin: 16px 0 0;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    padding-top: 16px;
-    margin-top: auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding-top: 14px;
   }
-  .tier-features li {
+  .tier-poster-features li {
     font-size: 13px;
     color: #E2E8F0;
     display: flex;
@@ -680,8 +745,30 @@
     gap: 8px;
   }
 
-  @media(max-width:960px){
-    .tier-grid { grid-template-columns: 1fr; }
+  .tier-footer-bar {
+    padding: 0 48px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .tier-progress-track {
+    flex-grow: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .tier-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold-light), var(--gold));
+    transition: width 0.1s ease-out;
+  }
+
+  @media(max-width:850px){
+    .tier-poster-card { width: 85vw; flex-direction: column; height: auto; max-height: none; }
+    .tier-poster-media { width: 100%; height: 200px; }
+    .tier-poster-body { width: 100%; padding: 24px; }
   }
 
   /* ---------- REGISTRATION ---------- */
@@ -1365,70 +1452,96 @@
   </div>
 </section>
 
-<!-- ================= 3-TIER NETWORK ECOSYSTEM ================= -->
-<section class="tier-ecosystem" id="tier-network">
-  <div class="wrap">
-    <div class="section-head on-dark">
-      <span class="eyebrow light">National Infrastructure Network</span>
-      <h2>3-Tier Connected Alliance System.</h2>
-      <p>From panchayat ground zero to elite pro leagues &mdash; connecting rural grounds, NCR metro school campuses, and national pro academies across India.</p>
+<!-- ================= 3-TIER SCROLL-DRIVEN HORIZONTAL SHOWCASE ================= -->
+<section class="tier-horizontal-section" id="tier-network">
+  <div class="tier-sticky-viewport">
+
+    <!-- Top Header Bar -->
+    <div class="tier-header-bar">
+      <div class="tier-header-left">
+        <span class="eyebrow">NATIONAL INFRASTRUCTURE NETWORK</span>
+        <h2>3-TIER CONNECTED ALLIANCE SYSTEM.</h2>
+      </div>
+      <div class="tier-counter-badge" id="tier-counter">TIER 01 / 03</div>
     </div>
 
-    <div class="tier-grid">
-      <!-- Tier 3 Card -->
-      <div class="tier-card tier-3-card">
-        <div class="tier-image-wrap">
-          <img src="assets/images/athletics.png" alt="Tier 3 Grassroots &amp; Panchayat Infrastructure">
-          <span class="tier-badge badge-tier-3">Tier 3</span>
-        </div>
-        <div class="tier-content">
-          <h3>Grassroots &amp; Panchayat Grounds</h3>
-          <span class="tier-location">📍 Rural MP &amp; Panchayat Level India</span>
-          <p>Multi-sport outdoor grounds, synthetic tracks, and semi-olympic pools constructed directly on panchayat land &amp; government school campuses.</p>
-          <ul class="tier-features">
-            <li>✓ Panchayat &amp; Village Level Infrastructure</li>
-            <li>✓ Free Access for Rural &amp; School Athletes</li>
-            <li>✓ Grassroots Talent Identification Camps</li>
-          </ul>
-        </div>
-      </div>
+    <!-- Horizontal Cards Track Wrapper -->
+    <div class="tier-track-wrapper">
+      <div class="tier-slide-track" id="tier-slide-track">
 
-      <!-- Tier 2 Card -->
-      <div class="tier-card tier-2-card">
-        <div class="tier-image-wrap">
-          <img src="assets/images/tier2_universities.png" alt="Tier 2 Private Schools &amp; Universities">
-          <span class="tier-badge badge-tier-2">Tier 2</span>
+        <!-- Tier 3 Slide Poster Card -->
+        <div class="tier-poster-card active">
+          <div class="tier-poster-media">
+            <img src="assets/images/athletics.png" alt="Tier 3 Grassroots &amp; Panchayat Infrastructure">
+            <div class="tier-poster-gradient"></div>
+          </div>
+          <div class="tier-poster-body">
+            <div>
+              <span class="tier-tag-pill pill-tier-3">Tier 3</span>
+              <h3>GRASSROOTS &amp; PANCHAYAT GROUNDS</h3>
+              <div class="tier-poster-location">📍 Rural MP &amp; Panchayat Level India</div>
+              <p>Multi-sport outdoor grounds, synthetic tracks, and semi-olympic pools constructed directly on panchayat land &amp; government school campuses.</p>
+            </div>
+            <ul class="tier-poster-features">
+              <li>✓ Panchayat &amp; Village Level Infrastructure</li>
+              <li>✓ Free Access for Rural &amp; School Athletes</li>
+              <li>✓ Grassroots Talent Identification Camps</li>
+            </ul>
+          </div>
         </div>
-        <div class="tier-content">
-          <h3>Private Schools &amp; Universities</h3>
-          <span class="tier-location">📍 NCR Cities &amp; All India Metro Hubs</span>
-          <p>Connected with elite private schools, colleges, and university campuses across Delhi-NCR, Gurgaon, Noida, and metro cities nationwide.</p>
-          <ul class="tier-features">
-            <li>✓ Private School &amp; University Networks</li>
-            <li>✓ NCR &amp; Metro City Campus Partnerships</li>
-            <li>✓ Inter-School &amp; University Tournaments</li>
-          </ul>
-        </div>
-      </div>
 
-      <!-- Tier 1 Card -->
-      <div class="tier-card tier-1-card">
-        <div class="tier-image-wrap">
-          <img src="assets/images/tier1_academy.png" alt="Tier 1 Professional Academies &amp; Elite Coaches">
-          <span class="tier-badge badge-tier-1">Tier 1</span>
+        <!-- Tier 2 Slide Poster Card -->
+        <div class="tier-poster-card">
+          <div class="tier-poster-media">
+            <img src="assets/images/tier2_universities.png" alt="Tier 2 Private Schools &amp; Universities">
+            <div class="tier-poster-gradient"></div>
+          </div>
+          <div class="tier-poster-body">
+            <div>
+              <span class="tier-tag-pill pill-tier-2">Tier 2</span>
+              <h3>PRIVATE SCHOOLS &amp; UNIVERSITIES</h3>
+              <div class="tier-poster-location">📍 NCR Cities &amp; All India Metro Hubs</div>
+              <p>Connected with elite private schools, colleges, and university campuses across Delhi-NCR, Gurgaon, Noida, and metro cities nationwide.</p>
+            </div>
+            <ul class="tier-poster-features">
+              <li>✓ Private School &amp; University Networks</li>
+              <li>✓ NCR &amp; Metro City Campus Partnerships</li>
+              <li>✓ Inter-School &amp; University Tournaments</li>
+            </ul>
+          </div>
         </div>
-        <div class="tier-content">
-          <h3>Pro Academies &amp; Training Centers</h3>
-          <span class="tier-location">📍 National Pro Centers &amp; Master Coaches</span>
-          <p>Connected with national high-performance academies, certified master coaches, Olympic-grade training centers, and pro league scouts.</p>
-          <ul class="tier-features">
-            <li>✓ Professional Certified Master Coaches</li>
-            <li>✓ High-Performance Elite Academies</li>
-            <li>✓ Pro League Direct Scouting Pipeline</li>
-          </ul>
+
+        <!-- Tier 1 Slide Poster Card -->
+        <div class="tier-poster-card">
+          <div class="tier-poster-media">
+            <img src="assets/images/tier1_academy.png" alt="Tier 1 Professional Academies &amp; Elite Coaches">
+            <div class="tier-poster-gradient"></div>
+          </div>
+          <div class="tier-poster-body">
+            <div>
+              <span class="tier-tag-pill pill-tier-1">Tier 1</span>
+              <h3>PRO ACADEMIES &amp; TRAINING CENTERS</h3>
+              <div class="tier-poster-location">📍 National Pro Centers &amp; Master Coaches</div>
+              <p>Connected with national high-performance academies, certified master coaches, Olympic-grade training centers, and pro league scouts.</p>
+            </div>
+            <ul class="tier-poster-features">
+              <li>✓ Professional Certified Master Coaches</li>
+              <li>✓ High-Performance Elite Academies</li>
+              <li>✓ Pro League Direct Scouting Pipeline</li>
+            </ul>
+          </div>
         </div>
+
       </div>
     </div>
+
+    <!-- Bottom Progress Track -->
+    <div class="tier-footer-bar">
+      <div class="tier-progress-track">
+        <div class="tier-progress-fill" id="tier-progress"></div>
+      </div>
+    </div>
+
   </div>
 </section>
 

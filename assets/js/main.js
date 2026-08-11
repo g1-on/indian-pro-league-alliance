@@ -142,3 +142,56 @@ function handleSubmit(e, formType) {
   window.addEventListener('resize', onScroll);
   onScroll();
 })();
+
+// Full View Scroll-Driven Pinned 3-Tier Showcase (Mouse Scroll Movement)
+(function () {
+  const section = document.getElementById('tier-network');
+  const track = document.getElementById('tier-slide-track');
+  const progressBar = document.getElementById('tier-progress');
+  const counter = document.getElementById('tier-counter');
+  if (!section || !track) return;
+
+  function onTierScroll() {
+    const sectionRect = section.getBoundingClientRect();
+    const sectionHeight = section.offsetHeight;
+    const viewportHeight = window.innerHeight;
+
+    const totalScrollable = sectionHeight - viewportHeight;
+    if (totalScrollable <= 0) return;
+
+    let progress = -sectionRect.top / totalScrollable;
+    progress = Math.max(0, Math.min(1, progress));
+
+    const cards = track.querySelectorAll('.tier-poster-card');
+    if (!cards.length) return;
+
+    const cardWidth = cards[0].offsetWidth + 48; // width + gap
+    const maxTranslate = cardWidth * (cards.length - 1);
+    const translateX = progress * maxTranslate;
+
+    track.style.transform = `translateX(-${translateX}px)`;
+
+    if (progressBar) {
+      progressBar.style.width = `${progress * 100}%`;
+    }
+
+    // Determine active card (0, 1, 2)
+    const activeIndex = Math.min(cards.length - 1, Math.floor(progress * cards.length + 0.35));
+    if (counter) {
+      counter.textContent = `TIER 0${activeIndex + 1} / 0${cards.length}`;
+    }
+
+    cards.forEach((card, idx) => {
+      if (idx === activeIndex) {
+        card.classList.add('active');
+      } else {
+        card.classList.remove('active');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', onTierScroll, { passive: true });
+  window.addEventListener('resize', onTierScroll);
+  onTierScroll();
+})();
+
