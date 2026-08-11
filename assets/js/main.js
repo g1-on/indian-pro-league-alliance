@@ -143,41 +143,64 @@ function handleSubmit(e, formType) {
   onScroll();
 })();
 
-// Global Tier Navigation Helpers
+// Full-Screen Stacking Fade Showcase for 3-Tier Network (Tier 3 -> Tier 2 -> Tier 1)
 let currentTierIndex = 0;
 
-function switchTierPage(index) {
-  const section = document.getElementById('tier-network');
-  if (!section) return;
-  const sectionTop = window.scrollY + section.getBoundingClientRect().top;
-  const sectionHeight = section.offsetHeight;
-  const totalScrollable = sectionHeight - window.innerHeight;
-
-  const targetFractions = [0.05, 0.48, 0.85];
-  const targetFraction = targetFractions[index] || 0;
-  const targetScrollY = sectionTop + (targetFraction * totalScrollable);
-
-  window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
-}
-
-function stepTierPage(dir) {
-  let nextIndex = currentTierIndex + dir;
-  nextIndex = Math.max(0, Math.min(2, nextIndex));
-  switchTierPage(nextIndex);
-}
-
-// Full-Screen Stacking Fade Showcase for 3-Tier Network (Tier 3 -> Tier 2 -> Tier 1)
-(function () {
-  const section = document.getElementById('tier-network');
+function switchTierPage(pageNum) {
+  currentTierIndex = Math.max(0, Math.min(2, pageNum - 1));
   const pages = [
     document.getElementById('tier-page-1'),
     document.getElementById('tier-page-2'),
     document.getElementById('tier-page-3')
   ];
-  const progressBar = document.getElementById('tier-fade-progress');
+  const tabs = [
+    document.getElementById('tier-tab-1'),
+    document.getElementById('tier-tab-2'),
+    document.getElementById('tier-tab-3')
+  ];
   const counter = document.getElementById('tier-fade-counter');
+  const progressBar = document.getElementById('tier-fade-progress');
 
-  if (!section || !pages[0]) return;
+  if (counter) counter.textContent = `TIER 0${currentTierIndex + 1} / 03`;
+  if (progressBar) progressBar.style.width = `${((currentTierIndex + 1) / 3) * 100}%`;
+
+  pages.forEach((page, idx) => {
+    if (!page) return;
+    if (idx === currentTierIndex) {
+      page.classList.add('active');
+      page.classList.remove('exit');
+    } else if (idx < currentTierIndex) {
+      page.classList.remove('active');
+      page.classList.add('exit');
+    } else {
+      page.classList.remove('active');
+      page.classList.remove('exit');
+    }
+  });
+
+  tabs.forEach((tab, idx) => {
+    if (!tab) return;
+    if (idx === currentTierIndex) {
+      tab.classList.add('active');
+    } else {
+      tab.classList.remove('active');
+    }
+  });
+}
+
+function nextTierPage() {
+  const nextIdx = (currentTierIndex + 1) % 3;
+  switchTierPage(nextIdx + 1);
+}
+
+function prevTierPage() {
+  const prevIdx = (currentTierIndex - 1 + 3) % 3;
+  switchTierPage(prevIdx + 1);
+}
+
+(function () {
+  const section = document.getElementById('tier-network');
+  if (!section) return;
 
   function onTierFadeScroll() {
     const sectionRect = section.getBoundingClientRect();
@@ -190,11 +213,6 @@ function stepTierPage(dir) {
     let progress = -sectionRect.top / totalScrollable;
     progress = Math.max(0, Math.min(1, progress));
 
-    if (progressBar) {
-      progressBar.style.width = `${progress * 100}%`;
-    }
-
-    // Determine active index: [0..0.33) -> Tier 3, [0.33..0.66) -> Tier 2, [0.66..1.0] -> Tier 1
     let activeIndex = 0;
     if (progress >= 0.66) {
       activeIndex = 2;
@@ -204,39 +222,13 @@ function stepTierPage(dir) {
       activeIndex = 0;
     }
 
-    currentTierIndex = activeIndex;
-
-    if (counter) {
-      counter.textContent = `TIER 0${activeIndex + 1} / 0${pages.length}`;
+    if (activeIndex !== currentTierIndex && sectionRect.top <= 0 && sectionRect.bottom >= viewportHeight) {
+      switchTierPage(activeIndex + 1);
     }
-
-    // Update active state on tab buttons
-    for (let i = 0; i < 3; i++) {
-      const tabBtn = document.getElementById('tier-tab-' + i);
-      if (tabBtn) {
-        if (i === activeIndex) tabBtn.classList.add('active');
-        else tabBtn.classList.remove('active');
-      }
-    }
-
-    pages.forEach((page, idx) => {
-      if (!page) return;
-      if (idx === activeIndex) {
-        page.classList.add('active');
-        page.classList.remove('exit');
-      } else if (idx < activeIndex) {
-        page.classList.remove('active');
-        page.classList.add('exit');
-      } else {
-        page.classList.remove('active');
-        page.classList.remove('exit');
-      }
-    });
   }
 
   window.addEventListener('scroll', onTierFadeScroll, { passive: true });
   window.addEventListener('resize', onTierFadeScroll);
-  onTierFadeScroll();
 })();
 
 
