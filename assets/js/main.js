@@ -143,15 +143,20 @@ function handleSubmit(e, formType) {
   onScroll();
 })();
 
-// Full View Scroll-Driven Pinned 3-Tier Showcase (Mouse Scroll Movement)
+// Full-Screen Stacking Fade Showcase for 3-Tier Network (Tier 3 -> Tier 2 -> Tier 1)
 (function () {
   const section = document.getElementById('tier-network');
-  const track = document.getElementById('tier-slide-track');
-  const progressBar = document.getElementById('tier-progress');
-  const counter = document.getElementById('tier-counter');
-  if (!section || !track) return;
+  const pages = [
+    document.getElementById('tier-page-1'),
+    document.getElementById('tier-page-2'),
+    document.getElementById('tier-page-3')
+  ];
+  const progressBar = document.getElementById('tier-fade-progress');
+  const counter = document.getElementById('tier-fade-counter');
 
-  function onTierScroll() {
+  if (!section || !pages[0]) return;
+
+  function onTierFadeScroll() {
     const sectionRect = section.getBoundingClientRect();
     const sectionHeight = section.offsetHeight;
     const viewportHeight = window.innerHeight;
@@ -162,36 +167,42 @@ function handleSubmit(e, formType) {
     let progress = -sectionRect.top / totalScrollable;
     progress = Math.max(0, Math.min(1, progress));
 
-    const cards = track.querySelectorAll('.tier-poster-card');
-    if (!cards.length) return;
-
-    const cardWidth = cards[0].offsetWidth + 48; // width + gap
-    const maxTranslate = cardWidth * (cards.length - 1);
-    const translateX = progress * maxTranslate;
-
-    track.style.transform = `translateX(-${translateX}px)`;
-
     if (progressBar) {
       progressBar.style.width = `${progress * 100}%`;
     }
 
-    // Determine active card (0, 1, 2)
-    const activeIndex = Math.min(cards.length - 1, Math.floor(progress * cards.length + 0.35));
-    if (counter) {
-      counter.textContent = `TIER 0${activeIndex + 1} / 0${cards.length}`;
+    // Map progress (0 to 1) to active page index (0, 1, 2)
+    let activeIndex = 0;
+    if (progress >= 0.64) {
+      activeIndex = 2;
+    } else if (progress >= 0.32) {
+      activeIndex = 1;
+    } else {
+      activeIndex = 0;
     }
 
-    cards.forEach((card, idx) => {
+    if (counter) {
+      counter.textContent = `TIER 0${activeIndex + 1} / 0${pages.length}`;
+    }
+
+    pages.forEach((page, idx) => {
+      if (!page) return;
       if (idx === activeIndex) {
-        card.classList.add('active');
+        page.classList.add('active');
+        page.classList.remove('exit');
+      } else if (idx < activeIndex) {
+        page.classList.remove('active');
+        page.classList.add('exit');
       } else {
-        card.classList.remove('active');
+        page.classList.remove('active');
+        page.classList.remove('exit');
       }
     });
   }
 
-  window.addEventListener('scroll', onTierScroll, { passive: true });
-  window.addEventListener('resize', onTierScroll);
-  onTierScroll();
+  window.addEventListener('scroll', onTierFadeScroll, { passive: true });
+  window.addEventListener('resize', onTierFadeScroll);
+  onTierFadeScroll();
 })();
+
 
