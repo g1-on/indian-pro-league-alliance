@@ -171,11 +171,11 @@ function handleSubmit(e, formType) {
       progressBar.style.width = `${progress * 100}%`;
     }
 
-    // Map progress (0 to 1) to active page index (0, 1, 2)
+    // Determine active index: [0..0.33) -> Tier 3, [0.33..0.66) -> Tier 2, [0.66..1.0] -> Tier 1
     let activeIndex = 0;
-    if (progress >= 0.64) {
+    if (progress >= 0.66) {
       activeIndex = 2;
-    } else if (progress >= 0.32) {
+    } else if (progress >= 0.33) {
       activeIndex = 1;
     } else {
       activeIndex = 0;
@@ -204,5 +204,6 @@ function handleSubmit(e, formType) {
   window.addEventListener('resize', onTierFadeScroll);
   onTierFadeScroll();
 })();
+
 
 
