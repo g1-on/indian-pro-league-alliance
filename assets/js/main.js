@@ -141,6 +141,66 @@ function handleSubmit(e, formType) {
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
   onScroll();
+// Bulletproof Scroll-Driven 3-Tier Fade Switching (Tier 3 -> Tier 2 -> Tier 1)
+(function () {
+  const section = document.getElementById('tier-network');
+  const page1 = document.getElementById('tier-scroll-page-1');
+  const page2 = document.getElementById('tier-scroll-page-2');
+  const page3 = document.getElementById('tier-scroll-page-3');
+  const counter = document.getElementById('tier-scroll-counter');
+  const progressBar = document.getElementById('tier-scroll-progress');
+
+  if (!section || !page1 || !page2 || !page3) return;
+
+  function updateTierScrollFade() {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.offsetHeight;
+    const viewportHeight = window.innerHeight;
+
+    const totalScrollable = sectionHeight - viewportHeight;
+    if (totalScrollable <= 0) return;
+
+    // Calculate scroll fraction from 0.0 (top of section) to 1.0 (bottom of section)
+    const scrollPos = window.scrollY - sectionTop;
+    let fraction = scrollPos / totalScrollable;
+    fraction = Math.max(0, Math.min(1, fraction));
+
+    if (progressBar) {
+      progressBar.style.width = `${fraction * 100}%`;
+    }
+
+    // Determine active page index: 0 = Tier 3, 1 = Tier 2, 2 = Tier 1
+    let activeIdx = 0;
+    if (fraction >= 0.64) {
+      activeIdx = 2;
+    } else if (fraction >= 0.32) {
+      activeIdx = 1;
+    } else {
+      activeIdx = 0;
+    }
+
+    if (counter) {
+      counter.textContent = `TIER 0${activeIdx + 1} / 03`;
+    }
+
+    const pages = [page1, page2, page3];
+    pages.forEach((page, idx) => {
+      if (idx === activeIdx) {
+        page.classList.add('active');
+        page.classList.remove('exit');
+      } else if (idx < activeIdx) {
+        page.classList.remove('active');
+        page.classList.add('exit');
+      } else {
+        page.classList.remove('active');
+        page.classList.remove('exit');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', updateTierScrollFade, { passive: true });
+  window.addEventListener('resize', updateTierScrollFade);
+  updateTierScrollFade();
 })();
 
 

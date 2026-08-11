@@ -577,83 +577,134 @@
   }
   .split-col .btn{margin-top:24px;}
 
-  /* ---------- 3 DEDICATED FULL-PAGE TIER SHOWCASES ---------- */
-  .tier-pages-wrapper {
+  /* ---------- 3-TIER SCROLL-DRIVEN FADE SHOWCASE ---------- */
+  .tier-scroll-section {
+    position: relative;
+    height: 300vh;
     background: #020817;
     color: #ffffff;
-    padding: 90px 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-  }
-  .tier-pages-main-head {
-    text-align: center;
-    max-width: 850px;
-    margin: 0 auto 64px;
-  }
-  .tier-pages-main-head .eyebrow {
-    color: var(--gold-light);
-    font-size: 13px;
-    letter-spacing: 0.16em;
-    font-family: 'IBM Plex Mono', monospace;
-    text-transform: uppercase;
-  }
-  .tier-pages-main-head h2 {
-    font-family: 'Big Shoulders Display', sans-serif;
-    font-size: 52px;
-    font-weight: 800;
-    color: #ffffff;
-    line-height: 1.05;
-    margin-top: 8px;
   }
 
-  .tier-standalone-page {
+  .tier-sticky-viewport {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 40%, #0A1C44 0%, #020817 100%);
+  }
+
+  .tier-scroll-header {
+    position: absolute;
+    top: 24px;
+    left: 48px;
+    right: 48px;
+    z-index: 50;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    padding-bottom: 16px;
+  }
+  .tier-scroll-header-left .eyebrow {
+    color: var(--gold-light);
+    font-size: 11.5px;
+    letter-spacing: 0.14em;
+  }
+  .tier-scroll-header-left h2 {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-size: 32px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.1;
+    margin-top: 2px;
+  }
+
+  .tier-fade-counter {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--gold-light);
+    background: rgba(212, 149, 47, 0.15);
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid rgba(240, 200, 117, 0.3);
+    letter-spacing: 0.1em;
+  }
+
+  .tier-fade-page {
+    position: absolute;
+    inset: 0;
+    padding-top: 100px;
+    padding-bottom: 40px;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1;
+    transform: scale(0.96) translateY(24px);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s;
+    pointer-events: none;
+  }
+
+  .tier-fade-page.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 10;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
+
+  .tier-fade-page.exit {
+    opacity: 0;
+    visibility: hidden;
+    z-index: 2;
+    transform: scale(1.04) translateY(-24px);
+    pointer-events: none;
+  }
+
+  .tier-card-container {
     background: rgba(4, 16, 41, 0.75);
     border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 24px;
-    padding: 48px;
-    margin-bottom: 60px;
+    padding: 40px 44px;
     max-width: 1140px;
-    margin-left: auto;
-    margin-right: auto;
+    width: 90%;
     box-shadow: 0 25px 80px rgba(0, 0, 0, 0.7);
-    transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-  }
-  .tier-standalone-page:last-child {
-    margin-bottom: 0;
-  }
-  .tier-standalone-page:hover {
-    border-color: rgba(240, 200, 117, 0.4);
-    box-shadow: 0 35px 100px rgba(0, 0, 0, 0.9), 0 0 30px rgba(212, 149, 47, 0.2);
-  }
-
-  .tier-standalone-content {
     display: grid;
     grid-template-columns: 1fr 1.05fr;
-    gap: 44px;
+    gap: 40px;
     align-items: center;
   }
 
-  .tier-standalone-media {
+  .tier-card-media {
     position: relative;
-    height: 400px;
+    height: 380px;
     border-radius: 18px;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.22);
     box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85);
   }
-  .tier-standalone-media img {
+  .tier-card-media img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: transform 0.8s ease;
   }
-  .tier-standalone-page:hover .tier-standalone-media img {
+  .tier-fade-page.active .tier-card-media img {
     transform: scale(1.06);
   }
-  .tier-standalone-badge {
+
+  .tier-card-badge {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 18px;
+    left: 18px;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12.5px;
     font-weight: 800;
@@ -664,69 +715,91 @@
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
   }
 
-  .tier-standalone-info {
+  .tier-card-info {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 14px;
   }
-  .tier-standalone-location {
+  .tier-card-location {
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
     color: var(--gold-light);
     font-weight: 700;
     background: rgba(212, 149, 47, 0.14);
     display: inline-block;
-    padding: 6px 14px;
+    padding: 5px 12px;
     border-radius: 6px;
     border: 1px solid rgba(240, 200, 117, 0.3);
     align-self: flex-start;
   }
-  .tier-standalone-info h3 {
+  .tier-card-info h3 {
     font-family: 'Big Shoulders Display', sans-serif;
-    font-size: 42px;
+    font-size: 38px;
     font-weight: 800;
     color: #ffffff;
     line-height: 1.05;
   }
-  .tier-standalone-info p {
-    font-size: 15px;
+  .tier-card-info p {
+    font-size: 14.5px;
     color: #CBD6F2;
-    line-height: 1.6;
+    line-height: 1.55;
   }
 
-  .tier-standalone-features {
+  .tier-card-features {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-top: 6px;
+    gap: 8px;
+    margin-top: 4px;
   }
-  .tier-standalone-features .item {
-    font-size: 14px;
+  .tier-card-features .item {
+    font-size: 13.5px;
     color: #F1F5F9;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     background: rgba(255, 255, 255, 0.04);
-    padding: 11px 16px;
+    padding: 9px 14px;
     border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.08);
   }
-  .tier-standalone-features .item span {
+  .tier-card-features .item span {
     color: var(--gold-light);
     font-weight: 800;
   }
 
-  .tier-standalone-cta {
-    margin-top: 10px;
+  .tier-card-cta {
+    margin-top: 8px;
     align-self: flex-start;
   }
 
+  .tier-scroll-footer {
+    position: absolute;
+    bottom: 20px;
+    left: 48px;
+    right: 48px;
+    z-index: 50;
+  }
+  .tier-progress-track {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .tier-progress-fill {
+    height: 100%;
+    width: 33.33%;
+    background: linear-gradient(90deg, var(--gold-light), var(--gold));
+    transition: width 0.3s ease;
+  }
+
   @media(max-width:960px){
-    .tier-standalone-page { padding: 32px 24px; border-radius: 20px; }
-    .tier-standalone-content { grid-template-columns: 1fr; gap: 24px; }
-    .tier-standalone-media { height: 260px; }
-    .tier-standalone-info h3 { font-size: 32px; }
-    .tier-pages-main-head h2 { font-size: 38px; }
+    .tier-scroll-section { height: auto; min-height: 0; }
+    .tier-sticky-viewport { position: relative; height: auto; padding-bottom: 40px; }
+    .tier-scroll-header { position: relative; top: 0; left: 0; right: 0; flex-direction: column; gap: 12px; padding: 24px; }
+    .tier-fade-page { position: relative; inset: auto; height: auto; opacity: 1; visibility: visible; display: flex; padding: 20px; }
+    .tier-card-container { grid-template-columns: 1fr; gap: 20px; padding: 24px; }
+    .tier-card-media { height: 240px; }
+    .tier-card-info h3 { font-size: 28px; }
   }
 
   /* ---------- REGISTRATION ---------- */
@@ -1410,33 +1483,36 @@
   </div>
 </section>
 
-<!-- ================= 3 DEDICATED FULL-PAGE TIER SHOWCASES ================= -->
-<section class="tier-pages-wrapper" id="tier-network">
-  <div class="wrap">
-    
-    <!-- Section Main Head -->
-    <div class="tier-pages-main-head">
-      <span class="eyebrow">NATIONAL INFRASTRUCTURE NETWORK</span>
-      <h2>3-TIER CONNECTED ALLIANCE SYSTEM.</h2>
+<!-- ================= 3-TIER SCROLL-DRIVEN FADE SHOWCASE ================= -->
+<section class="tier-scroll-section" id="tier-network">
+  <div class="tier-sticky-viewport">
+
+    <!-- Top Header Bar -->
+    <div class="tier-scroll-header">
+      <div class="tier-scroll-header-left">
+        <span class="eyebrow">NATIONAL INFRASTRUCTURE NETWORK</span>
+        <h2>3-TIER CONNECTED ALLIANCE SYSTEM.</h2>
+      </div>
+      <div class="tier-fade-counter" id="tier-scroll-counter">TIER 01 / 03</div>
     </div>
 
     <!-- Page 1: Tier 3 -->
-    <div class="tier-standalone-page" id="tier-3-page">
-      <div class="tier-standalone-content">
-        <div class="tier-standalone-media">
+    <div class="tier-fade-page active" id="tier-scroll-page-1">
+      <div class="tier-card-container">
+        <div class="tier-card-media">
           <img src="assets/images/athletics.png" alt="Tier 3 Grassroots &amp; Panchayat Infrastructure">
-          <span class="tier-standalone-badge pill-tier-3">Tier 3</span>
+          <span class="tier-card-badge pill-tier-3">Tier 3</span>
         </div>
-        <div class="tier-standalone-info">
-          <span class="tier-standalone-location">📍 Rural MP &amp; Panchayat Level India</span>
+        <div class="tier-card-info">
+          <span class="tier-card-location">📍 Rural MP &amp; Panchayat Level India</span>
           <h3>GRASSROOTS &amp; PANCHAYAT GROUNDS</h3>
           <p>Multi-sport outdoor grounds, synthetic running tracks, and semi-olympic pools constructed directly on panchayat land &amp; government school campuses to serve rural and semi-urban athletes across Madhya Pradesh and India.</p>
-          <div class="tier-standalone-features">
+          <div class="tier-card-features">
             <div class="item"><span>✓</span> Panchayat &amp; Village Level Multi-Sport Infrastructure</div>
             <div class="item"><span>✓</span> 100% Free Access for Rural &amp; Government School Athletes</div>
             <div class="item"><span>✓</span> Grassroots Talent Identification &amp; Scouting Camps</div>
           </div>
-          <div class="tier-standalone-cta">
+          <div class="tier-card-cta">
             <button class="btn btn-primary" onclick="openTab('player')">Register Village Ground / Athlete →</button>
           </div>
         </div>
@@ -1444,22 +1520,22 @@
     </div>
 
     <!-- Page 2: Tier 2 -->
-    <div class="tier-standalone-page" id="tier-2-page">
-      <div class="tier-standalone-content">
-        <div class="tier-standalone-media">
+    <div class="tier-fade-page" id="tier-scroll-page-2">
+      <div class="tier-card-container">
+        <div class="tier-card-media">
           <img src="assets/images/tier2_universities.png" alt="Tier 2 Private Schools &amp; Universities">
-          <span class="tier-standalone-badge pill-tier-2">Tier 2</span>
+          <span class="tier-card-badge pill-tier-2">Tier 2</span>
         </div>
-        <div class="tier-standalone-info">
-          <span class="tier-standalone-location">📍 NCR Cities &amp; All India Metro Hubs</span>
+        <div class="tier-card-info">
+          <span class="tier-card-location">📍 NCR Cities &amp; All India Metro Hubs</span>
           <h3>PRIVATE SCHOOLS &amp; UNIVERSITIES</h3>
           <p>Strategic network integration with premier private schools, colleges, and university campuses across Delhi-NCR, Gurgaon, Noida, and metro hubs nationwide to provide high-performance training hubs and tournament hosting centers.</p>
-          <div class="tier-standalone-features">
+          <div class="tier-card-features">
             <div class="item"><span>✓</span> Premier Private School &amp; University Campus Networks</div>
             <div class="item"><span>✓</span> NCR &amp; Metro City High-Performance Infrastructure</div>
             <div class="item"><span>✓</span> Inter-School &amp; University Championship Leagues</div>
           </div>
-          <div class="tier-standalone-cta">
+          <div class="tier-card-cta">
             <button class="btn btn-primary" onclick="openTab('vendor')">Connect Campus Network →</button>
           </div>
         </div>
@@ -1467,25 +1543,32 @@
     </div>
 
     <!-- Page 3: Tier 1 -->
-    <div class="tier-standalone-page" id="tier-1-page">
-      <div class="tier-standalone-content">
-        <div class="tier-standalone-media">
+    <div class="tier-fade-page" id="tier-scroll-page-3">
+      <div class="tier-card-container">
+        <div class="tier-card-media">
           <img src="assets/images/tier1_academy.png" alt="Tier 1 Professional Academies &amp; Elite Coaches">
-          <span class="tier-standalone-badge pill-tier-1">Tier 1</span>
+          <span class="tier-card-badge pill-tier-1">Tier 1</span>
         </div>
-        <div class="tier-standalone-info">
-          <span class="tier-standalone-location">📍 National Pro Centers &amp; Master Coaches</span>
+        <div class="tier-card-info">
+          <span class="tier-card-location">📍 National Pro Centers &amp; Master Coaches</span>
           <h3>PRO ACADEMIES &amp; TRAINING CENTERS</h3>
           <p>Connected with national high-performance academies, certified master coaches, Olympic-grade training facilities, sports science labs, and direct pro league scouting pipelines.</p>
-          <div class="tier-standalone-features">
+          <div class="tier-card-features">
             <div class="item"><span>✓</span> Professional Certified Master Coaches &amp; Master Trainers</div>
             <div class="item"><span>✓</span> High-Performance Olympic-Grade Academies</div>
             <div class="item"><span>✓</span> Pro League Direct Scouting &amp; Contract Pipeline</div>
           </div>
-          <div class="tier-standalone-cta">
+          <div class="tier-card-cta">
             <button class="btn btn-primary" onclick="openTab('investor')">Join Master Academy Alliance →</button>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Bottom Progress Track -->
+    <div class="tier-scroll-footer">
+      <div class="tier-progress-track">
+        <div class="tier-progress-fill" id="tier-scroll-progress"></div>
       </div>
     </div>
 
