@@ -63,7 +63,9 @@ body {
 }
 
 .cms-brand img {
-  height: 48px;
+  height: 76px;
+  width: auto;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
 }
 
 .cms-badge {
@@ -377,8 +379,25 @@ body {
   margin-bottom: 28px;
 }
 .login-header img {
-  height: 52px;
-  margin-bottom: 16px;
+  height: 84px;
+  width: auto;
+  margin-bottom: 18px;
+  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.6));
+}
+
+.admin-corner-logo {
+  position: absolute;
+  top: 24px;
+  left: 32px;
+  z-index: 200001;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.admin-corner-logo img {
+  height: 76px;
+  width: auto;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.6));
 }
 .login-badge {
   display: inline-block;
