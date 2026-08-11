@@ -1,6 +1,14 @@
 [
     {
-        "merged": "com.indianproleague.alliance.registration.app-merged_res-31:/layout_activity_main.xml.flat",
-        "source": "com.indianproleague.alliance.registration.app-main-33:/layout/activity_main.xml"
+        "merged": "com.indianproleague.alliance.registration.app-merged_res-31:/drawable_ic_launcher_round.png.flat",
+        "source": "com.indianproleague.alliance.registration.app-main-33:/drawable/ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\pc\\.gradle\\daemon\\8.14\\com.indianproleague.alliance.registration.app-merged_res-31:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\pc\\.gradle\\daemon\\8.14\\com.indianproleague.alliance.registration.app-main-33:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "com.indianproleague.alliance.registration.app-merged_res-31:/drawable_ic_launcher.png.flat",
+        "source": "com.indianproleague.alliance.registration.app-main-33:/drawable/ic_launcher.png"
     }
 ]

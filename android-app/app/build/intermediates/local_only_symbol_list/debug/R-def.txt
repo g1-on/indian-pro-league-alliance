@@ -5,6 +5,8 @@ color gold_light
 color navy
 color navy_deep
 color white
+drawable ic_launcher
+drawable ic_launcher_round
 id progressBar
 id webView
 layout activity_main
