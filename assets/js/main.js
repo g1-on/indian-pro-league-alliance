@@ -143,77 +143,7 @@ function handleSubmit(e, formType) {
   onScroll();
 })();
 
-// Interactive 3-Tier Network Showcase Logic (Tabs, Arrows & Auto Rotation)
-let currentTierIndex = 0;
-let tierAutoInterval = null;
 
-window.switchTierPage = function (pageNum) {
-  currentTierIndex = Math.max(0, Math.min(2, pageNum - 1));
-  const pages = [
-    document.getElementById('tier-page-1'),
-    document.getElementById('tier-page-2'),
-    document.getElementById('tier-page-3')
-  ];
-  const tabs = [
-    document.getElementById('tier-tab-1'),
-    document.getElementById('tier-tab-2'),
-    document.getElementById('tier-tab-3')
-  ];
-  const counter = document.getElementById('tier-fade-counter');
-  const progressBar = document.getElementById('tier-fade-progress');
-
-  if (counter) counter.textContent = `TIER 0${currentTierIndex + 1} / 03`;
-  if (progressBar) progressBar.style.width = `${((currentTierIndex + 1) / 3) * 100}%`;
-
-  pages.forEach((page, idx) => {
-    if (!page) return;
-    if (idx === currentTierIndex) {
-      page.classList.add('active');
-      page.style.display = 'flex';
-      page.style.opacity = '1';
-    } else {
-      page.classList.remove('active');
-      page.style.display = 'none';
-      page.style.opacity = '0';
-    }
-  });
-
-  tabs.forEach((tab, idx) => {
-    if (!tab) return;
-    if (idx === currentTierIndex) {
-      tab.classList.add('active');
-    } else {
-      tab.classList.remove('active');
-    }
-  });
-};
-
-window.nextTierPage = function () {
-  const nextIdx = (currentTierIndex + 1) % 3;
-  window.switchTierPage(nextIdx + 1);
-};
-
-window.prevTierPage = function () {
-  const prevIdx = (currentTierIndex - 1 + 3) % 3;
-  window.switchTierPage(prevIdx + 1);
-};
-
-// Initialize event listeners and state
-document.addEventListener('DOMContentLoaded', function () {
-  const btnPrev = document.querySelector('.tier-arrow-btn.arrow-prev');
-  const btnNext = document.querySelector('.tier-arrow-btn.arrow-next');
-  const tab1 = document.getElementById('tier-tab-1');
-  const tab2 = document.getElementById('tier-tab-2');
-  const tab3 = document.getElementById('tier-tab-3');
-
-  if (btnPrev) btnPrev.addEventListener('click', window.prevTierPage);
-  if (btnNext) btnNext.addEventListener('click', window.nextTierPage);
-  if (tab1) tab1.addEventListener('click', function () { window.switchTierPage(1); });
-  if (tab2) tab2.addEventListener('click', function () { window.switchTierPage(2); });
-  if (tab3) tab3.addEventListener('click', function () { window.switchTierPage(3); });
-
-  window.switchTierPage(1);
-});
 
 
 
