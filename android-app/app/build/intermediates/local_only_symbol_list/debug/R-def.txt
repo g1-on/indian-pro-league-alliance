@@ -1,0 +1,13 @@
+R_DEF: Internal format may change without notice
+local
+color gold
+color gold_light
+color navy
+color navy_deep
+color white
+id progressBar
+id webView
+layout activity_main
+string app_name
+string registration_portal
+style Theme.IPLAllianceRegistration

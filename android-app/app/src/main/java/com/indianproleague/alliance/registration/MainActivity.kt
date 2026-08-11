@@ -13,8 +13,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var webView: WebView
     private lateinit var progressBar: ProgressBar
 
-    // Production Portal & Local Server Fallback URL
-    private val appRegistrationUrl = "https://g1-on.github.io/indian-pro-league-alliance/#register"
+    // Dedicated Mobile Registration App URL
+    private val appRegistrationUrl = "https://g1-on.github.io/indian-pro-league-alliance/app.html"
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {

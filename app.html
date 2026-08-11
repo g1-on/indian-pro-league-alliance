@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IPL Alliance | Mobile Registration App</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Manrope:wght@500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-deep: #041A4D;
+    --navy: #0A2D6B;
+    --gold: #D4952F;
+    --gold-light: #F0C875;
+    --gold-deep: #A97319;
+    --cream: #FAF7F1;
+    --ink: #0E1830;
+    --slate: #5C6478;
+    --line: rgba(10,45,107,0.12);
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Manrope', sans-serif;
+    background: #041029;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---------- APP MOBILE HEADER ---------- */
+  .app-header {
+    background: rgba(4, 26, 77, 0.98);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 16px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+  .app-header-brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .app-header-brand img {
+    height: 48px;
+    width: auto;
+    filter: brightness(1.2) drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+  }
+  .app-sync-pill {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: #10B981;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 4px 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .app-sync-dot {
+    width: 7px;
+    height: 7px;
+    background: #10B981;
+    border-radius: 50%;
+    animation: pulse 1.8s infinite;
+  }
+  @keyframes pulse {
+    0% { opacity: 0.4; }
+    50% { opacity: 1; }
+    100% { opacity: 0.4; }
+  }
+
+  .app-title-bar {
+    margin-top: 14px;
+    text-align: center;
+  }
+  .app-title-bar h1 {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  .app-title-bar p {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    color: var(--gold-light);
+    margin-top: 2px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- MOBILE TAB SWITCHER ---------- */
+  .app-tabs-container {
+    padding: 16px 16px 0;
+    background: #020817;
+  }
+  .app-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .app-tab-btn {
+    background: transparent;
+    border: none;
+    color: #94A3B8;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 10px 4px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+  .app-tab-btn.active {
+    background: linear-gradient(120deg, var(--gold) 0%, var(--gold-deep) 100%);
+    color: var(--navy-deep);
+    font-weight: 800;
+    box-shadow: 0 4px 12px rgba(212, 149, 47, 0.35);
+  }
+
+  /* ---------- FORM MAIN CONTAINER ---------- */
+  .app-main {
+    flex-grow: 1;
+    padding: 20px 16px 36px;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .app-form-panel {
+    display: none;
+    background: rgba(4, 26, 77, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 22px 18px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  }
+  .app-form-panel.active { display: block; }
+
+  .app-form-intro {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+  .app-form-intro h3 {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-size: 24px;
+    color: #ffffff;
+    margin: 0;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  .app-form-intro p {
+    font-size: 13px;
+    color: #CBD6F2;
+    margin-top: 4px;
+    line-height: 1.45;
+  }
+
+  .app-form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .field label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--gold-light);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .field input, .field select, .field textarea {
+    width: 100%;
+    background: rgba(2, 8, 23, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--gold-light);
+    box-shadow: 0 0 10px rgba(240, 200, 117, 0.25);
+  }
+  .field select option {
+    background: #041029;
+    color: #ffffff;
+  }
+  .field textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .app-submit-btn {
+    width: 100%;
+    margin-top: 20px;
+    padding: 16px;
+    background: linear-gradient(120deg, var(--gold) 0%, var(--gold-deep) 100%);
+    color: var(--navy-deep);
+    border: none;
+    border-radius: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13.5px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(212, 149, 47, 0.4);
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .app-submit-btn:active {
+    transform: scale(0.98);
+  }
+
+  .app-form-note {
+    display: block;
+    text-align: center;
+    font-size: 11.5px;
+    color: #94A3B8;
+    margin-top: 10px;
+    line-height: 1.4;
+  }
+
+  /* ---------- CONFIRMATION BOX ---------- */
+  .confirm-box {
+    display: none;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid #10B981;
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 16px;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .confirm-box svg {
+    width: 24px;
+    height: 24px;
+    stroke: #10B981;
+    flex-shrink: 0;
+  }
+  .confirm-box h4 {
+    margin: 0;
+    color: #10B981;
+    font-size: 15px;
+    font-weight: 800;
+  }
+  .confirm-box p {
+    margin: 4px 0 0;
+    font-size: 12.5px;
+    color: #E2E8F0;
+    line-height: 1.5;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .app-footer {
+    text-align: center;
+    padding: 16px;
+    font-size: 11px;
+    color: #64748B;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background: #020817;
+  }
+</style>
+</head>
+<body>
+
+  <!-- ================= APP HEADER ================= -->
+  <header class="app-header">
+    <div class="app-header-brand">
+      <img src="assets/logo.svg" alt="IPL Alliance Corp">
+      <div class="app-sync-pill">
+        <span class="app-sync-dot"></span>
+        <span>CMS Live Sync</span>
+      </div>
+    </div>
+    <div class="app-title-bar">
+      <h1>Registration Mobile App</h1>
+      <p>Official Indian Pro League Alliance Portal</p>
+    </div>
+  </header>
+
+  <!-- ================= CATEGORY TAB SWITCHER ================= -->
+  <div class="app-tabs-container">
+    <div class="app-tabs">
+      <button class="app-tab-btn active" id="apptab-player" onclick="openAppTab('player')">🏃 Player</button>
+      <button class="app-tab-btn" id="apptab-vendor" onclick="openAppTab('vendor')">🏬 Vendor</button>
+      <button class="app-tab-btn" id="apptab-investor" onclick="openAppTab('investor')">💼 Investor</button>
+    </div>
+  </div>
+
+  <!-- ================= MAIN REGISTRATION CONTAINER ================= -->
+  <main class="app-main">
+
+    <!-- 1. PLAYER REGISTRATION FORM -->
+    <div class="app-form-panel active" id="apppanel-player">
+      <div class="app-form-intro">
+        <h3>Athlete Registration</h3>
+        <p>Register athletes for panchayat grounds, school facilities &amp; district coaching pathways.</p>
+      </div>
+      <form onsubmit="return handleAppSubmit(event,'player')">
+        <div class="app-form-grid">
+          <div class="field"><label>Full Name</label><input required type="text" placeholder="Athlete's full name"></div>
+          <div class="field"><label>Age</label><input required type="number" min="4" max="60" placeholder="e.g. 14"></div>
+          <div class="field"><label>Guardian Name (if minor)</label><input type="text" placeholder="Parent / guardian name"></div>
+          <div class="field"><label>Mobile Number</label><input required type="tel" placeholder="10-digit mobile number"></div>
+          <div class="field"><label>District / Panchayat</label><input required type="text" placeholder="e.g. Gwalior, Panchayat name"></div>
+          <div class="field"><label>State</label><input required type="text" value="Madhya Pradesh"></div>
+          <div class="field"><label>Preferred Sport</label>
+            <select required>
+              <option value="">Select a sport</option>
+              <option>Badminton</option><option>Athletics &amp; Track</option><option>Swimming</option>
+              <option>Volleyball</option><option>Basketball</option><option>Kabaddi</option><option>Kho-Kho</option>
+              <option>Table Tennis</option><option>Wrestling</option><option>Handball</option>
+              <option>Judo &amp; Martial Arts</option><option>Weightlifting</option><option>Boxing</option>
+              <option>Gymnastics</option><option>Hyrox Academy</option><option>Archery</option><option>Shooting Sport</option>
+            </select>
+          </div>
+          <div class="field"><label>Nearest Facility / School</label><input type="text" placeholder="School or ground name (if known)"></div>
+          <div class="field"><label>Sporting Background (optional)</label><textarea placeholder="Prior training or competitive background"></textarea></div>
+        </div>
+        <button class="app-submit-btn" type="submit">Submit Player Registration →</button>
+        <span class="app-form-note">Regional coordinator will contact the mobile number to confirm facility allocation.</span>
+
+        <div class="confirm-box" id="appconfirm-player">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>
+          <div>
+            <h4>Registration Complete!</h4>
+            <p>Your details are synced live to the Alliance CMS Portal. Our team will contact you within 24–48 hours.</p>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- 2. VENDOR REGISTRATION FORM -->
+    <div class="app-form-panel" id="apppanel-vendor">
+      <div class="app-form-intro">
+        <h3>Vendor Application</h3>
+        <p>Register as an approved equipment, kit, or footwear supplier at verified rates.</p>
+      </div>
+      <form onsubmit="return handleAppSubmit(event,'vendor')">
+        <div class="app-form-grid">
+          <div class="field"><label>Business / Shop Name</label><input required type="text" placeholder="Registered business name"></div>
+          <div class="field"><label>Contact Person</label><input required type="text" placeholder="Owner / authorized contact"></div>
+          <div class="field"><label>Mobile Number</label><input required type="tel" placeholder="10-digit mobile number"></div>
+          <div class="field"><label>Email Address</label><input type="email" placeholder="business@example.com"></div>
+          <div class="field"><label>City / District</label><input required type="text" placeholder="e.g. Jhansi"></div>
+          <div class="field"><label>GST / Registration Number</label><input type="text" placeholder="If applicable"></div>
+          <div class="field"><label>Product Category</label>
+            <select required>
+              <option value="">Select a category</option>
+              <option>Badminton Equipment</option>
+              <option>Swim Costumes &amp; Swimwear</option>
+              <option>Sports Footwear</option>
+              <option>Jerseys &amp; Team Kits</option>
+              <option>Training &amp; Gym Equipment</option>
+              <option>Hyrox Gear</option>
+              <option>Archery Equipment</option>
+              <option>Shooting Gear</option>
+              <option>General Sports Accessories</option>
+            </select>
+          </div>
+          <div class="field"><label>Years in Business</label><input type="number" min="0" placeholder="e.g. 5"></div>
+          <div class="field"><label>Products &amp; Indicative Rates</label><textarea placeholder="Key products supplied &amp; wholesale rates"></textarea></div>
+        </div>
+        <button class="app-submit-btn" type="submit">Submit Vendor Application →</button>
+        <span class="app-form-note">Procurement team will review your application &amp; verify wholesale rates.</span>
+
+        <div class="confirm-box" id="appconfirm-vendor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>
+          <div>
+            <h4>Application Submitted!</h4>
+            <p>Your vendor profile is registered on the CMS Portal. Procurement will reach out to complete verification.</p>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- 3. INVESTOR REGISTRATION FORM -->
+    <div class="app-form-panel" id="apppanel-investor">
+      <div class="app-form-intro">
+        <h3>Investor Inquiry</h3>
+        <p>Invest capital, land, or both into district sports infrastructure build-outs.</p>
+      </div>
+      <form onsubmit="return handleAppSubmit(event,'investor')">
+        <div class="app-form-grid">
+          <div class="field"><label>Full Name</label><input required type="text" placeholder="Investor's full name"></div>
+          <div class="field"><label>Company / Entity (optional)</label><input type="text" placeholder="Entity name"></div>
+          <div class="field"><label>Mobile Number</label><input required type="tel" placeholder="10-digit mobile number"></div>
+          <div class="field"><label>Email Address</label><input required type="email" placeholder="you@example.com"></div>
+          <div class="field"><label>City / State</label><input required type="text" placeholder="Current location"></div>
+          <div class="field"><label>Investment Type</label>
+            <select required>
+              <option value="">Select an option</option>
+              <option>Capital Investment</option>
+              <option>Land Contribution</option>
+              <option>Capital + Land</option>
+            </select>
+          </div>
+          <div class="field"><label>Investment Range</label>
+            <select>
+              <option value="">Select a range (optional)</option>
+              <option>Under ₹10 Lakh</option>
+              <option>₹10–50 Lakh</option>
+              <option>₹50 Lakh – ₹1 Crore</option>
+              <option>Above ₹1 Crore</option>
+            </select>
+          </div>
+          <div class="field"><label>Land Location (if applicable)</label><input type="text" placeholder="District / panchayat where land is located"></div>
+          <div class="field"><label>Notes for Executive Board</label><textarea placeholder="Target district, timeline, or profit-share questions"></textarea></div>
+        </div>
+        <button class="app-submit-btn" type="submit">Submit Investor Inquiry →</button>
+        <span class="app-form-note">Alliance Board will schedule a direct follow-up call regarding structure &amp; returns.</span>
+
+        <div class="confirm-box" id="appconfirm-investor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>
+          <div>
+            <h4>Inquiry Received!</h4>
+            <p>Your investment inquiry has been logged into the Executive CMS. Our board will contact you directly.</p>
+          </div>
+        </div>
+      </form>
+    </div>
+
+  </main>
+
+  <footer class="app-footer">
+    &copy; 2026 Indian Pro League Alliance Corp. All rights reserved.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-config.js"></script>
+  <script>
+    const CMS_STORAGE_KEY = 'ipl_alliance_submissions';
+
+    function getSubmissions() {
+      const stored = localStorage.getItem(CMS_STORAGE_KEY);
+      if (!stored) return [];
+      try { return JSON.parse(stored); } catch (e) { return []; }
+    }
+
+    function saveSubmissions(data) {
+      localStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function openAppTab(name) {
+      document.querySelectorAll('.app-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.app-form-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('apptab-' + name)?.classList.add('active');
+      document.getElementById('apppanel-' + name)?.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function handleAppSubmit(e, formType) {
+      e.preventDefault();
+      const form = e.target;
+      const inputs = form.querySelectorAll('input, select, textarea');
+
+      let submissionData = {
+        id: 'IPL-2026-' + Math.floor(1000 + Math.random() * 9000),
+        timestamp: new Date().toLocaleString('en-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true }),
+        type: formType === 'player' ? 'Player' : formType === 'vendor' ? 'Vendor' : 'Investor',
+        status: 'Pending Review',
+        name: '',
+        mobile: '',
+        location: '',
+        details: '',
+        notes: ''
+      };
+
+      inputs.forEach(input => {
+        const fieldDiv = input.closest('.field');
+        const label = fieldDiv ? (fieldDiv.querySelector('label')?.textContent || '') : '';
+        const val = input.value ? input.value.trim() : '';
+        if (!val) return;
+
+        if (label.includes('Name') || label.includes('Business') || label.includes('Contact Person')) {
+          if (!submissionData.name) submissionData.name = val;
+        } else if (label.includes('Mobile')) {
+          submissionData.mobile = val;
+        } else if (label.includes('District') || label.includes('City') || label.includes('Panchayat') || label.includes('State')) {
+          if (!submissionData.location) submissionData.location = val;
+          else submissionData.location += ', ' + val;
+        } else if (label.includes('Sport') || label.includes('Category') || label.includes('Investment Type')) {
+          submissionData.details = val;
+        } else if (label.includes('Background') || label.includes('Products') || label.includes('Notes') || label.includes('Ranges') || label.includes('Land')) {
+          if (!submissionData.notes) submissionData.notes = val;
+          else submissionData.notes += ' | ' + val;
+        }
+      });
+
+      if (!submissionData.name) submissionData.name = 'Registrant (' + submissionData.type + ')';
+
+      // 1. Save to LocalStorage immediately
+      const list = getSubmissions();
+      list.unshift(submissionData);
+      saveSubmissions(list);
+
+      // 2. Direct REST API Call to Supabase Cloud Database (CMS Sync)
+      if (typeof supabaseRestRequest === 'function') {
+        supabaseRestRequest('submissions', {
+          method: 'POST',
+          headers: { 'Prefer': 'return=minimal' },
+          body: JSON.stringify(submissionData)
+        }).then(res => {
+          console.log('☁️ Android Mobile App Registration synced to Supabase CMS Database!');
+        });
+      }
+
+      // 3. Show Confirmation Box
+      const confirmBox = document.getElementById('appconfirm-' + formType);
+      if (confirmBox) {
+        confirmBox.style.display = 'flex';
+        setTimeout(() => { confirmBox.scrollIntoView({ behavior: 'smooth' }); }, 100);
+      }
+
+      form.reset();
+      return false;
+    }
+  </script>
+</body>
+</html>
