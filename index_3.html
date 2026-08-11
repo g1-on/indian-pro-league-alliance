@@ -577,6 +577,113 @@
   }
   .split-col .btn{margin-top:24px;}
 
+  /* ---------- 3-TIER NETWORK ECOSYSTEM ---------- */
+  .tier-ecosystem {
+    background: #020817;
+    color: #ffffff;
+    padding: 90px 0;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 48px;
+  }
+  .tier-card {
+    background: #041029;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .tier-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--gold);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+  }
+  .tier-image-wrap {
+    position: relative;
+    height: 230px;
+    overflow: hidden;
+  }
+  .tier-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .tier-card:hover .tier-image-wrap img {
+    transform: scale(1.06);
+  }
+  .tier-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 4px;
+    letter-spacing: 0.08em;
+  }
+  .badge-tier-3 { background: rgba(59, 130, 246, 0.95); color: #fff; }
+  .badge-tier-2 { background: rgba(168, 85, 247, 0.95); color: #fff; }
+  .badge-tier-1 { background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: #040C1E; }
+
+  .tier-content {
+    padding: 24px 24px 30px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  .tier-content h3 {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 6px;
+  }
+  .tier-location {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--gold-light);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .tier-content p {
+    font-size: 14.5px;
+    color: #CBD6F2;
+    line-height: 1.55;
+    margin-bottom: 18px;
+  }
+  .tier-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 16px;
+    margin-top: auto;
+  }
+  .tier-features li {
+    font-size: 13px;
+    color: #E2E8F0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @media(max-width:960px){
+    .tier-grid { grid-template-columns: 1fr; }
+  }
+
   /* ---------- REGISTRATION ---------- */
   .register{background:linear-gradient(180deg,var(--navy-deep),var(--navy));color:#fff;}
   .tabs{display:flex;gap:4px;margin-bottom:0;border-bottom:2px solid rgba(255,255,255,0.2);}
@@ -1254,6 +1361,73 @@
 
     <div class="sports-progress-bar-wrap">
       <div class="sports-progress-bar" id="sports-progress"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3-TIER NETWORK ECOSYSTEM ================= -->
+<section class="tier-ecosystem" id="tier-network">
+  <div class="wrap">
+    <div class="section-head on-dark">
+      <span class="eyebrow light">National Infrastructure Network</span>
+      <h2>3-Tier Connected Alliance System.</h2>
+      <p>From panchayat ground zero to elite pro leagues &mdash; connecting rural grounds, NCR metro school campuses, and national pro academies across India.</p>
+    </div>
+
+    <div class="tier-grid">
+      <!-- Tier 3 Card -->
+      <div class="tier-card tier-3-card">
+        <div class="tier-image-wrap">
+          <img src="assets/images/athletics.png" alt="Tier 3 Grassroots &amp; Panchayat Infrastructure">
+          <span class="tier-badge badge-tier-3">Tier 3</span>
+        </div>
+        <div class="tier-content">
+          <h3>Grassroots &amp; Panchayat Grounds</h3>
+          <span class="tier-location">📍 Rural MP &amp; Panchayat Level India</span>
+          <p>Multi-sport outdoor grounds, synthetic tracks, and semi-olympic pools constructed directly on panchayat land &amp; government school campuses.</p>
+          <ul class="tier-features">
+            <li>✓ Panchayat &amp; Village Level Infrastructure</li>
+            <li>✓ Free Access for Rural &amp; School Athletes</li>
+            <li>✓ Grassroots Talent Identification Camps</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tier 2 Card -->
+      <div class="tier-card tier-2-card">
+        <div class="tier-image-wrap">
+          <img src="assets/images/tier2_universities.png" alt="Tier 2 Private Schools &amp; Universities">
+          <span class="tier-badge badge-tier-2">Tier 2</span>
+        </div>
+        <div class="tier-content">
+          <h3>Private Schools &amp; Universities</h3>
+          <span class="tier-location">📍 NCR Cities &amp; All India Metro Hubs</span>
+          <p>Connected with elite private schools, colleges, and university campuses across Delhi-NCR, Gurgaon, Noida, and metro cities nationwide.</p>
+          <ul class="tier-features">
+            <li>✓ Private School &amp; University Networks</li>
+            <li>✓ NCR &amp; Metro City Campus Partnerships</li>
+            <li>✓ Inter-School &amp; University Tournaments</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tier 1 Card -->
+      <div class="tier-card tier-1-card">
+        <div class="tier-image-wrap">
+          <img src="assets/images/tier1_academy.png" alt="Tier 1 Professional Academies &amp; Elite Coaches">
+          <span class="tier-badge badge-tier-1">Tier 1</span>
+        </div>
+        <div class="tier-content">
+          <h3>Pro Academies &amp; Training Centers</h3>
+          <span class="tier-location">📍 National Pro Centers &amp; Master Coaches</span>
+          <p>Connected with national high-performance academies, certified master coaches, Olympic-grade training centers, and pro league scouts.</p>
+          <ul class="tier-features">
+            <li>✓ Professional Certified Master Coaches</li>
+            <li>✓ High-Performance Elite Academies</li>
+            <li>✓ Pro League Direct Scouting Pipeline</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </section>
