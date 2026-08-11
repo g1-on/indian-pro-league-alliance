@@ -147,7 +147,7 @@ function handleSubmit(e, formType) {
 let currentTierIndex = 0;
 let tierAutoInterval = null;
 
-function switchTierPage(pageNum) {
+window.switchTierPage = function (pageNum) {
   currentTierIndex = Math.max(0, Math.min(2, pageNum - 1));
   const pages = [
     document.getElementById('tier-page-1'),
@@ -169,8 +169,12 @@ function switchTierPage(pageNum) {
     if (!page) return;
     if (idx === currentTierIndex) {
       page.classList.add('active');
+      page.style.display = 'flex';
+      page.style.opacity = '1';
     } else {
       page.classList.remove('active');
+      page.style.display = 'none';
+      page.style.opacity = '0';
     }
   });
 
@@ -182,32 +186,35 @@ function switchTierPage(pageNum) {
       tab.classList.remove('active');
     }
   });
-}
+};
 
-function nextTierPage() {
+window.nextTierPage = function () {
   const nextIdx = (currentTierIndex + 1) % 3;
-  switchTierPage(nextIdx + 1);
-}
+  window.switchTierPage(nextIdx + 1);
+};
 
-function prevTierPage() {
+window.prevTierPage = function () {
   const prevIdx = (currentTierIndex - 1 + 3) % 3;
-  switchTierPage(prevIdx + 1);
-}
+  window.switchTierPage(prevIdx + 1);
+};
 
-// Auto-advance tier slides every 6 seconds
-(function () {
-  const section = document.getElementById('tier-network');
-  if (!section) return;
+// Initialize event listeners and state
+document.addEventListener('DOMContentLoaded', function () {
+  const btnPrev = document.querySelector('.tier-arrow-btn.arrow-prev');
+  const btnNext = document.querySelector('.tier-arrow-btn.arrow-next');
+  const tab1 = document.getElementById('tier-tab-1');
+  const tab2 = document.getElementById('tier-tab-2');
+  const tab3 = document.getElementById('tier-tab-3');
 
-  function resetTierTimer() {
-    if (tierAutoInterval) clearInterval(tierAutoInterval);
-    tierAutoInterval = setInterval(() => {
-      nextTierPage();
-    }, 6000);
-  }
+  if (btnPrev) btnPrev.addEventListener('click', window.prevTierPage);
+  if (btnNext) btnNext.addEventListener('click', window.nextTierPage);
+  if (tab1) tab1.addEventListener('click', function () { window.switchTierPage(1); });
+  if (tab2) tab2.addEventListener('click', function () { window.switchTierPage(2); });
+  if (tab3) tab3.addEventListener('click', function () { window.switchTierPage(3); });
 
-  resetTierTimer();
-})();
+  window.switchTierPage(1);
+});
+
 
 
 
