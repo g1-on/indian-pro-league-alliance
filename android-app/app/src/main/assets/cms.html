@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Executive CMS Portal | Indian Pro League Alliance Corp</title>
+  <link rel="stylesheet" href="assets/css/cms.css">
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Mono:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- ================= ADMIN LOGIN SCREEN OVERLAY ================= -->
+  <div class="admin-login-overlay" id="admin-login-overlay">
+    <div class="admin-corner-logo">
+      <img src="assets/logo.svg" alt="Indian Pro League Alliance Corp">
+    </div>
+
+    <div class="login-card">
+      <div class="login-header">
+        <img src="assets/logo.svg" alt="Indian Pro League Alliance Corp">
+        <div>
+          <span class="login-badge">Alliance Security Portal</span>
+          <h2>Executive Admin Login</h2>
+        </div>
+      </div>
+
+      <form class="login-form" onsubmit="return handleAdminLogin(event)">
+        <div class="login-error" id="login-error-msg">Invalid Username or Password</div>
+
+        <div class="login-field">
+          <label>Username / Admin Email</label>
+          <input required type="text" id="login-username" placeholder="Enter admin username" autocomplete="username" value="admin">
+        </div>
+
+        <div class="login-field">
+          <label>Password</label>
+          <input required type="password" id="login-password" placeholder="Enter admin password" autocomplete="current-password" value="admin123">
+        </div>
+
+        <button type="submit" class="login-submit-btn">Sign In to CMS Portal 🔒</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="cms-container" id="cms-main-container">
+    <!-- Header Card -->
+    <div class="cms-header-card">
+      <div class="cms-brand">
+        <img src="assets/logo.svg" alt="Indian Pro League Alliance Corp">
+        <div>
+          <span class="cms-badge">Executive Management System</span>
+          <h1>Centralized Administration CMS</h1>
+        </div>
+      </div>
+      <div class="cms-actions">
+        <a href="index_3.html" class="cms-btn cms-btn-navy">🌐 View Portal</a>
+        <button class="cms-btn cms-btn-green" onclick="exportCMSToCSV()">📥 Export CSV</button>
+        <button class="cms-btn cms-btn-navy" onclick="seedSampleCMSData()">🔄 Reset / Seed Data</button>
+        <button class="cms-btn" style="background:#EF4444;color:#ffffff;" onclick="handleAdminLogout()">Logout 🚪</button>
+      </div>
+    </div>
+
+    <!-- Main Navigation Sections in CMS -->
+    <div class="cms-section-nav">
+      <button class="cms-sec-tab active" id="sec-tab-submissions" onclick="switchCMSSection('submissions')">
+        📋 Submissions &amp; Login Approvals
+      </button>
+      <button class="cms-sec-tab" id="sec-tab-performance" onclick="switchCMSSection('performance')">
+        🏆 Player Performance Manager
+      </button>
+      <button class="cms-sec-tab" id="sec-tab-events" onclick="switchCMSSection('events')">
+        📅 Sports Events Calendar
+      </button>
+      <button class="cms-sec-tab" id="sec-tab-apps" onclick="switchCMSSection('apps')">
+        📩 Player Event Applications
+      </button>
+    </div>
+
+    <!-- Analytics Stats Grid -->
+    <div class="cms-stats-grid">
+      <div class="cms-stat-card">
+        <span class="lbl">Total Registrations</span>
+        <span class="val" id="cms-stat-total">0</span>
+      </div>
+      <div class="cms-stat-card border-player">
+        <span class="lbl">Approved Players</span>
+        <span class="val" id="cms-stat-players">0</span>
+      </div>
+      <div class="cms-stat-card border-vendor">
+        <span class="lbl">Verified Vendors</span>
+        <span class="val" id="cms-stat-vendors">0</span>
+      </div>
+      <div class="cms-stat-card border-investor">
+        <span class="lbl">Active Investors</span>
+        <span class="val" id="cms-stat-investors">0</span>
+      </div>
+    </div>
+
+    <!-- SECTION 1: SUBMISSIONS & LOGIN APPROVALS -->
+    <div class="cms-panel cms-sec-panel active" id="sec-panel-submissions">
+      <div class="cms-toolbar">
+        <div class="cms-filter-tabs">
+          <button class="cms-tab active" id="cms-filter-all" onclick="filterCMSCategory('all')">All Registrations</button>
+          <button class="cms-tab" id="cms-filter-player" onclick="filterCMSCategory('Player')">Players</button>
+          <button class="cms-tab" id="cms-filter-vendor" onclick="filterCMSCategory('Vendor')">Vendors</button>
+          <button class="cms-tab" id="cms-filter-investor" onclick="filterCMSCategory('Investor')">Investors</button>
+        </div>
+        <div class="cms-search-box">
+          <input type="text" id="cms-search-input" placeholder="Search name, mobile, district, sport..." oninput="renderCMSTable()">
+        </div>
+      </div>
+
+      <div class="cms-table-wrapper">
+        <table class="cms-table">
+          <thead>
+            <tr>
+              <th>ID &amp; Login Creds</th>
+              <th>Date &amp; Time</th>
+              <th>Type</th>
+              <th>Name / Entity</th>
+              <th>Mobile</th>
+              <th>Location</th>
+              <th>Discipline / Offer</th>
+              <th>Approval Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="cms-table-body">
+            <!-- Dynamic Rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SECTION 2: PLAYER PERFORMANCE MANAGER -->
+    <div class="cms-panel cms-sec-panel" id="sec-panel-performance">
+      <div class="cms-toolbar">
+        <div class="cms-sec-title">
+          <h3>Athlete Performance Records &amp; State Rankings</h3>
+          <p>Track matches played, wins, state ranks, fitness scores, and official coach remarks.</p>
+        </div>
+      </div>
+      <div class="cms-table-wrapper">
+        <table class="cms-table">
+          <thead>
+            <tr>
+              <th>Player ID</th>
+              <th>Player Name</th>
+              <th>Sport</th>
+              <th>Matches Played</th>
+              <th>Wins / Medals</th>
+              <th>State Rank</th>
+              <th>Fitness Score</th>
+              <th>Coach Remarks</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="cms-perf-table-body">
+            <!-- Dynamic Performance Rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SECTION 3: SPORTS EVENTS CALENDAR -->
+    <div class="cms-panel cms-sec-panel" id="sec-panel-events">
+      <div class="cms-toolbar" style="justify-content:space-between;">
+        <div class="cms-sec-title">
+          <h3>Corporation Sports Events &amp; Tournaments</h3>
+          <p>Create and manage official sports trials, championships, and athletic events.</p>
+        </div>
+        <button class="cms-btn cms-btn-green" onclick="openAddEventModal()">+ Create New Sports Event</button>
+      </div>
+      <div class="cms-table-wrapper">
+        <table class="cms-table">
+          <thead>
+            <tr>
+              <th>Event Code</th>
+              <th>Title &amp; Sport</th>
+              <th>Date &amp; Venue</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th>Applications</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="cms-events-table-body">
+            <!-- Dynamic Event Rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SECTION 4: EVENT APPLICATIONS -->
+    <div class="cms-panel cms-sec-panel" id="sec-panel-apps">
+      <div class="cms-toolbar">
+        <div class="cms-sec-title">
+          <h3>Player Event Registration Submissions</h3>
+          <p>Applications submitted by approved athletes for upcoming sports events.</p>
+        </div>
+      </div>
+      <div class="cms-table-wrapper">
+        <table class="cms-table">
+          <thead>
+            <tr>
+              <th>App ID</th>
+              <th>Submission Date</th>
+              <th>Event Title</th>
+              <th>Athlete Name &amp; ID</th>
+              <th>Sport</th>
+              <th>Details / T-Shirt</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="cms-apps-table-body">
+            <!-- Dynamic Event Applications -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Record Detail Modal -->
+  <div class="cms-detail-overlay" id="cms-detail-modal">
+    <div class="cms-detail-card">
+      <div class="cms-detail-header">
+        <h3 id="cms-detail-title">Registration Record Details</h3>
+        <button class="action-btn" onclick="closeCMSDetailModal()">&times;</button>
+      </div>
+      <div id="cms-detail-content">
+        <!-- Content -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Credentials Edit Modal -->
+  <div class="cms-detail-overlay" id="cms-creds-modal">
+    <div class="cms-detail-card" style="max-width:480px;">
+      <div class="cms-detail-header">
+        <h3>Manage Account Credentials</h3>
+        <button class="action-btn" onclick="closeCredsModal()">&times;</button>
+      </div>
+      <form onsubmit="return handleSaveCreds(event)" style="display:flex;flex-direction:column;gap:16px;margin-top:16px;">
+        <input type="hidden" id="creds-record-id">
+        <div>
+          <label style="font-size:12px;color:#94A3B8;display:block;margin-bottom:4px;">Login ID / Application No.</label>
+          <input type="text" id="creds-login-id" readonly style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:#ffffff;font-family:'IBM Plex Mono',monospace;">
+        </div>
+        <div>
+          <label style="font-size:12px;color:#94A3B8;display:block;margin-bottom:4px;">Password</label>
+          <input type="text" id="creds-password" required style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:#ffffff;">
+        </div>
+        <button type="submit" class="cms-btn cms-btn-green" style="justify-content:center;margin-top:8px;">Save Login Credentials</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Performance Modal -->
+  <div class="cms-detail-overlay" id="cms-perf-modal">
+    <div class="cms-detail-card" style="max-width:560px;">
+      <div class="cms-detail-header">
+        <h3 id="perf-modal-title">Update Athlete Performance</h3>
+        <button class="action-btn" onclick="closePerfModal()">&times;</button>
+      </div>
+      <form onsubmit="return handleSavePerformance(event)" style="display:flex;flex-direction:column;gap:14px;margin-top:16px;">
+        <input type="hidden" id="perf-player-id">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label style="font-size:12px;color:#94A3B8;display:block;margin-bottom:4px;">Matches Played</label>
+            <input type="number" id="perf-matches" required style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:#ffffff;">
+          </div>
+          <div>
+            <label style="font-size:12px;color:#94A3B8;display:block;margin-bottom:4px;">Wins / Medals</label>
+            <input type="number" id="perf-wins" required style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:#ffffff;">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label style="font-size:12px;color:#94A3B8;display:block;margin-bottom:4px;">State Rank</label>
+            <input type="text" id="perf-rank" required placeholder="e.g. #3 in MP U-17" style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:#ffffff;">
+          </div>
+          <div>
+            <label style="font-size:12px;color:#94A3B8;display:block;margin-bottom:4px;">Fitness Score</label>
+            <input type="text" id="perf-fitness" required placeholder="e.g. 94/100" style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:#ffffff;">
+          </div>
+        </div>
+        <div>
+          <label style="font-size:12px;color:#94A3B8;display:block;margin-bottom:4px;">Key Achievements &amp; Medals</label>
+          <input type="text" id="perf-achievements" placeholder="Silver Medal Gwalior Cup..." style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:#ffffff;">
+        </div>
+        <div>
+          <label style="font-size:12px;color:#94A3B8;display:block;margin-bottom:4px;">Official Coach Remarks</label>
+          <textarea id="perf-remarks" rows="3" placeholder="High stamina, excellent court movement..." style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:#ffffff;"></textarea>
+        </div>
+        <button type="submit" class="cms-btn cms-btn-green" style="justify-content:center;">Save Performance Record</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Create/Edit Event Modal -->
+  <div class="cms-detail-overlay" id="cms-event-modal">
+    <div class="cms-detail-card" style="max-width:580px;">
+      <div class="cms-detail-header">
+        <h3 id="event-modal-title">Create Sports Event</h3>
+        <button class="action-btn" onclick="closeEventModal()">&times;</button>
+      </div>
+      <form onsubmit="return handleSaveEvent(event)" style="display:flex;flex-direction:column;gap:14px;margin-top:16px;">
+        <input type="hidden" id="event-id">
+        <div>
+          <label style="font-size:12px;color:#94A3B8;display:block;margin-bottom:4px;">Event Title</label>
+          <input type="text" id="event-title" required placeholder="e.g. MP State Youth Badminton Championship 2026" style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:#ffffff;">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label style="font-size:12px;color:#94A3B8;display:block;margin-bottom:4px;">Sport / Discipline</label>
+            <input type="text" id="event-sport" required placeholder="Badminton, Athletics..." style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:#ffffff;">
+          </div>
+          <div>
+            <label style="font-size:12px;color:#94A3B8;display:block;margin-bottom:4px;">Event Date</label>
+            <input type="text" id="event-date" required placeholder="e.g. 25 Aug 2026" style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:#ffffff;">
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label style="font-size:12px;color:#94A3B8;display:block;margin-bottom:4px;">Venue / Location</label>
+            <input type="text" id="event-venue" required placeholder="Gwalior Indoor Complex" style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:#ffffff;">
+          </div>
+          <div>
+            <label style="font-size:12px;color:#94A3B8;display:block;margin-bottom:4px;">Status</label>
+            <select id="event-status" style="width:100%;padding:10px;background:rgba(4,16,41,0.9);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:#ffffff;">
+              <option value="Registration Open">Registration Open</option>
+              <option value="Upcoming">Upcoming</option>
+              <option value="Registration Closed">Registration Closed</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label style="font-size:12px;color:#94A3B8;display:block;margin-bottom:4px;">Category / Eligibility</label>
+          <input type="text" id="event-category" required placeholder="e.g. Under-17 Singles & Doubles" style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:#ffffff;">
+        </div>
+        <div>
+          <label style="font-size:12px;color:#94A3B8;display:block;margin-bottom:4px;">Event Description</label>
+          <textarea id="event-desc" rows="3" placeholder="Tournament overview, trial details..." style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:6px;color:#ffffff;"></textarea>
+        </div>
+        <button type="submit" class="cms-btn cms-btn-green" style="justify-content:center;">Save Sports Event</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="assets/js/cms.js"></script>
+</body>
+
+</html>

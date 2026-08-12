@@ -1,0 +1,6 @@
+# Build output directories to ignore
+android-app/app/build/
+android-app/.gradle/
+.gradle/
+*.tmp
+~$*.docx

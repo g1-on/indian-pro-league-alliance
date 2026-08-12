@@ -1,0 +1,1964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="theme-color" content="#041A4D">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-deep:#041A4D;
+    --navy:#0A2D6B;
+    --navy-2:#0F3480;
+    --blue:#2F7CD6;
+    --blue-bright:#4E97ED;
+    --gold-deep:#A97319;
+    --gold:#D4952F;
+    --gold-light:#F0C875;
+    --cream:#FAF7F1;
+    --cream-2:#F1ECE1;
+    --ink:#0E1830;
+    --slate:#5C6478;
+    --slate-light:#8890A1;
+    --line:rgba(10,45,107,0.12);
+    --white:#ffffff;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Manrope',sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Big Shoulders Display',sans-serif;
+    margin:0;
+    letter-spacing:0.01em;
+    text-transform:uppercase;
+    font-weight:800;
+    line-height:0.98;
+  }
+  p{margin:0;line-height:1.6;color:var(--slate);}
+  a{color:inherit;text-decoration:none;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--gold-deep);
+    font-weight:600;
+  }
+  .eyebrow.light{color:var(--gold-light);}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  img{max-width:100%;display:block;}
+  button{font-family:inherit;cursor:pointer;}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky;top:0;z-index:100;
+    background:rgba(4,26,77,0.98);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    box-shadow:0 4px 20px rgba(0,0,0,0.3);
+  }
+  .nav .nav-wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:108px;width:100%;max-width:100%;padding:0 40px;}
+  .nav-left{display:flex;align-items:center;justify-content:flex-start;}
+  .nav-center{display:flex;align-items:center;justify-content:center;}
+  .nav-right{display:flex;align-items:center;justify-content:flex-end;}
+  .nav-logo{display:flex;align-items:center;gap:14px;}
+  .nav-logo img{height:92px;width:auto;filter:brightness(1.25) drop-shadow(0 6px 14px rgba(0,0,0,0.6));transition:transform .2s ease;}
+  .nav-links{display:flex;align-items:center;gap:36px;}
+  .nav-links a{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:#E2E8F0;
+    transition:color .2s;
+  }
+  .nav-links a:hover{color:var(--gold-light);}
+  .nav-cta{
+    background:linear-gradient(120deg,var(--gold) 0%,var(--gold-deep) 100%);
+    color:var(--navy-deep);
+    padding:12px 24px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    border:none;
+    box-shadow:0 4px 12px rgba(212,149,47,0.3);
+  }
+  .nav-cta:hover{transform:translateY(-1px);background:linear-gradient(120deg,var(--gold-light) 0%,var(--gold) 100%);}
+  .nav-toggle{display:none;background:none;border:none;color:#fff;font-size:26px;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background: var(--navy-deep);
+    color: #fff;
+    padding: 110px 0 80px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg{
+    position: absolute; inset: 0; z-index: 0; overflow: hidden;
+  }
+  .hero-bg-track{
+    display: flex; height: 100%; position: absolute; top: 0; left: 0;
+    animation: hero-bg-scroll 60s linear infinite;
+    will-change: transform;
+  }
+  .hero-bg-track img{
+    height: 100%; width: auto; min-width: 340px; object-fit: cover; flex-shrink: 0;
+    filter: brightness(0.65) saturate(1.2);
+  }
+  @keyframes hero-bg-scroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  .hero-overlay{
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(135deg, rgba(4,26,77,0.20) 0%, rgba(2,8,23,0.20) 100%);
+    pointer-events: none;
+  }
+  .hero-grid{
+    display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 40px; align-items: center;
+    position: relative; z-index: 2;
+    width: 100%;
+  }
+  .hero-text-block {
+    background: rgba(4, 26, 77, 0.20);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  }
+  .hero h1{
+    font-size: clamp(38px,4.8vw,60px);
+    color: #fff;
+    margin-top: 14px;
+    line-height: 1.05;
+    text-shadow: 0 3px 18px rgba(0,0,0,0.85);
+  }
+  .hero h1 em{
+    font-style: normal;
+    color: #F0C875;
+    text-shadow: 0 3px 18px rgba(0,0,0,0.95), 0 0 14px rgba(240,200,117,0.65);
+  }
+  .hero p.lead{
+    color: #F1F5F9;
+    font-size: 16.5px;
+    font-weight: 500;
+    line-height: 1.65;
+    margin-top: 18px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  }
+  .hero-ctas{display:flex;gap:14px;margin-top:28px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:14px 26px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+    border:1px solid transparent;
+    border-radius:4px;
+    transition:transform .18s ease, opacity .18s ease, box-shadow .18s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-gold{background:linear-gradient(120deg,var(--gold) 0%,var(--gold-deep) 100%);color:var(--navy-deep);box-shadow:0 4px 14px rgba(212,149,47,0.35);}
+  .btn-outline{border-color:rgba(255,255,255,0.7);color:#ffffff;background:rgba(4,26,77,0.7);backdrop-filter:blur(6px);}
+  .btn-outline:hover{border-color:var(--gold-light);color:var(--gold-light);background:rgba(4,26,77,0.9);}
+  .btn-navy{background:var(--navy-deep);color:#ffffff;}
+  .btn-navy:hover{background:var(--navy);}
+
+  .hero-stats{
+    display:grid;grid-template-columns:1fr 1fr;gap:1px;
+    background:rgba(255,255,255,0.25);
+    margin-top:36px;
+    border-radius:10px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.25);
+  }
+  .hero-stats div{background:rgba(4,26,77,0.85);backdrop-filter:blur(8px);padding:18px 16px;}
+  .hero-stats .num{
+    font-family:'Big Shoulders Display',sans-serif;font-weight:800;
+    font-size:36px;color:#F8D178;
+  }
+  .hero-stats .lbl{font-size:12px;color:#CBD6F2;margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;}
+
+  .hero-card{
+    background:rgba(4,26,77,0.85);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    border:1px solid rgba(255,255,255,0.25);
+    padding:36px;
+    position:relative;
+    border-radius:16px;
+    box-shadow:0 25px 60px rgba(0,0,0,0.6);
+  }
+  .hero-card .tag{
+    display:inline-block;background:rgba(212,149,47,0.25);color:#FDE68A;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:700;letter-spacing:0.12em;
+    padding:5px 14px;text-transform:uppercase;margin-bottom:16px;border:1px solid rgba(212,149,47,0.4);
+    border-radius:4px;
+  }
+  .hero-card h3{color:#ffffff;font-size:26px;margin-bottom:12px;}
+  .hero-card p{color:#CBD6F2;font-size:15px;line-height:1.6;}
+  .hero-card ul{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:14px;}
+  .hero-card li{display:flex;gap:10px;align-items:flex-start;color:#E2E8F0;font-size:14.5px;line-height:1.5;}
+  .hero-card li::before{content:"";width:8px;height:8px;background:var(--gold-light);margin-top:6px;flex-shrink:0;border-radius:2px;}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:96px 0;}
+  .section-head{max-width:680px;margin-bottom:52px;}
+  .section-head h2{font-size:clamp(30px,3.8vw,46px);color:var(--navy-deep);margin-top:12px;letter-spacing:0.01em;}
+  .section-head p{margin-top:16px;font-size:16.5px;color:#475569;line-height:1.6;}
+  .section-head.on-dark h2, .on-dark .section-head h2{color:#ffffff !important;}
+  .section-head.on-dark p, .on-dark .section-head p{color:#F1F5F9 !important;font-size:17px;font-weight:500;}
+  .section-head.on-dark .eyebrow, .on-dark .section-head .eyebrow{color:var(--gold-light) !important;}
+
+  /* ---------- ABOUT / MISSION ---------- */
+  .mission{background:var(--cream);}
+  .mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
+  .mission-copy p{font-size:16.5px;color:#334155;margin-bottom:16px;line-height:1.65;}
+  .mission-copy p strong{color:var(--navy-deep);font-weight:700;}
+  .mission-list{margin-top:26px;display:flex;flex-direction:column;gap:20px;}
+  .mission-list .item{display:flex;gap:16px;}
+  .mission-list .idx{
+    font-family:'Big Shoulders Display',sans-serif;font-weight:800;font-size:28px;
+    color:var(--gold-deep);width:44px;flex-shrink:0;
+  }
+  .mission-list h4{font-size:17px;color:var(--navy-deep);letter-spacing:0;text-transform:none;font-weight:700;}
+  .mission-list p{font-size:15px;color:#475569;margin-top:4px;line-height:1.55;}
+  .not-box{
+    border:2px solid #EF4444;
+    background:linear-gradient(135deg, #FFF5F5 0%, #FEF2F2 100%);
+    padding:28px;margin-top:16px;
+    border-radius:6px;
+    box-shadow:0 6px 20px rgba(239,68,68,0.12);
+  }
+  .not-box .eyebrow{color:#DC2626;font-weight:700;letter-spacing:0.12em;}
+  .not-box h3{color:#991B1B;font-size:20px;margin-top:8px;margin-bottom:10px;font-weight:800;}
+  .not-box p{margin-top:8px;font-size:15px;color:#451A1A;line-height:1.6;}
+  .not-box .excl{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap;}
+  .not-box .excl span{
+    font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:700;
+    padding:8px 16px;border:2px solid #EF4444;color:#B91C1C;
+    background:#FFFFFF;
+    border-radius:4px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  }
+
+  /* ---------- FULL VIEW SCROLL-DRIVEN PINNED SPORTS GALLERY ---------- */
+  .sports-scroll-section {
+    position: relative;
+    height: 380vh;
+    background: #020817;
+    background: radial-gradient(circle at 50% 40%, #0A1E4A 0%, #020817 100%);
+    color: #ffffff;
+  }
+
+  .sports-sticky-viewport {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 32px 0 24px;
+    box-sizing: border-box;
+  }
+
+  .sports-header-bar {
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+    padding: 0 20px;
+  }
+  .sports-header-bar h2 {
+    color: #ffffff !important;
+    font-size: clamp(28px, 3.6vw, 44px) !important;
+    margin: 6px 0 8px 0 !important;
+  }
+  .sports-header-bar p {
+    color: #CBD5E1 !important;
+    margin: 0 auto !important;
+    max-width: 640px;
+    font-size: 14.5px !important;
+  }
+
+  .sports-fullview-window {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    margin: 12px 0;
+  }
+
+  .sports-fullview-track {
+    display: flex;
+    gap: 28px;
+    padding: 0 8vw;
+    width: max-content;
+    will-change: transform;
+    transition: transform 0.08s ease-out;
+  }
+
+  .sports-poster-banner {
+    flex: 0 0 310px;
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    height: 54vh;
+    min-height: 480px;
+    max-height: 580px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px 20px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.75);
+    transform-origin: top center;
+    transform: scaleY(0.08) translateY(-60px);
+    opacity: 0;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    will-change: transform, opacity;
+  }
+  .sports-poster-banner.unrolled {
+    transform: scaleY(1) translateY(0);
+    opacity: 1;
+  }
+  .sports-poster-banner:hover {
+    transform: scaleY(1) translateY(-14px) scale(1.04);
+    box-shadow: 0 36px 80px rgba(0,0,0,0.9);
+  }
+
+  .sports-progress-bar-wrap {
+    width: 80%;
+    max-width: 600px;
+    height: 4px;
+    background: rgba(255,255,255,0.15);
+    margin: 0 auto;
+    border-radius: 4px;
+    overflow: hidden;
+    z-index: 10;
+  }
+  .sports-progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--gold-light), var(--gold-deep));
+    transition: width 0.1s linear;
+  }
+
+  /* Vibrant Solid Color Banner Backgrounds like Reference Image #2 */
+  .theme-cyan{background:linear-gradient(180deg, #00B4D8 0%, #0077B6 40%, #020A1C 100%);border-top:6px solid #00B4D8;}
+  .theme-cyan .banner-num{background:#00B4D8;color:#040C1E;}
+
+  .theme-orange{background:linear-gradient(180deg, #F97316 0%, #EA580C 40%, #020A1C 100%);border-top:6px solid #F97316;}
+  .theme-orange .banner-num{background:#F97316;color:#040C1E;}
+
+  .theme-purple{background:linear-gradient(180deg, #A855F7 0%, #7E22CE 40%, #020A1C 100%);border-top:6px solid #A855F7;}
+  .theme-purple .banner-num{background:#A855F7;color:#ffffff;}
+
+  .theme-emerald{background:linear-gradient(180deg, #10B981 0%, #047857 40%, #020A1C 100%);border-top:6px solid #10B981;}
+  .theme-emerald .banner-num{background:#10B981;color:#040C1E;}
+
+  .theme-crimson{background:linear-gradient(180deg, #EF4444 0%, #B91C1C 40%, #020A1C 100%);border-top:6px solid #EF4444;}
+  .theme-crimson .banner-num{background:#EF4444;color:#ffffff;}
+
+  .theme-gold{background:linear-gradient(180deg, #F59E0B 0%, #D97706 40%, #020A1C 100%);border-top:6px solid #F59E0B;}
+  .theme-gold .banner-num{background:#F59E0B;color:#040C1E;}
+
+  .theme-indigo{background:linear-gradient(180deg, #6366F1 0%, #4338CA 40%, #020A1C 100%);border-top:6px solid #6366F1;}
+  .theme-indigo .banner-num{background:#6366F1;color:#ffffff;}
+
+  .theme-magenta{background:linear-gradient(180deg, #EC4899 0%, #BE185D 40%, #020A1C 100%);border-top:6px solid #EC4899;}
+  .theme-magenta .banner-num{background:#EC4899;color:#ffffff;}
+
+  .theme-blue{background:linear-gradient(180deg, #3B82F6 0%, #1D4ED8 40%, #020A1C 100%);border-top:6px solid #3B82F6;}
+  .theme-blue .banner-num{background:#3B82F6;color:#ffffff;}
+
+  .theme-amber{background:linear-gradient(180deg, #D97706 0%, #92400E 40%, #020A1C 100%);border-top:6px solid #D97706;}
+  .theme-amber .banner-num{background:#D97706;color:#ffffff;}
+
+  .banner-media{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    overflow:hidden;
+  }
+  .banner-media img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .sports-poster-banner:hover .banner-media img{
+    transform:scale(1.14);
+  }
+  .banner-gradient{
+    position:absolute;
+    inset:0;
+    z-index:2;
+    background:linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(2,10,28,0.92) 85%);
+  }
+
+  .banner-top-bar{
+    position:relative;
+    z-index:3;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .banner-num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    font-weight:800;
+    padding:4px 10px;
+    border-radius:4px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.5);
+  }
+  .banner-tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    font-weight:700;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    background:rgba(4, 12, 30, 0.85);
+    color:#ffffff;
+    padding:5px 12px;
+    border-radius:4px;
+    border:1px solid rgba(255,255,255,0.25);
+    backdrop-filter:blur(8px);
+  }
+
+  .banner-body{
+    position:relative;
+    z-index:3;
+    margin-top:auto;
+    padding-top:20px;
+  }
+  .banner-title{
+    font-family:'Big Shoulders Display',sans-serif;
+    font-weight:900;
+    font-size:28px;
+    letter-spacing:0.03em;
+    color:#ffffff;
+    margin:0 0 6px 0;
+    text-shadow:0 2px 14px rgba(0,0,0,0.85);
+    text-transform:uppercase;
+  }
+  .banner-desc{
+    font-size:13px;
+    color:#E2E8F0;
+    margin:0 0 16px 0;
+    line-height:1.45;
+    text-shadow:0 1px 8px rgba(0,0,0,0.85);
+  }
+  .banner-footer{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding-top:10px;
+    border-top:1px solid rgba(255,255,255,0.2);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    color:var(--gold-light);
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    font-weight:700;
+  }
+
+  .stage-controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:16px;
+    padding:0 10px;
+  }
+  .stage-btn-group{
+    display:flex;
+    gap:12px;
+  }
+  .stage-btn{
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.25);
+    color:#ffffff;
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:all 0.3s ease;
+    font-size:20px;
+    user-select:none;
+  }
+  .stage-btn:hover{
+    background:var(--gold);
+    color:#040C1E;
+    border-color:var(--gold);
+    transform:scale(1.1);
+  }
+  .stage-counter{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    color:var(--gold-light);
+    letter-spacing:0.1em;
+    font-weight:700;
+  }
+
+  /* ---------- PATHWAY ---------- */
+  .pathway{background:linear-gradient(180deg,var(--navy) 0%, var(--navy-deep) 100%);color:#fff;position:relative;overflow:hidden;}
+  .pathway-line-wrap{position:relative;margin-top:60px;}
+  .pathway-stages{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:20px;position:relative;z-index:2;
+  }
+  .stage{display:flex;flex-direction:column;align-items:flex-start;}
+  .stage-node{
+    width:52px;height:52px;border-radius:50%;
+    background:var(--navy-deep);border:2px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--gold-light);font-size:13px;
+    margin-bottom:18px;
+  }
+  .stage:last-child .stage-node{background:linear-gradient(135deg,var(--gold-light),var(--gold-deep));color:var(--navy-deep);}
+  .stage h4{font-size:17px;color:#fff;letter-spacing:0.02em;}
+  .stage p{font-size:13.5px;color:#CBD6F2;margin-top:8px;line-height:1.5;}
+  .pathway-connector{
+    position:absolute;top:26px;left:calc(10% + 26px);right:calc(10% + 26px);height:2px;
+    background:repeating-linear-gradient(90deg,var(--gold) 0,var(--gold) 6px,transparent 6px,transparent 14px);
+    z-index:1;
+  }
+
+  /* ---------- GET INVOLVED (3 doors) ---------- */
+  .doors{background:var(--cream);}
+  .doors-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .door{
+    background:var(--white);border:1px solid var(--line);
+    padding:32px 28px;display:flex;flex-direction:column;
+    transition:border-color .2s, transform .2s;
+  }
+  .door:hover{border-color:var(--gold);transform:translateY(-4px);}
+  .door .icon{
+    width:50px;height:50px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--navy-deep);margin-bottom:20px;
+  }
+  .door .icon svg{width:24px;height:24px;stroke:var(--gold-light);}
+  .door h3{font-size:24px;color:var(--ink);}
+  .door p{font-size:14.5px;color:#475569;margin-top:12px;flex-grow:1;line-height:1.6;}
+  .door .door-cta{
+    margin-top:22px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:700;
+    color:var(--navy);letter-spacing:0.05em;text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:6px;
+    background:none;border:none;padding:0;
+  }
+  .door .door-cta svg{width:14px;height:14px;transition:transform .2s;}
+  .door:hover .door-cta svg{transform:translateX(4px);}
+
+  /* ---------- VENDOR / INVESTOR SPLIT ---------- */
+  .split{background:var(--white);border-top:1px solid var(--line);}
+  .split-row{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);}
+  .split-col{padding:52px 46px;}
+  .split-col + .split-col{border-left:1px solid var(--line);}
+  .split-col .eyebrow{margin-bottom:14px;}
+  .split-col h3{font-size:28px;color:var(--ink);margin-bottom:16px;}
+  .split-col p{font-size:15.5px;color:#475569;margin-bottom:14px;line-height:1.6;}
+  .split-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;}
+  .split-tags span{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 12px;
+    background:var(--cream-2);color:#334155;border:1px solid var(--line);font-weight:600;
+  }
+  .split-col .btn{margin-top:24px;}
+
+  /* ---------- 3 DEDICATED FULL-PAGE TIER SHOWCASES (LIGHT CREAM THEME) ---------- */
+  .tier-pages-wrapper {
+    background: var(--cream);
+    color: var(--ink);
+    padding: 90px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .tier-pages-main-head {
+    text-align: center;
+    max-width: 850px;
+    margin: 0 auto 64px;
+  }
+  .tier-pages-main-head .eyebrow {
+    color: var(--gold-deep);
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    font-family: 'IBM Plex Mono', monospace;
+    text-transform: uppercase;
+  }
+  .tier-pages-main-head h2 {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--ink);
+    line-height: 1.05;
+    margin-top: 8px;
+  }
+
+  .tier-standalone-page {
+    background: #ffffff;
+    border: 1px solid rgba(10, 45, 107, 0.15);
+    border-radius: 24px;
+    padding: 48px;
+    margin-bottom: 60px;
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0 20px 60px rgba(4, 26, 77, 0.07);
+    transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  }
+  .tier-standalone-page:last-child {
+    margin-bottom: 0;
+  }
+  .tier-standalone-page:hover {
+    border-color: var(--gold);
+    box-shadow: 0 30px 80px rgba(4, 26, 77, 0.14), 0 0 25px rgba(212, 149, 47, 0.2);
+  }
+
+  .tier-standalone-content {
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: 44px;
+    align-items: center;
+  }
+
+  .tier-standalone-media {
+    position: relative;
+    height: 400px;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid rgba(10, 45, 107, 0.15);
+    box-shadow: 0 20px 50px rgba(4, 26, 77, 0.18);
+  }
+  .tier-standalone-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+  }
+  .tier-standalone-page:hover .tier-standalone-media img {
+    transform: scale(1.06);
+  }
+  .tier-top-header {
+    margin-bottom: 20px;
+  }
+  .tier-top-tag {
+    display: inline-block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 7px 20px;
+    border-radius: 6px;
+    letter-spacing: 0.12em;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  .pill-tier-3 { background: #DCFCE7; color: #166534; border: 1px solid #86EFAC; }
+  .pill-tier-2 { background: #E0E7FF; color: #3730A3; border: 1px solid #A5B4FC; }
+  .pill-tier-1 { background: #FFEDD5; color: #9A3412; border: 1px solid #FDBA74; }
+
+  .tier-standalone-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .tier-standalone-location {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--gold-deep);
+    font-weight: 700;
+    background: rgba(212, 149, 47, 0.12);
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 6px;
+    border: 1px solid rgba(212, 149, 47, 0.3);
+    align-self: flex-start;
+  }
+  .tier-standalone-info h3 {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--navy-deep);
+    line-height: 1.05;
+  }
+  .tier-standalone-info p {
+    font-size: 15px;
+    color: var(--slate);
+    line-height: 1.6;
+  }
+
+  .tier-standalone-features {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 6px;
+  }
+  .tier-standalone-features .item {
+    font-size: 14px;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--cream);
+    padding: 11px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    font-weight: 600;
+  }
+  .tier-standalone-features .item span {
+    color: var(--gold-deep);
+    font-weight: 800;
+  }
+
+  @media(max-width:960px){
+    .tier-standalone-page { padding: 32px 24px; border-radius: 20px; }
+    .tier-standalone-content { grid-template-columns: 1fr; gap: 24px; }
+    .tier-standalone-media { height: 260px; }
+    .tier-standalone-info h3 { font-size: 32px; }
+    .tier-pages-main-head h2 { font-size: 38px; }
+  }
+
+  /* ---------- REGISTRATION ---------- */
+  .register{background:linear-gradient(180deg,var(--navy-deep),var(--navy));color:#fff;}
+  .tabs{display:flex;gap:4px;margin-bottom:0;border-bottom:2px solid rgba(255,255,255,0.2);}
+  .tab-btn{
+    flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.18);border-bottom:none;
+    color:#E2E8F0;
+    padding:18px 16px;font-family:'IBM Plex Mono',monospace;font-size:13.5px;
+    letter-spacing:0.08em;text-transform:uppercase;font-weight:700;
+    cursor:pointer;
+    transition:all .2s ease;
+  }
+  .tab-btn.active{
+    color:#041A4D;
+    background:linear-gradient(120deg,var(--gold-light) 0%,var(--gold) 100%);
+    font-weight:800;
+    border-color:var(--gold-light);
+    box-shadow:0 4px 16px rgba(212,149,47,0.4);
+  }
+  .tab-btn:hover:not(.active){color:#ffffff;background:rgba(255,255,255,0.18);}
+  .form-panel{display:none;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.18);border-top:none;padding:44px;border-bottom-left-radius:6px;border-bottom-right-radius:6px;}
+  .form-panel.active{display:block;}
+  .form-intro{max-width:640px;margin-bottom:30px;}
+  .form-intro h3{font-size:26px;color:#ffffff;margin-bottom:10px;letter-spacing:0.02em;}
+  .form-intro p{color:#E2E8F0;font-size:15.5px;line-height:1.55;}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  .form-grid .full{grid-column:1/-1;}
+  .field label{
+    display:block;font-family:'IBM Plex Mono',monospace;font-size:12.5px;
+    letter-spacing:0.08em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px;font-weight:700;
+  }
+  .field input,.field select,.field textarea{
+    width:100%;background:rgba(255,255,255,0.14);border:1.5px solid rgba(255,255,255,0.32);
+    color:#ffffff;padding:14px 16px;font-family:'Manrope',sans-serif;font-size:15px;font-weight:500;
+    border-radius:4px;
+    transition:border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  }
+  .field input::placeholder,.field textarea::placeholder{color:#CBD5E1;font-weight:400;}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--gold-light);background:rgba(255,255,255,0.22);box-shadow:0 0 0 3px rgba(240,200,117,0.3);}
+  .field textarea{resize:vertical;min-height:100px;}
+  .field select option{color:#0E1830;background:#ffffff;font-weight:600;}
+  .form-submit{
+    margin-top:34px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;
+  }
+  .form-note{font-size:13.5px;color:#E2E8F0;max-width:440px;line-height:1.5;}
+  .confirm-box{
+    display:none;margin-top:26px;border:1px solid var(--gold);
+    background:rgba(212,149,47,0.14);padding:22px 24px;border-radius:4px;
+  }
+  .confirm-box.show{display:flex;gap:14px;align-items:flex-start;}
+  .confirm-box svg{width:24px;height:24px;stroke:var(--gold-light);flex-shrink:0;margin-top:2px;}
+  .confirm-box h4{font-size:16px;color:var(--gold-light);text-transform:none;font-weight:800;letter-spacing:0;}
+  .confirm-box p{font-size:14px;color:#F3F4F6;margin-top:6px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--navy-deep);color:#CBD6F2;padding:64px 0 30px;border-top:1px solid rgba(255,255,255,0.08);}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;}
+  .foot-logo img{height:78px;width:auto;filter:brightness(1.25) drop-shadow(0 4px 12px rgba(0,0,0,0.5));margin-bottom:20px;}
+  .foot-grid p{font-size:14px;color:#94A3B8;line-height:1.6;}
+  .foot-col h5{font-family:'IBM Plex Mono',monospace;color:#fff;font-size:12.5px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px;font-weight:700;}
+  .foot-col a,.foot-col span{display:block;font-size:14px;color:#CBD6F2;margin-bottom:10px;}
+  .foot-col a:hover{color:var(--gold-light);}
+  .foot-bottom{
+    max-width:1180px;margin:50px auto 0;padding:24px 32px 0;
+    border-top:1px solid rgba(255,255,255,0.08);
+    display:flex;justify-content:space-between;font-size:12.5px;color:#94A3B8;flex-wrap:wrap;gap:10px;
+  }
+
+  /* ---------- ADMIN CMS PORTAL STYLES ---------- */
+  .cms-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(2, 8, 22, 0.88);
+    backdrop-filter: blur(14px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .cms-modal-overlay.active { display: flex; }
+
+  .cms-modal-container {
+    width: 100%;
+    max-width: 1280px;
+    height: 88vh;
+    background: #041029;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 16px;
+    box-shadow: 0 30px 90px rgba(0,0,0,0.85);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: #ffffff;
+  }
+
+  .cms-header {
+    padding: 22px 30px;
+    background: #020817;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .cms-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    letter-spacing: 0.12em;
+  }
+  .cms-header h2 { margin: 4px 0 0; font-size: 24px; color: #ffffff; }
+
+  .cms-actions { display: flex; align-items: center; gap: 12px; }
+  .cms-btn {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 9px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+  }
+  .cms-btn-green { background: #10B981; color: #041029; }
+  .cms-btn-navy { background: rgba(255,255,255,0.12); color: #ffffff; border: 1px solid rgba(255,255,255,0.25); }
+  .cms-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+
+  .cms-close-btn {
+    background: none; border: none; color: #E2E8F0; font-size: 28px; cursor: pointer; padding: 0 8px; line-height: 1;
+  }
+
+  .cms-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    padding: 20px 30px 10px;
+  }
+  .cms-stat-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .cms-stat-card .lbl { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #94A3B8; text-transform: uppercase; }
+  .cms-stat-card .val { font-family: 'Big Shoulders Display', sans-serif; font-size: 32px; font-weight: 800; color: #ffffff; }
+  .border-player { border-left: 4px solid #00B4D8; }
+  .border-vendor { border-left: 4px solid #F97316; }
+  .border-investor { border-left: 4px solid #F59E0B; }
+
+  .cms-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 30px;
+    background: rgba(255,255,255,0.03);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    gap: 16px;
+  }
+  .cms-filter-tabs { display: flex; gap: 8px; }
+  .cms-tab {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #CBD5E1;
+    padding: 7px 14px; border-radius: 6px; font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 600; cursor: pointer;
+  }
+  .cms-tab.active { background: var(--gold-light); color: #041029; font-weight: 800; border-color: var(--gold-light); }
+  .cms-search-box input {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.25); color: #ffffff;
+    padding: 8px 16px; border-radius: 6px; font-size: 13.5px; width: 280px;
+  }
+
+  .cms-table-wrapper { flex-grow: 1; overflow-y: auto; padding: 0 30px 24px; }
+  .cms-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; }
+  .cms-table th {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase; color: var(--gold-light);
+    padding: 14px 12px; border-bottom: 2px solid rgba(255,255,255,0.15); position: sticky; top: 0; background: #041029;
+  }
+  .cms-table td { padding: 14px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); color: #E2E8F0; }
+  .cms-table tr:hover { background: rgba(255,255,255,0.04); }
+
+  .type-badge {
+    display: inline-block; padding: 3px 8px; border-radius: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 700;
+  }
+  .type-player { background: rgba(0,180,216,0.2); color: #00B4D8; border: 1px solid rgba(0,180,216,0.4); }
+  .type-vendor { background: rgba(249,115,22,0.2); color: #F97316; border: 1px solid rgba(249,115,22,0.4); }
+  .type-investor { background: rgba(245,158,11,0.2); color: #F59E0B; border: 1px solid rgba(245,158,11,0.4); }
+
+  .status-select {
+    background: #020817; color: #ffffff; border: 1px solid rgba(255,255,255,0.25); border-radius: 4px;
+    padding: 4px 8px; font-size: 12px; font-family: 'IBM Plex Mono', monospace; cursor: pointer;
+  }
+
+  .action-btn {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #ffffff;
+    padding: 4px 10px; border-radius: 4px; font-size: 12px; cursor: pointer; transition: all 0.2s ease;
+  }
+  .action-btn:hover { background: var(--gold-light); color: #041029; }
+  .action-btn-del:hover { background: #EF4444; color: #ffffff; }
+
+  .cms-detail-overlay {
+    position: fixed; inset: 0; z-index: 100000; background: rgba(0,0,0,0.8);
+    display: none; align-items: center; justify-content: center; padding: 20px;
+  }
+  .cms-detail-overlay.active { display: flex; }
+  .cms-detail-card {
+    width: 100%; max-width: 600px; background: #041029; border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 14px; padding: 28px; color: #ffffff; box-shadow: 0 20px 60px rgba(0,0,0,0.9);
+  }
+  .cms-detail-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 14px; margin-bottom: 18px; }
+  .cms-detail-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 14px; }
+  .cms-detail-row .lbl { color: var(--gold-light); font-family: 'IBM Plex Mono', monospace; font-size: 12px; }
+
+  @media(max-width:768px){
+    .hero-grid{grid-template-columns:1fr;}
+    .mission-grid{grid-template-columns:1fr;gap:36px;}
+    .sports-banner-grid{gap:32px;}
+    .sports-poster-banner{height:520px;padding:24px 20px;}
+    .pathway-stages{grid-template-columns:repeat(2,1fr);row-gap:34px;}
+    .pathway-connector{display:none;}
+    .doors-grid{grid-template-columns:1fr;}
+    .split-row{grid-template-columns:1fr;}
+    .split-col + .split-col{border-left:none;border-top:1px solid var(--line);}
+    .form-grid{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+    .nav-links{display:none;}
+    .nav-toggle{display:block;}
+    .hero{min-height:auto;padding:100px 0 60px;}
+    .hero-bg-track img{min-width:220px;}
+    .cms-stats-grid{grid-template-columns:repeat(2,1fr);}
+  }
+
+  /* Member Portal & Dashboard Overlay CSS */
+  .member-modal-overlay {
+    position: fixed; inset: 0; z-index: 999999;
+    background: rgba(2, 8, 23, 0.88); backdrop-filter: blur(12px);
+    display: none; align-items: center; justify-content: center; padding: 20px;
+  }
+  .member-card {
+    width: 100%; max-width: 480px; background: #041029;
+    border: 1px solid rgba(240, 200, 117, 0.3); border-radius: 16px;
+    padding: 32px; color: #ffffff; box-shadow: 0 24px 70px rgba(0,0,0,0.85);
+  }
+  .member-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 16px; margin-bottom: 20px; }
+  .member-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+  .member-field label { font-size: 12px; color: var(--gold-light); font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; font-weight: 700; }
+  .member-field input, .member-field select {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 8px; padding: 12px 14px; color: #ffffff; font-size: 14px; outline: none;
+  }
+  .member-field input:focus, .member-field select:focus { border-color: var(--gold-light); box-shadow: 0 0 12px rgba(240,200,117,0.3); }
+
+  /* Dashboard Overlay */
+  .dash-overlay {
+    position: fixed; inset: 0; z-index: 999999;
+    background: #020817; overflow-y: auto; display: none; padding: 40px 20px;
+  }
+  .dash-container { max-width: 1100px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; }
+  .dash-card-header {
+    background: rgba(4,26,77,0.9); border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 16px; padding: 24px 30px; display: flex; justify-content: space-between; align-items: center;
+    backdrop-filter: blur(10px); flex-wrap: wrap; gap: 16px;
+  }
+  .dash-user-info { display: flex; align-items: center; gap: 18px; }
+  .dash-avatar { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--gold-light), var(--gold-deep)); display: flex; align-items: center; justify-content: center; font-size: 26px; }
+  .dash-badge { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; color: #34D399; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); padding: 3px 8px; border-radius: 4px; }
+  .dash-sub { font-size: 13px; color: #CBD5E1; display: block; margin-top: 4px; }
+  .dash-id-tag { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--gold-light); background: rgba(212,149,47,0.15); padding: 6px 14px; border-radius: 6px; border: 1px solid rgba(212,149,47,0.3); font-weight: 700; }
+  .dash-logout-btn { background: #EF4444; color: #ffffff; border: none; padding: 8px 16px; border-radius: 6px; font-family: 'IBM Plex Mono', monospace; font-weight: 700; cursor: pointer; }
+  
+  .dash-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .dash-stat { background: rgba(4,16,41,0.85); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 18px 20px; display: flex; flex-direction: column; gap: 4px; }
+  .dash-stat .lbl { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: #94A3B8; text-transform: uppercase; }
+  .dash-stat .val { font-family: 'Big Shoulders Display', sans-serif; font-size: 32px; font-weight: 800; color: #ffffff; }
+
+  .dash-box { background: rgba(4,16,41,0.85); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 24px 28px; }
+  .dash-box-title { font-family: 'Big Shoulders Display', sans-serif; font-size: 24px; font-weight: 800; color: #ffffff; }
+
+  .event-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; }
+  .event-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 20px; transition: transform 0.2s ease; }
+  .event-card:hover { transform: translateY(-3px); border-color: var(--gold-light); }
+  .dash-btn { font-family: 'IBM Plex Mono', monospace; font-size: 12px; font-weight: 700; padding: 8px 16px; border-radius: 6px; cursor: pointer; border: none; }
+  .dash-btn-gold { background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: #041029; }
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<nav class="nav">
+  <div class="nav-wrap">
+    <div class="nav-left">
+      <div class="nav-logo">
+        <img src="assets/logo.svg" alt="Indian Pro League Alliance Corp">
+      </div>
+    </div>
+    <div class="nav-center">
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#sports">Sports</a>
+        <a href="#pathway">The Pathway</a>
+        <a href="#vendors-investors">Vendors &amp; Investors</a>
+        <a href="#register">Register</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="nav-right">
+      <button class="nav-cta" style="background:transparent;border:1px solid var(--gold-light);color:var(--gold-light);margin-right:10px;" onclick="openMemberLoginModal()">Member Login 🔑</button>
+      <button class="nav-cta" onclick="document.getElementById('register').scrollIntoView()">Get Involved</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <div class="hero-bg-track">
+      <img src="assets/images/badminton.png" alt="">
+      <img src="assets/images/athletics.png" alt="">
+      <img src="assets/images/swimming.png" alt="">
+      <img src="assets/images/kabaddi.png" alt="">
+      <img src="assets/images/volleyball.png" alt="">
+      <img src="assets/images/basketball.png" alt="">
+      <img src="assets/images/khokho.png" alt="">
+      <img src="assets/images/wrestling.png" alt="">
+      <img src="assets/images/tabletennis.png" alt="">
+      <img src="assets/images/handball.png" alt="">
+      <img src="assets/images/judomartialarts.png" alt="">
+      <img src="assets/images/weightlifting.png" alt="">
+      <img src="assets/images/archery.png" alt="">
+      <img src="assets/images/shooting.png" alt="">
+      <!-- duplicate set for a seamless loop -->
+      <img src="assets/images/badminton.png" alt="">
+      <img src="assets/images/athletics.png" alt="">
+      <img src="assets/images/swimming.png" alt="">
+      <img src="assets/images/kabaddi.png" alt="">
+      <img src="assets/images/volleyball.png" alt="">
+      <img src="assets/images/basketball.png" alt="">
+      <img src="assets/images/khokho.png" alt="">
+      <img src="assets/images/wrestling.png" alt="">
+      <img src="assets/images/tabletennis.png" alt="">
+      <img src="assets/images/handball.png" alt="">
+      <img src="assets/images/judomartialarts.png" alt="">
+      <img src="assets/images/weightlifting.png" alt="">
+      <img src="assets/images/archery.png" alt="">
+      <img src="assets/images/shooting.png" alt="">
+    </div>
+  </div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-text-block">
+      <span class="eyebrow light">Tier-3 &amp; Panchayat-Level Sports Infrastructure &mdash; Madhya Pradesh</span>
+      <h1>From Grassroots Arenas<br>to the <em>Pro League</em>.</h1>
+      <p class="lead">Indian Pro League Alliance Corp builds and operates multi-sport infrastructure at the panchayat and government-school level &mdash; opening every outdoor and indoor discipline to athletes who've never had a proper ground to train on. We build high-performance arenas right where the infrastructure gaps are widest.</p>
+      
+      <!-- 2 MAIN OPTIONS GATEWAY -->
+      <div class="main-options-container" style="margin-top:24px;display:grid;grid-template-columns:1fr 1fr;gap:16px;background:rgba(4,16,41,0.85);padding:20px;border-radius:14px;border:1px solid rgba(240,200,117,0.3);backdrop-filter:blur(10px);">
+        <!-- Option 1: Already Registered Login -->
+        <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:10px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;">
+          <div>
+            <span class="eyebrow" style="color:#34D399;font-size:11px;">OPTION 1 &bull; ALREADY REGISTERED</span>
+            <h4 style="font-family:'Big Shoulders Display',sans-serif;font-size:20px;color:#ffffff;margin-top:4px;">Member Login Portal 🔑</h4>
+            <p style="font-size:12px;color:#CBD5E1;margin-top:6px;line-height:1.4;">If you are an approved Player, Vendor, or Investor, log in with your ID &amp; Password to view your performance, profile, and event calendar.</p>
+          </div>
+          <button class="btn btn-gold" style="margin-top:14px;justify-content:center;background:linear-gradient(135deg,#10B981,#047857);color:#ffffff;border:none;" onclick="openMemberLoginModal()">Log In to Profile 🔑</button>
+        </div>
+
+        <!-- Option 2: New Registration -->
+        <div style="background:rgba(212,149,47,0.1);border:1px solid rgba(212,149,47,0.3);border-radius:10px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;">
+          <div>
+            <span class="eyebrow" style="color:var(--gold-light);font-size:11px;">OPTION 2 &bull; NEW REGISTRATION</span>
+            <h4 style="font-family:'Big Shoulders Display',sans-serif;font-size:20px;color:#ffffff;margin-top:4px;">New Registration 📝</h4>
+            <p style="font-size:12px;color:#CBD5E1;margin-top:6px;line-height:1.4;">If you are a new Player, Vendor, or Investor, fill out the official registration form to submit your details to the Executive CMS Portal.</p>
+          </div>
+          <button class="btn btn-gold" style="margin-top:14px;justify-content:center;" onclick="document.getElementById('register').scrollIntoView({behavior:'smooth'})">Fill Registration Form 📝</button>
+        </div>
+      </div>
+
+      <div class="hero-stats" style="margin-top:24px;">
+        <div><div class="num">17+</div><div class="lbl">Multi-Sport Disciplines Supported</div></div>
+        <div><div class="num">Tier&nbsp;3</div><div class="lbl">Starting point: panchayat &amp; govt. school grounds</div></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <span class="tag">Access Options</span>
+      <h3>Select Your Entry Path</h3>
+      <p>Whether you have an existing approved ID or are joining the Alliance today, access is fast and direct.</p>
+      <ul>
+        <li><strong style="color:#fff">Registered Players</strong> &mdash; Log in to view performance stats, coach feedback, &amp; register for sports events.</li>
+        <li><strong style="color:#fff">Registered Vendors</strong> &mdash; Log in to view procurement tenders &amp; equipment supply contracts.</li>
+        <li><strong style="color:#fff">Registered Investors</strong> &mdash; Log in to view land contribution &amp; profit-share dashboards.</li>
+        <li><strong style="color:#fff">New Applicants</strong> &mdash; Fill out the registration form below for CMS approval.</li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<!-- ================= ABOUT / MISSION ================= -->
+<section class="mission" id="about">
+  <div class="wrap">
+    <div class="mission-grid">
+      <div>
+        <span class="eyebrow">About the Corporation</span>
+        <h2 style="margin-top:12px;">Infrastructure first. <br>Everywhere else, last.</h2>
+        <div class="mission-copy" style="margin-top:24px;">
+          <p><strong>Indian Pro League Alliance Corp</strong> exists to build the sporting infrastructure India's smaller towns and villages have never had. We start at Tier-3 and panchayat level &mdash; government schools across Madhya Pradesh &mdash; and grow the same model district by district.</p>
+          <p>Where a national federation already funds and promotes a sport at scale, we stay out of the way. Where nobody is building anything &mdash; badminton courts, swimming pools, athletics tracks, kabaddi akhadas, volleyball and basketball courts &mdash; that's where the corporation puts its capital, its vendors, and its coaching network.</p>
+        </div>
+      </div>
+      <div>
+        <div class="mission-list">
+          <div class="item">
+            <div class="idx">01</div>
+            <div><h4>Government school partnerships</h4><p>We build and upgrade courts, tracks and pools inside existing government school campuses across Madhya Pradesh, so facilities serve students first and the wider panchayat after school hours.</p></div>
+          </div>
+          <div class="item">
+            <div class="idx">02</div>
+            <div><h4>Panchayat-level grounds</h4><p>Outside school campuses, we develop community grounds at the panchayat level &mdash; the first tier of real, structured sports infrastructure most of these villages will have seen.</p></div>
+          </div>
+          <div class="item">
+            <div class="idx">03</div>
+            <div><h4>A verified vendor network</h4><p>Local and regional vendors &mdash; badminton, swimwear, footwear, kits &mdash; register with the corporation and supply every facility at fixed, fair rates.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FULL VIEW SCROLL-DRIVEN PINNED GALLERY ================= -->
+<section class="sports-scroll-section" id="sports">
+  <div class="sports-sticky-viewport">
+    <div class="sports-header-bar">
+      <span class="eyebrow">Every other sport, indoors and outdoors</span>
+      <h2>Seventeen disciplines. One infrastructure model.</h2>
+      <p>Scroll down with your mouse to reveal each discipline moving across the alliance build-out.</p>
+    </div>
+
+    <div class="sports-fullview-window">
+      <div class="sports-fullview-track" id="sports-full-track">
+        <!-- Banner 1: Badminton -->
+        <div class="sports-poster-banner theme-cyan">
+          <div class="banner-media">
+            <img src="assets/images/badminton.png" alt="Badminton" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">01</span>
+            <span class="banner-tag">Indoor Court</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">BADMINTON</h3>
+            <p class="banner-desc">Wooden &amp; synthetic courts built inside government school campuses.</p>
+            <div class="banner-footer">
+              <span>Panchayat Level</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 2: Athletics -->
+        <div class="sports-poster-banner theme-orange">
+          <div class="banner-media">
+            <img src="assets/images/athletics.png" alt="Athletics &amp; Track" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">02</span>
+            <span class="banner-tag">Outdoor Track</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">ATHLETICS &amp; TRACK</h3>
+            <p class="banner-desc">Synthetic 200m &amp; 400m running tracks at panchayat-level grounds.</p>
+            <div class="banner-footer">
+              <span>Panchayat Level</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 3: Swimming -->
+        <div class="sports-poster-banner theme-purple">
+          <div class="banner-media">
+            <img src="assets/images/swimming.png" alt="Swimming" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">03</span>
+            <span class="banner-tag">Aquatics</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">SWIMMING</h3>
+            <p class="banner-desc">Semi-Olympic pools built for panchayats and partner schools.</p>
+            <div class="banner-footer">
+              <span>Semi-Olympic</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 4: Volleyball -->
+        <div class="sports-poster-banner theme-crimson">
+          <div class="banner-media">
+            <img src="assets/images/volleyball.png" alt="Volleyball" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">04</span>
+            <span class="banner-tag">Outdoor Court</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">VOLLEYBALL</h3>
+            <p class="banner-desc">Floodlit clay &amp; synthetic courts for evening community play.</p>
+            <div class="banner-footer">
+              <span>Floodlit Court</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 5: Basketball -->
+        <div class="sports-poster-banner theme-gold">
+          <div class="banner-media">
+            <img src="assets/images/basketball.png" alt="Basketball" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">05</span>
+            <span class="banner-tag">Indoor &amp; Outdoor</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">BASKETBALL</h3>
+            <p class="banner-desc">Standard high-friction hard courts for schools and open grounds.</p>
+            <div class="banner-footer">
+              <span>Hard Court</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 6: Kabaddi -->
+        <div class="sports-poster-banner theme-indigo">
+          <div class="banner-media">
+            <img src="assets/images/kabaddi.png" alt="Kabaddi" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">06</span>
+            <span class="banner-tag">Traditional &amp; Pro</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">KABADDI</h3>
+            <p class="banner-desc">Indoor mat courts and open panchayat akhadas alike.</p>
+            <div class="banner-footer">
+              <span>Pro &amp; Clay Mat</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 7: Kho-Kho -->
+        <div class="sports-poster-banner theme-magenta">
+          <div class="banner-media">
+            <img src="assets/images/khokho.png" alt="Kho-Kho" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">07</span>
+            <span class="banner-tag">Traditional Sport</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">KHO-KHO</h3>
+            <p class="banner-desc">Standardised clay &amp; synthetic arenas at the panchayat level.</p>
+            <div class="banner-footer">
+              <span>Panchayat Arena</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 8: Table Tennis -->
+        <div class="sports-poster-banner theme-blue">
+          <div class="banner-media">
+            <img src="assets/images/tabletennis.png" alt="Table Tennis" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">08</span>
+            <span class="banner-tag">Indoor Discipline</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">TABLE TENNIS</h3>
+            <p class="banner-desc">Tournament-grade tables inside school sports halls.</p>
+            <div class="banner-footer">
+              <span>Sports Hall</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 9: Wrestling -->
+        <div class="sports-poster-banner theme-amber">
+          <div class="banner-media">
+            <img src="assets/images/wrestling.png" alt="Wrestling" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">09</span>
+            <span class="banner-tag">Combat Mat</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">WRESTLING</h3>
+            <p class="banner-desc">Modern mat akhadas replacing traditional mud pits.</p>
+            <div class="banner-footer">
+              <span>Modern Akhada</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 10: Handball -->
+        <div class="sports-poster-banner theme-cyan">
+          <div class="banner-media">
+            <img src="assets/images/handball.png" alt="Handball" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">10</span>
+            <span class="banner-tag">Team Sport</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">HANDBALL</h3>
+            <p class="banner-desc">Multi-purpose indoor &amp; outdoor courts shared with basketball.</p>
+            <div class="banner-footer">
+              <span>Multi-Court</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 11: Judo & Martial Arts -->
+        <div class="sports-poster-banner theme-crimson">
+          <div class="banner-media">
+            <img src="assets/images/judomartialarts.png" alt="Judo &amp; Martial Arts" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">11</span>
+            <span class="banner-tag">Martial Arts</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">JUDO &amp; MARTIAL ARTS</h3>
+            <p class="banner-desc">Tatami mat halls with proper safety gear on site.</p>
+            <div class="banner-footer">
+              <span>Tatami Hall</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 12: Weightlifting -->
+        <div class="sports-poster-banner theme-amber">
+          <div class="banner-media">
+            <img src="assets/images/weightlifting.png" alt="Weightlifting" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">12</span>
+            <span class="banner-tag">Strength &amp; Power</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">WEIGHTLIFTING</h3>
+            <p class="banner-desc">Calibrated barbells and rubber platforms for structured coaching.</p>
+            <div class="banner-footer">
+              <span>Strength Hub</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 13: Boxing -->
+        <div class="sports-poster-banner theme-orange">
+          <div class="banner-media">
+            <img src="https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Boxing" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">13</span>
+            <span class="banner-tag">Combat Sport</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">BOXING</h3>
+            <p class="banner-desc">Elevated rings and heavy-bag stations at district facilities.</p>
+            <div class="banner-footer">
+              <span>Ring Facility</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 14: Gymnastics -->
+        <div class="sports-poster-banner theme-purple">
+          <div class="banner-media">
+            <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Gymnastics" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">14</span>
+            <span class="banner-tag">Artistic &amp; Flex</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">GYMNASTICS</h3>
+            <p class="banner-desc">Vaulting tables, bars and safety foam for early-age training.</p>
+            <div class="banner-footer">
+              <span>Foam Pit Arena</span>
+              <span>★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 15: Hyrox Academy -->
+        <div class="sports-poster-banner theme-gold">
+          <div class="banner-media">
+            <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Hyrox Academy" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">15</span>
+            <span class="banner-tag" style="background:var(--gold); color:#040C1E; border:none; font-weight:800;">Newly Added</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">HYROX ACADEMY</h3>
+            <p class="banner-desc">Hybrid fitness-racing stations &mdash; the newest discipline joining the alliance's build-out.</p>
+            <div class="banner-footer">
+              <span>Hybrid Fitness</span>
+              <span style="color:var(--gold-light)">★ Active</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 16: Archery -->
+        <div class="sports-poster-banner theme-cyan">
+          <div class="banner-media">
+            <img src="assets/images/archery.png" alt="Archery" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">16</span>
+            <span class="banner-tag" style="background:var(--gold); color:#040C1E; border:none; font-weight:800;">Newly Added</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">ARCHERY</h3>
+            <p class="banner-desc">Precision target archery ranges built at panchayat grounds &amp; school campuses.</p>
+            <div class="banner-footer">
+              <span>Target Archery</span>
+              <span style="color:var(--gold-light)">★ New Discipline</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Banner 17: Shooting Sport -->
+        <div class="sports-poster-banner theme-orange">
+          <div class="banner-media">
+            <img src="assets/images/shooting.png" alt="Shooting Sport" loading="lazy">
+            <div class="banner-gradient"></div>
+          </div>
+          <div class="banner-top-bar">
+            <span class="banner-num">17</span>
+            <span class="banner-tag" style="background:var(--gold); color:#040C1E; border:none; font-weight:800;">Newly Added</span>
+          </div>
+          <div class="banner-body">
+            <h3 class="banner-title">SHOOTING SPORT</h3>
+            <p class="banner-desc">Air rifle &amp; pistol shooting ranges with electronic scoring targets.</p>
+            <div class="banner-footer">
+              <span>Precision Shooting</span>
+              <span style="color:var(--gold-light)">★ New Discipline</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sports-progress-bar-wrap">
+      <div class="sports-progress-bar" id="sports-progress"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3 DEDICATED FULL-PAGE TIER SHOWCASES ================= -->
+<section class="tier-pages-wrapper" id="tier-network">
+  <div class="wrap">
+    
+    <!-- Section Main Head -->
+    <div class="tier-pages-main-head">
+      <span class="eyebrow">NATIONAL INFRASTRUCTURE NETWORK</span>
+      <h2>3-TIER CONNECTED ALLIANCE SYSTEM.</h2>
+    </div>
+
+    <!-- Page 1: Tier 3 -->
+    <div class="tier-standalone-page" id="tier-3-page">
+      <div class="tier-top-header">
+        <span class="tier-top-tag pill-tier-3">Tier 3</span>
+      </div>
+      <div class="tier-standalone-content">
+        <div class="tier-standalone-media">
+          <img src="assets/images/athletics.png" alt="Tier 3 Grassroots &amp; Panchayat Infrastructure">
+        </div>
+        <div class="tier-standalone-info">
+          <span class="tier-standalone-location">📍 Rural MP &amp; Panchayat Level India</span>
+          <h3>GRASSROOTS &amp; PANCHAYAT GROUNDS</h3>
+          <p>Multi-sport outdoor grounds, synthetic running tracks, and semi-olympic pools constructed directly on panchayat land &amp; government school campuses to serve rural and semi-urban athletes across Madhya Pradesh and India.</p>
+          <div class="tier-standalone-features">
+            <div class="item"><span>✓</span> Panchayat &amp; Village Level Multi-Sport Infrastructure</div>
+            <div class="item"><span>✓</span> 100% Free Access for Rural &amp; Government School Athletes</div>
+            <div class="item"><span>✓</span> Grassroots Talent Identification &amp; Scouting Camps</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 2: Tier 2 -->
+    <div class="tier-standalone-page" id="tier-2-page">
+      <div class="tier-top-header">
+        <span class="tier-top-tag pill-tier-2">Tier 2</span>
+      </div>
+      <div class="tier-standalone-content">
+        <div class="tier-standalone-media">
+          <img src="assets/images/tier2_universities.png" alt="Tier 2 Private Schools &amp; Universities">
+        </div>
+        <div class="tier-standalone-info">
+          <span class="tier-standalone-location">📍 NCR Cities &amp; All India Metro Hubs</span>
+          <h3>PRIVATE SCHOOLS &amp; UNIVERSITIES</h3>
+          <p>Strategic network integration with premier private schools, colleges, and university campuses across Delhi-NCR, Gurgaon, Noida, and metro hubs nationwide to provide high-performance training hubs and tournament hosting centers.</p>
+          <div class="tier-standalone-features">
+            <div class="item"><span>✓</span> Premier Private School &amp; University Campus Networks</div>
+            <div class="item"><span>✓</span> NCR &amp; Metro City High-Performance Infrastructure</div>
+            <div class="item"><span>✓</span> Inter-School &amp; University Championship Leagues</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page 3: Tier 1 -->
+    <div class="tier-standalone-page" id="tier-1-page">
+      <div class="tier-top-header">
+        <span class="tier-top-tag pill-tier-1">Tier 1</span>
+      </div>
+      <div class="tier-standalone-content">
+        <div class="tier-standalone-media">
+          <img src="assets/images/tier1_academy.png" alt="Tier 1 Professional Academies &amp; Elite Coaches">
+        </div>
+        <div class="tier-standalone-info">
+          <span class="tier-standalone-location">📍 National Pro Centers &amp; Master Coaches</span>
+          <h3>PRO ACADEMIES &amp; TRAINING CENTERS</h3>
+          <p>Connected with national high-performance academies, certified master coaches, Olympic-grade training facilities, sports science labs, and direct pro league scouting pipelines.</p>
+          <div class="tier-standalone-features">
+            <div class="item"><span>✓</span> Professional Certified Master Coaches &amp; Master Trainers</div>
+            <div class="item"><span>✓</span> High-Performance Olympic-Grade Academies</div>
+            <div class="item"><span>✓</span> Pro League Direct Scouting &amp; Contract Pipeline</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= PATHWAY ================= -->
+<section class="pathway" id="pathway">
+  <div class="wrap">
+    <div class="section-head on-dark">
+      <span class="eyebrow light">The Build-Out Model</span>
+      <h2>Panchayat ground <br>to Pro League.</h2>
+      <p>The same model the logo's runner is chasing toward its star &mdash; a defined pathway, not a one-off donation. Every facility we build sits on this line.</p>
+    </div>
+    <div class="pathway-line-wrap">
+      <div class="pathway-connector"></div>
+      <div class="pathway-stages">
+        <div class="stage"><div class="stage-node">01</div><h4>Panchayat Ground</h4><p>Bare community land identified and cleared at Tier-3, panchayat level.</p></div>
+        <div class="stage"><div class="stage-node">02</div><h4>Govt. School Facility</h4><p>Courts, tracks or pools built inside partner government school campuses across MP.</p></div>
+        <div class="stage"><div class="stage-node">03</div><h4>Coaching &amp; Equipment</h4><p>Registered vendors supply kits at fair rates; coaches run structured sessions.</p></div>
+        <div class="stage"><div class="stage-node">04</div><h4>District Competition</h4><p>Players registered through the corporation compete across district-level meets.</p></div>
+        <div class="stage"><div class="stage-node">★</div><h4>Pro League Pathway</h4><p>Standout athletes are tracked into state academies and pro-level opportunity.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= THREE DOORS ================= -->
+<section class="doors" id="get-involved">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Get Involved</span>
+      <h2>Three doors into <br>the alliance.</h2>
+      <p>Every relationship with the corporation starts with a registration form. Fill in the one that fits, and the team contacts you directly.</p>
+    </div>
+    <div class="doors-grid">
+      <div class="door">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></div>
+        <h3>Player</h3>
+        <p>Register for a sport, a facility, and a coaching pathway near you &mdash; from panchayat ground to district and state-level play.</p>
+        <button class="door-cta" onclick="openTab('player')">Register as a Player <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+      <div class="door">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M3 9l2-5h14l2 5M3 9v10a1 1 0 001 1h16a1 1 0 001-1V9M3 9h18M9 13a3 3 0 006 0"/></svg></div>
+        <h3>Vendor</h3>
+        <p>Supply badminton gear, swimwear, footwear or kits to the corporation's growing facility network at verified, fair rates.</p>
+        <button class="door-cta" onclick="openTab('vendor')">Register as a Vendor <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+      <div class="door">
+        <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
+        <h3>Investor</h3>
+        <p>Bring capital, land, or both &mdash; and sit down with the team to work out the profit-sharing and facility structure directly.</p>
+        <button class="door-cta" onclick="openTab('investor')">Register as an Investor <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VENDOR / INVESTOR EXPLAINER ================= -->
+<section class="split" id="vendors-investors">
+  <div class="wrap" style="padding:0 32px;">
+    <div class="section-head">
+      <span class="eyebrow">How the two programs work</span>
+      <h2>Vendors supply. <br>Investors build.</h2>
+    </div>
+    <div class="split-row">
+      <div class="split-col">
+        <span class="eyebrow">Vendor Network</span>
+        <h3>Fair deals, direct access.</h3>
+        <p>Local and regional vendors &mdash; badminton equipment, swim costumes, footwear, jerseys and general sports kits &mdash; register with the corporation to become approved suppliers.</p>
+        <p>Once verified, a vendor gets standing access to every facility we operate, at rates fixed in advance &mdash; fair deals for the vendor, and consistent pricing for players and parents at panchayat level.</p>
+        <div class="split-tags">
+          <span>Badminton equipment</span><span>Swim costumes</span><span>Footwear</span><span>Kits &amp; jerseys</span><span>Training gear</span><span>Hyrox equipment</span>
+        </div>
+        <button class="btn btn-navy" onclick="openTab('vendor')">Register as a Vendor</button>
+      </div>
+      <div class="split-col">
+        <span class="eyebrow">Investor Program</span>
+        <h3>Capital, land, or both.</h3>
+        <p>Investors bring money, land, or a combination of the two into a specific facility or district build-out. There's no fixed template &mdash; every investor's situation is different.</p>
+        <p>After registration, the corporation's team reaches out directly to walk through the profit-sharing margin, facility ownership structure, and any additional terms specific to that investment.</p>
+        <div class="split-tags">
+          <span>Cash investment</span><span>Land contribution</span><span>Profit-share discussion</span><span>Team follow-up call</span>
+        </div>
+        <button class="btn btn-navy" onclick="openTab('investor')">Register as an Investor</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REGISTRATION FORMS ================= -->
+<section class="register" id="register">
+  <div class="wrap">
+    <div class="section-head on-dark">
+      <span class="eyebrow light">Registration</span>
+      <h2>Choose your form.</h2>
+      <p>Three short forms, one team reviewing every submission. Pick the one that matches you below.</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" id="tabbtn-player" onclick="openTab('player')">Player</button>
+      <button class="tab-btn" id="tabbtn-vendor" onclick="openTab('vendor')">Vendor</button>
+      <button class="tab-btn" id="tabbtn-investor" onclick="openTab('investor')">Investor</button>
+    </div>
+
+    <!-- PLAYER FORM -->
+    <div class="form-panel active" id="panel-player">
+      <div class="form-intro">
+        <h3>Player Registration</h3>
+        <p>For athletes and parents looking to join a sport, ground, or coaching pathway through the corporation.</p>
+      </div>
+      <form onsubmit="return handleSubmit(event,'player')">
+        <div class="form-grid">
+          <div class="field"><label>Full Name</label><input required type="text" placeholder="Athlete's full name"></div>
+          <div class="field"><label>Age</label><input required type="number" min="4" max="60" placeholder="e.g. 14"></div>
+          <div class="field"><label>Guardian Name (if minor)</label><input type="text" placeholder="Parent / guardian name"></div>
+          <div class="field"><label>Mobile Number</label><input required type="tel" placeholder="10-digit mobile number"></div>
+          <div class="field"><label>District / Panchayat</label><input required type="text" placeholder="e.g. Gwalior, Panchayat name"></div>
+          <div class="field"><label>State</label><input required type="text" value="Madhya Pradesh"></div>
+          <div class="field"><label>Preferred Sport</label>
+            <select required>
+              <option value="">Select a sport</option>
+              <option>Badminton</option><option>Athletics &amp; Track</option><option>Swimming</option>
+              <option>Volleyball</option><option>Basketball</option><option>Kabaddi</option><option>Kho-Kho</option>
+              <option>Table Tennis</option><option>Wrestling</option><option>Handball</option>
+              <option>Judo &amp; Martial Arts</option><option>Weightlifting</option><option>Boxing</option>
+              <option>Gymnastics</option><option>Hyrox Academy</option>
+              <option>Archery</option><option>Shooting Sport</option>
+            </select>
+          </div>
+          <div class="field"><label>Nearest Facility / School</label><input type="text" placeholder="Government school or ground name, if known"></div>
+          <div class="field full"><label>Sporting Background (optional)</label><textarea placeholder="Any prior training, competitions, or coaching experience"></textarea></div>
+        </div>
+        <div class="form-submit">
+          <button class="btn btn-gold" type="submit">Submit Player Registration</button>
+          <span class="form-note">Our regional coordinator will contact the mobile number above to confirm the nearest active facility.</span>
+        </div>
+        <div class="confirm-box" id="confirm-player">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>
+          <div><h4>Registration received</h4><p>Thank you &mdash; a member of the Indian Pro League Alliance Corp team will contact you within 3–5 business days about the nearest facility and sport-specific pathway.</p></div>
+        </div>
+      </form>
+    </div>
+
+    <!-- VENDOR FORM -->
+    <div class="form-panel" id="panel-vendor">
+      <div class="form-intro">
+        <h3>Vendor Registration</h3>
+        <p>For suppliers of sports equipment, apparel, and accessories looking to become an approved vendor at fixed, fair rates.</p>
+      </div>
+      <form onsubmit="return handleSubmit(event,'vendor')">
+        <div class="form-grid">
+          <div class="field"><label>Business / Shop Name</label><input required type="text" placeholder="Registered business name"></div>
+          <div class="field"><label>Contact Person</label><input required type="text" placeholder="Owner / authorised contact"></div>
+          <div class="field"><label>Mobile Number</label><input required type="tel" placeholder="10-digit mobile number"></div>
+          <div class="field"><label>Email Address</label><input type="email" placeholder="business@example.com"></div>
+          <div class="field"><label>City / District</label><input required type="text" placeholder="e.g. Jhansi"></div>
+          <div class="field"><label>GST / Registration Number</label><input type="text" placeholder="If applicable"></div>
+          <div class="field"><label>Product Category</label>
+            <select required>
+              <option value="">Select a category</option>
+              <option>Badminton Equipment</option>
+              <option>Swim Costumes &amp; Swimwear</option>
+              <option>Sports Footwear</option>
+              <option>Jerseys &amp; Team Kits</option>
+              <option>Training &amp; Gym Equipment</option>
+              <option>General Sports Accessories</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="field"><label>Years in Business</label><input type="number" min="0" placeholder="e.g. 5"></div>
+          <div class="field full"><label>Products &amp; Indicative Rates</label><textarea placeholder="List key products you supply and your typical wholesale / bulk rates"></textarea></div>
+        </div>
+        <div class="form-submit">
+          <button class="btn btn-gold" type="submit">Submit Vendor Registration</button>
+          <span class="form-note">Approved vendors are added to the facility supply list; our procurement team will follow up to verify rates.</span>
+        </div>
+        <div class="confirm-box" id="confirm-vendor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>
+          <div><h4>Registration received</h4><p>Thank you &mdash; the procurement team will review your product categories and rates, then contact you to confirm vendor approval.</p></div>
+        </div>
+      </form>
+    </div>
+
+    <!-- INVESTOR FORM -->
+    <div class="form-panel" id="panel-investor">
+      <div class="form-intro">
+        <h3>Investor Registration</h3>
+        <p>For individuals or entities looking to invest capital, land, or both into a facility or district build-out.</p>
+      </div>
+      <form onsubmit="return handleSubmit(event,'investor')">
+        <div class="form-grid">
+          <div class="field"><label>Full Name</label><input required type="text" placeholder="Investor's full name"></div>
+          <div class="field"><label>Company / Entity (if any)</label><input type="text" placeholder="Optional"></div>
+          <div class="field"><label>Mobile Number</label><input required type="tel" placeholder="10-digit mobile number"></div>
+          <div class="field"><label>Email Address</label><input required type="email" placeholder="you@example.com"></div>
+          <div class="field"><label>City / State</label><input required type="text" placeholder="Current location"></div>
+          <div class="field"><label>Investment Type</label>
+            <select required>
+              <option value="">Select an option</option>
+              <option>Capital Investment</option>
+              <option>Land Contribution</option>
+              <option>Capital + Land</option>
+            </select>
+          </div>
+          <div class="field"><label>Approximate Investment Range</label>
+            <select>
+              <option value="">Select a range (optional)</option>
+              <option>Under ₹10 Lakh</option>
+              <option>₹10–50 Lakh</option>
+              <option>₹50 Lakh – ₹1 Crore</option>
+              <option>Above ₹1 Crore</option>
+            </select>
+          </div>
+          <div class="field"><label>Land Location (if applicable)</label><input type="text" placeholder="District / panchayat where land is located"></div>
+          <div class="field full"><label>Notes for the Team</label><textarea placeholder="Preferred district, sport, timeline, or any questions on profit-sharing"></textarea></div>
+        </div>
+        <div class="form-submit">
+          <button class="btn btn-gold" type="submit">Submit Investor Registration</button>
+          <span class="form-note">The corporation's team will schedule a direct call to discuss profit margin, facility structure, and next steps.</span>
+        </div>
+        <div class="confirm-box" id="confirm-investor">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>
+          <div><h4>Registration received</h4><p>Thank you &mdash; our investment team will reach out directly to discuss profit-sharing, facility structure, and timelines.</p></div>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer id="contact">
+  <div class="wrap foot-grid">
+    <div>
+      <div class="foot-logo"><img src="assets/logo.svg" alt="Indian Pro League Alliance Corp"></div>
+      <p>Building multi-sport infrastructure at panchayat and government-school level across Madhya Pradesh &mdash; empowering athletes, elevating futures.</p>
+    </div>
+    <div class="foot-col">
+      <h5>Explore</h5>
+      <a href="#about">About the Corporation</a>
+      <a href="#sports">Sports We Build</a>
+      <a href="#pathway">The Pathway</a>
+      <a href="#get-involved">Get Involved</a>
+    </div>
+    <div class="foot-col">
+      <h5>Register</h5>
+      <a href="#register" onclick="openTab('player')">Player Registration</a>
+      <a href="#register" onclick="openTab('vendor')">Vendor Registration</a>
+      <a href="#register" onclick="openTab('investor')">Investor Registration</a>
+    </div>
+    <div class="foot-col">
+      <h5>Contact</h5>
+      <span>Madhya Pradesh, India</span>
+      <span>info@indianproleaguealliance.in</span>
+      <span>A Global One Consulting Group company</span>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>&copy; 2026 Indian Pro League Alliance Corp. All rights reserved.</span>
+    <span><a href="cms.html" target="_blank" style="color:var(--gold-light);text-decoration:none;font-weight:700;">Admin CMS Portal ⚙️</a></span>
+  </div>
+</footer>
+
+<!-- ================= MEMBER LOGIN MODAL ================= -->
+<div class="member-modal-overlay" id="member-login-modal">
+  <div class="member-card">
+    <div class="member-header">
+      <h3 style="font-family:'Big Shoulders Display',sans-serif;font-size:24px;color:#ffffff;margin:0;">Alliance Member Portal Login</h3>
+      <button class="action-btn" onclick="closeMemberLoginModal()">&times;</button>
+    </div>
+    <form onsubmit="return handleMemberLogin(event)">
+      <div id="member-login-error" class="login-error" style="margin-bottom:14px;">Invalid credentials</div>
+
+      <div class="member-field">
+        <label>Account Role</label>
+        <select id="member-role" style="background:#040C1E;color:#ffffff;">
+          <option value="Player">Athlete / Player</option>
+          <option value="Vendor">Procurement Vendor</option>
+          <option value="Investor">Infrastructure Investor</option>
+        </select>
+      </div>
+
+      <div class="member-field">
+        <label>Application ID or Registered Mobile</label>
+        <input type="text" id="member-id" required placeholder="e.g. IPL-2026-1041 or 9826012345" value="IPL-2026-1041">
+      </div>
+
+      <div class="member-field">
+        <label>Password</label>
+        <input type="password" id="member-password" required placeholder="Enter password (default: password123)" value="password123">
+      </div>
+
+      <button type="submit" class="btn btn-gold" style="width:100%;margin-top:12px;justify-content:center;">Sign In to Dashboard 🔒</button>
+
+      <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.12);font-size:12px;color:#94A3B8;">
+        💡 <strong>Testing Credentials:</strong><br>
+        - Approved Player: ID <code style="color:var(--gold-light);">IPL-2026-1041</code> | Password <code style="color:var(--gold-light);">password123</code><br>
+        - Approved Vendor: ID <code style="color:var(--gold-light);">IPL-2026-1042</code> | Password <code style="color:var(--gold-light);">password123</code><br>
+        - Approved Investor: ID <code style="color:var(--gold-light);">IPL-2026-1043</code> | Password <code style="color:var(--gold-light);">password123</code>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= DASHBOARD OVERLAY ================= -->
+<div class="dash-overlay" id="dashboard-overlay">
+  <div class="dash-container" id="dashboard-content">
+    <!-- Dynamic Dashboard Content Rendered via main.js -->
+  </div>
+</div>
+
+<!-- ================= EVENT REGISTRATION MODAL ================= -->
+<div class="member-modal-overlay" id="event-app-modal">
+  <div class="member-card" style="max-width:520px;">
+    <div class="member-header">
+      <div>
+        <span class="eyebrow light">OFFICIAL EVENT APPLICATION</span>
+        <h3 style="font-family:'Big Shoulders Display',sans-serif;font-size:22px;color:#ffffff;margin-top:2px;" id="event-app-event-title">Sports Championship</h3>
+      </div>
+      <button class="action-btn" onclick="closeEventAppModal()">&times;</button>
+    </div>
+    <form onsubmit="return handleEventAppSubmit(event)">
+      <input type="hidden" id="event-app-event-id">
+      <input type="hidden" id="event-app-player-id">
+      <input type="hidden" id="event-app-player-name">
+
+      <div style="background:rgba(255,255,255,0.06);padding:12px;border-radius:8px;margin-bottom:14px;font-size:13px;color:#E2E8F0;">
+        📍 Event &amp; Schedule: <strong style="color:var(--gold-light);" id="event-app-sport">Badminton</strong>
+      </div>
+
+      <div class="member-field">
+        <label>Jersey / T-Shirt Size</label>
+        <select id="event-app-tsize" style="background:#040C1E;color:#ffffff;">
+          <option value="S">Small (S)</option>
+          <option value="M" selected>Medium (M)</option>
+          <option value="L">Large (L)</option>
+          <option value="XL">Extra Large (XL)</option>
+        </select>
+      </div>
+
+      <div class="member-field">
+        <label>Emergency Contact Number</label>
+        <input type="tel" id="event-app-contact" required placeholder="10-digit emergency contact" value="9826012345">
+      </div>
+
+      <div style="margin-top:10px;font-size:11.5px;color:#94A3B8;line-height:1.4;">
+        By submitting this form, you confirm your availability to participate in the trials/matches organized by Indian Pro League Alliance Corp.
+      </div>
+
+      <button type="submit" class="btn btn-gold" style="width:100%;margin-top:16px;justify-content:center;">Confirm Event Entry Ticket 🎟️</button>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -503,3 +503,72 @@ body {
   font-family: 'IBM Plex Mono', monospace;
 }
 
+/* CMS Section Navigation Tabs */
+.cms-section-nav {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cms-sec-tab {
+  background: rgba(4, 16, 41, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #CBD5E1;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+
+.cms-sec-tab:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: rgba(240, 200, 117, 0.4);
+}
+
+.cms-sec-tab.active {
+  background: linear-gradient(135deg, rgba(212, 149, 47, 0.25), rgba(4, 26, 77, 0.8));
+  border: 1px solid var(--gold-light);
+  color: var(--gold-light);
+  box-shadow: 0 4px 16px rgba(212, 149, 47, 0.25);
+}
+
+.cms-sec-panel {
+  display: none;
+}
+
+.cms-sec-panel.active {
+  display: block;
+}
+
+.cms-sec-title h3 {
+  font-family: 'Big Shoulders Display', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.cms-sec-title p {
+  font-size: 12.5px;
+  color: #94A3B8;
+  margin-top: 2px;
+}
+
+.creds-badge {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11.5px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #34D399;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+

@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>IPL Alliance | Mobile Registration & Member App</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Manrope:wght@500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy-deep: #041A4D;
+    --navy: #0A2D6B;
+    --gold: #D4952F;
+    --gold-light: #F0C875;
+    --gold-deep: #A97319;
+    --cream: #FAF7F1;
+    --ink: #0E1830;
+    --slate: #5C6478;
+    --line: rgba(10,45,107,0.12);
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Manrope', sans-serif;
+    background: #020817;
+    background: radial-gradient(circle at 50% 20%, #0A1C44 0%, #020817 100%);
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ---------- APP MOBILE HEADER ---------- */
+  .app-header {
+    background: rgba(4, 26, 77, 0.98);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 16px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  }
+  .app-header-brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .app-header-brand img {
+    height: 44px;
+    width: auto;
+    filter: brightness(1.2) drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+  }
+  .app-sync-pill {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: #10B981;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    padding: 4px 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .app-sync-dot {
+    width: 7px;
+    height: 7px;
+    background: #10B981;
+    border-radius: 50%;
+    animation: pulse 1.8s infinite;
+  }
+  @keyframes pulse {
+    0% { opacity: 0.4; }
+    50% { opacity: 1; }
+    100% { opacity: 0.4; }
+  }
+
+  .app-title-bar {
+    margin-top: 10px;
+    text-align: center;
+  }
+  .app-title-bar h1 {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  .app-title-bar p {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--gold-light);
+    margin-top: 2px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* ---------- MAIN CONTAINER ---------- */
+  .app-main {
+    flex-grow: 1;
+    padding: 20px 16px 36px;
+    max-width: 560px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* ---------- HOME CHOICE SCREEN (2 BIG OPTIONS) ---------- */
+  .choice-card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 10px;
+  }
+
+  .choice-card {
+    background: rgba(4, 26, 77, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 18px;
+    padding: 24px 20px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+    backdrop-filter: blur(12px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .choice-card.login-card-theme {
+    border-color: rgba(16, 185, 129, 0.4);
+    background: linear-gradient(145deg, rgba(16,185,129,0.12), rgba(4,26,77,0.9));
+  }
+  .choice-card.reg-card-theme {
+    border-color: rgba(240, 200, 117, 0.4);
+    background: linear-gradient(145deg, rgba(212,149,47,0.12), rgba(4,26,77,0.9));
+  }
+
+  .choice-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    width: max-content;
+  }
+  .choice-badge-green { background: rgba(16,185,129,0.2); color: #34D399; border: 1px solid rgba(16,185,129,0.4); }
+  .choice-badge-gold { background: rgba(212,149,47,0.2); color: var(--gold-light); border: 1px solid rgba(240,200,117,0.4); }
+
+  .choice-title {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-top: 8px;
+    text-transform: uppercase;
+  }
+  .choice-desc {
+    font-size: 13px;
+    color: #CBD5E1;
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  .choice-btn {
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13.5px;
+    font-weight: 800;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .choice-btn-green {
+    background: linear-gradient(135deg, #10B981, #047857);
+    color: #ffffff;
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+  }
+  .choice-btn-gold {
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    color: #041029;
+    box-shadow: 0 6px 18px rgba(212, 149, 47, 0.35);
+  }
+
+  /* ---------- MOBILE SCREEN VIEWS ---------- */
+  .app-screen-view { display: none; }
+  .app-screen-view.active { display: block; }
+
+  /* ---------- MOBILE TAB SWITCHER ---------- */
+  .app-tabs-container {
+    padding: 12px 16px 0;
+    background: transparent;
+  }
+  .app-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 5px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .app-tab-btn {
+    background: transparent;
+    border: none;
+    color: #94A3B8;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 10px 4px;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+  .app-tab-btn.active {
+    background: linear-gradient(120deg, var(--gold) 0%, var(--gold-deep) 100%);
+    color: var(--navy-deep);
+    font-weight: 800;
+    box-shadow: 0 4px 12px rgba(212, 149, 47, 0.35);
+  }
+
+  .app-form-panel {
+    display: none;
+    background: rgba(4, 26, 77, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 16px;
+    padding: 22px 18px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  }
+  .app-form-panel.active { display: block; }
+
+  .app-form-intro {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+  .app-form-intro h3 {
+    font-family: 'Big Shoulders Display', sans-serif;
+    font-size: 24px;
+    color: #ffffff;
+    margin: 0;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  .app-form-intro p {
+    font-size: 13px;
+    color: #CBD6F2;
+    margin-top: 4px;
+    line-height: 1.45;
+  }
+
+  .app-form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .field label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--gold-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .field input, .field select, .field textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: 'Manrope', sans-serif;
+    outline: none;
+    transition: all 0.2s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--gold-light);
+    box-shadow: 0 0 12px rgba(240, 200, 117, 0.3);
+    background: rgba(255, 255, 255, 0.14);
+  }
+  .field textarea { min-height: 90px; resize: vertical; }
+
+  .app-btn-submit {
+    width: 100%;
+    background: linear-gradient(120deg, var(--gold) 0%, var(--gold-deep) 100%);
+    color: var(--navy-deep);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+    font-weight: 800;
+    padding: 14px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-top: 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    box-shadow: 0 6px 18px rgba(212, 149, 47, 0.35);
+  }
+
+  .confirm-box {
+    display: none;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid #10B981;
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 16px;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .confirm-box svg { width: 24px; height: 24px; stroke: #10B981; flex-shrink: 0; }
+  .confirm-box h4 { margin: 0; color: #10B981; font-size: 15px; font-weight: 800; }
+  .confirm-box p { margin: 4px 0 0; font-size: 12.5px; color: #E2E8F0; line-height: 1.5; }
+
+  .back-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: #ffffff;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+
+  /* Dashboard Overlay & Modal Mobile Styling */
+  .member-modal-overlay {
+    position: fixed; inset: 0; z-index: 9999999;
+    background: rgba(2, 8, 23, 0.92); backdrop-filter: blur(12px);
+    display: none; align-items: center; justify-content: center; padding: 16px;
+  }
+  .member-card {
+    width: 100%; max-width: 480px; background: #041029;
+    border: 1px solid rgba(240, 200, 117, 0.3); border-radius: 16px;
+    padding: 24px 20px; color: #ffffff; box-shadow: 0 24px 70px rgba(0,0,0,0.85);
+  }
+  .member-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 14px; margin-bottom: 16px; }
+  .action-btn { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #ffffff; padding: 4px 10px; border-radius: 4px; font-size: 14px; cursor: pointer; }
+
+  /* Full Screen Mobile Dashboard Overlay */
+  .dash-overlay {
+    position: fixed; inset: 0; z-index: 9999999;
+    background: #020817; overflow-y: auto; display: none; padding: 20px 14px 40px;
+  }
+  .dash-container { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+  .dash-card-header {
+    background: rgba(4,26,77,0.9); border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 16px; padding: 18px; display: flex; justify-content: space-between; align-items: center;
+    backdrop-filter: blur(10px); flex-wrap: wrap; gap: 12px;
+  }
+  .dash-user-info { display: flex; align-items: center; gap: 12px; }
+  .dash-avatar { width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, var(--gold-light), var(--gold-deep)); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .dash-badge { font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 700; color: #34D399; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); padding: 3px 8px; border-radius: 4px; }
+  .dash-sub { font-size: 12px; color: #CBD5E1; display: block; margin-top: 3px; }
+  .dash-id-tag { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--gold-light); background: rgba(212,149,47,0.15); padding: 5px 12px; border-radius: 6px; border: 1px solid rgba(212,149,47,0.3); font-weight: 700; }
+  .dash-logout-btn { background: #EF4444; color: #ffffff; border: none; padding: 8px 14px; border-radius: 6px; font-family: 'IBM Plex Mono', monospace; font-weight: 700; font-size: 12px; cursor: pointer; }
+  
+  .dash-stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .dash-stat { background: rgba(4,16,41,0.85); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+  .dash-stat .lbl { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: #94A3B8; text-transform: uppercase; }
+  .dash-stat .val { font-family: 'Big Shoulders Display', sans-serif; font-size: 26px; font-weight: 800; color: #ffffff; }
+
+  .dash-box { background: rgba(4,16,41,0.85); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 18px 16px; }
+  .dash-box-title { font-family: 'Big Shoulders Display', sans-serif; font-size: 22px; font-weight: 800; color: #ffffff; }
+
+  .event-cards-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  .event-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 16px; transition: transform 0.2s ease; }
+  .dash-btn { font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; font-weight: 700; padding: 8px 14px; border-radius: 6px; cursor: pointer; border: none; }
+  .dash-btn-gold { background: linear-gradient(135deg, var(--gold-light), var(--gold)); color: #041029; }
+
+  .type-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; font-weight: 700; }
+  .type-player { background: rgba(0,180,216,0.2); color: #00B4D8; border: 1px solid rgba(0,180,216,0.4); }
+  .type-vendor { background: rgba(249,115,22,0.2); color: #F97316; border: 1px solid rgba(249,115,22,0.4); }
+  .type-investor { background: rgba(245,158,11,0.2); color: #F59E0B; border: 1px solid rgba(245,158,11,0.4); }
+</style>
+</head>
+<body>
+
+  <!-- ================= APP HEADER ================= -->
+  <header class="app-header">
+    <div class="app-header-brand">
+      <img src="assets/logo.svg" alt="IPL Alliance Corp">
+      <div class="app-sync-pill">
+        <span class="app-sync-dot"></span>
+        <span>CMS Live Sync</span>
+      </div>
+    </div>
+    <div class="app-title-bar">
+      <h1>Alliance Mobile App</h1>
+      <p>Indian Pro League Alliance Corp</p>
+    </div>
+  </header>
+
+  <!-- ================= MAIN APP BODY ================= -->
+  <main class="app-main">
+
+    <!-- VIEW 1: HOME WELCOME (2 MAIN OPTIONS) -->
+    <div class="app-screen-view active" id="view-home">
+      <div style="text-align:center;margin-bottom:16px;">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gold-light);letter-spacing:0.1em;">SELECT YOUR ACCESS OPTION</span>
+        <h2 style="font-family:'Big Shoulders Display',sans-serif;font-size:26px;color:#ffffff;margin-top:2px;">Main Access Portal</h2>
+      </div>
+
+      <div class="choice-card-container">
+        <!-- OPTION 1: ALREADY REGISTERED MEMBER LOGIN -->
+        <div class="choice-card login-card-theme">
+          <div>
+            <span class="choice-badge choice-badge-green">OPTION 1 &bull; ALREADY REGISTERED</span>
+            <h3 class="choice-title">Member Login 🔑</h3>
+            <p class="choice-desc">For approved Players, Vendors, and Investors. Log in with your Login ID &amp; Password to view your performance stats, coach feedback, sports event calendar, or procurement tenders.</p>
+          </div>
+          <button class="choice-btn choice-btn-green" onclick="showAppView('login')">
+            <span>🔑 Open Login Screen</span>
+          </button>
+        </div>
+
+        <!-- OPTION 2: NEW REGISTRATION -->
+        <div class="choice-card reg-card-theme">
+          <div>
+            <span class="choice-badge choice-badge-gold">OPTION 2 &bull; NEW APPLICANT</span>
+            <h3 class="choice-title">New Registration 📝</h3>
+            <p class="choice-desc">For new athletes, equipment suppliers, or capital/land investors. Fill out the official registration form to submit your details to the Executive CMS Portal.</p>
+          </div>
+          <button class="choice-btn choice-btn-gold" onclick="showAppView('register')">
+            <span>📝 Open Registration Form</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: LOGIN SCREEN FORM -->
+    <div class="app-screen-view" id="view-login">
+      <button class="back-btn" onclick="showAppView('home')">← Back to Main Menu</button>
+      
+      <div class="app-form-panel active" style="margin-top:0;">
+        <div class="app-form-intro">
+          <h3>Member Login Portal 🔑</h3>
+          <p>Sign in with your approved Application ID and Password.</p>
+        </div>
+
+        <form onsubmit="return handleMemberLogin(event)">
+          <div id="member-login-error" class="login-error" style="display:none;background:rgba(239,68,68,0.2);border:1px solid #EF4444;color:#FCA5A5;padding:10px;border-radius:6px;font-size:12.5px;margin-bottom:14px;">Invalid credentials</div>
+
+          <div class="field">
+            <label>Account Role</label>
+            <select id="member-role" style="background:#040C1E;">
+              <option value="Player">Athlete / Player</option>
+              <option value="Vendor">Procurement Vendor</option>
+              <option value="Investor">Infrastructure Investor</option>
+            </select>
+          </div>
+
+          <div class="field" style="margin-top:12px;">
+            <label>Application ID or Mobile</label>
+            <input type="text" id="member-id" required placeholder="e.g. IPL-2026-1041 or 9826012345" value="IPL-2026-1041">
+          </div>
+
+          <div class="field" style="margin-top:12px;">
+            <label>Password</label>
+            <input type="password" id="member-password" required placeholder="Enter password" value="password123">
+          </div>
+
+          <button type="submit" class="app-btn-submit" style="background:linear-gradient(135deg,#10B981,#047857);color:#ffffff;">Sign In to Dashboard 🔒</button>
+        </form>
+
+        <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.12);font-size:11.5px;color:#94A3B8;line-height:1.6;">
+          💡 <strong>Sample Approved Logins for Testing:</strong><br>
+          - Player: ID <code style="color:var(--gold-light);">IPL-2026-1041</code> | Password <code style="color:var(--gold-light);">password123</code><br>
+          - Vendor: ID <code style="color:var(--gold-light);">IPL-2026-1042</code> | Password <code style="color:var(--gold-light);">password123</code><br>
+          - Investor: ID <code style="color:var(--gold-light);">IPL-2026-1043</code> | Password <code style="color:var(--gold-light);">password123</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 3: REGISTRATION FORMS -->
+    <div class="app-screen-view" id="view-register">
+      <button class="back-btn" onclick="showAppView('home')">← Back to Main Menu</button>
+
+      <!-- Category Tab Switcher -->
+      <div class="app-tabs-container" style="padding:0 0 14px 0;">
+        <div class="app-tabs">
+          <button class="app-tab-btn active" id="apptab-player" onclick="openAppTab('player')">🏃 Player</button>
+          <button class="app-tab-btn" id="apptab-vendor" onclick="openAppTab('vendor')">🏬 Vendor</button>
+          <button class="app-tab-btn" id="apptab-investor" onclick="openAppTab('investor')">💼 Investor</button>
+        </div>
+      </div>
+
+      <!-- 1. PLAYER REGISTRATION FORM -->
+      <div class="app-form-panel active" id="apppanel-player">
+        <div class="app-form-intro">
+          <h3>Athlete Registration</h3>
+          <p>Register athletes for panchayat grounds, school facilities &amp; district coaching pathways.</p>
+        </div>
+        <form onsubmit="return handleAppSubmit(event,'player')">
+          <div class="app-form-grid">
+            <div class="field"><label>Full Name</label><input required type="text" placeholder="Athlete's full name"></div>
+            <div class="field"><label>Age</label><input required type="number" min="4" max="60" placeholder="e.g. 14"></div>
+            <div class="field"><label>Guardian Name (if minor)</label><input type="text" placeholder="Parent / guardian name"></div>
+            <div class="field"><label>Mobile Number</label><input required type="tel" placeholder="10-digit mobile number"></div>
+            <div class="field"><label>District / Panchayat</label><input required type="text" placeholder="e.g. Gwalior, Panchayat name"></div>
+            <div class="field"><label>State</label><input required type="text" value="Madhya Pradesh"></div>
+            <div class="field"><label>Sport / Discipline</label>
+              <select required>
+                <option value="">Select Primary Sport</option>
+                <option>Badminton</option>
+                <option>Athletics &amp; Track</option>
+                <option>Swimming</option>
+                <option>Kabaddi</option>
+                <option>Volleyball</option>
+                <option>Basketball</option>
+                <option>Kho-Kho</option>
+                <option>Wrestling</option>
+                <option>Table Tennis</option>
+                <option>Handball</option>
+                <option>Judo &amp; Martial Arts</option>
+                <option>Weightlifting</option>
+                <option>Archery</option>
+                <option>Shooting</option>
+              </select>
+            </div>
+            <div class="field"><label>Sporting Background</label><textarea placeholder="Tell us about school trials, district matches, or outdoor games played"></textarea></div>
+          </div>
+          <button class="app-btn-submit" type="submit">Submit Athlete Registration</button>
+          <div class="confirm-box" id="appconfirm-player"></div>
+        </form>
+      </div>
+
+      <!-- 2. VENDOR REGISTRATION FORM -->
+      <div class="app-form-panel" id="apppanel-vendor">
+        <div class="app-form-intro">
+          <h3>Vendor Registration</h3>
+          <p>For manufacturers &amp; suppliers of sports gear, apparel, footwear &amp; turf equipment.</p>
+        </div>
+        <form onsubmit="return handleAppSubmit(event,'vendor')">
+          <div class="app-form-grid">
+            <div class="field"><label>Company / Firm Name</label><input required type="text" placeholder="Business name"></div>
+            <div class="field"><label>Contact Person</label><input required type="text" placeholder="Full name"></div>
+            <div class="field"><label>Mobile Number</label><input required type="tel" placeholder="10-digit mobile number"></div>
+            <div class="field"><label>City / State</label><input required type="text" placeholder="Location"></div>
+            <div class="field"><label>Supply Category</label>
+              <select required>
+                <option value="">Select Main Category</option>
+                <option>Badminton Equipment &amp; Rackets</option>
+                <option>Swimwear &amp; Aquatic Gear</option>
+                <option>Athletics Track Shoes &amp; Spikes</option>
+                <option>Wrestling &amp; Kabaddi Mats</option>
+                <option>Balls (Volleyball/Basketball/Handball)</option>
+                <option>General Fitness &amp; Gym Equipment</option>
+                <option>Turf, Flooring &amp; Infrastructure</option>
+              </select>
+            </div>
+            <div class="field"><label>Products &amp; Rates Summary</label><textarea placeholder="Key products supplied and bulk wholesale rates"></textarea></div>
+          </div>
+          <button class="app-btn-submit" type="submit">Submit Vendor Registration</button>
+          <div class="confirm-box" id="appconfirm-vendor"></div>
+        </form>
+      </div>
+
+      <!-- 3. INVESTOR REGISTRATION FORM -->
+      <div class="app-form-panel" id="apppanel-investor">
+        <div class="app-form-intro">
+          <h3>Investor Registration</h3>
+          <p>For individuals or firms seeking to invest capital or land into panchayat sports complexes.</p>
+        </div>
+        <form onsubmit="return handleAppSubmit(event,'investor')">
+          <div class="app-form-grid">
+            <div class="field"><label>Full Name</label><input required type="text" placeholder="Investor's full name"></div>
+            <div class="field"><label>Mobile Number</label><input required type="tel" placeholder="10-digit mobile number"></div>
+            <div class="field"><label>City / State</label><input required type="text" placeholder="Location"></div>
+            <div class="field"><label>Investment Type</label>
+              <select required>
+                <option value="">Select Option</option>
+                <option>Capital Investment</option>
+                <option>Land Contribution</option>
+                <option>Capital + Land</option>
+              </select>
+            </div>
+            <div class="field"><label>Notes / Land Location</label><textarea placeholder="Location of land or preferred investment range"></textarea></div>
+          </div>
+          <button class="app-btn-submit" type="submit">Submit Investor Registration</button>
+          <div class="confirm-box" id="appconfirm-investor"></div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- ================= DASHBOARD OVERLAY ================= -->
+  <div class="dash-overlay" id="dashboard-overlay">
+    <div class="dash-container" id="dashboard-content">
+      <!-- Dynamic Dashboard Content -->
+    </div>
+  </div>
+
+  <!-- ================= EVENT REGISTRATION MODAL ================= -->
+  <div class="member-modal-overlay" id="event-app-modal">
+    <div class="member-card" style="max-width:520px;">
+      <div class="member-header">
+        <div>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--gold-light);">OFFICIAL EVENT APPLICATION</span>
+          <h3 style="font-family:'Big Shoulders Display',sans-serif;font-size:22px;color:#ffffff;margin-top:2px;" id="event-app-event-title">Sports Championship</h3>
+        </div>
+        <button class="action-btn" onclick="closeEventAppModal()">&times;</button>
+      </div>
+      <form onsubmit="return handleEventAppSubmit(event)">
+        <input type="hidden" id="event-app-event-id">
+        <input type="hidden" id="event-app-player-id">
+        <input type="hidden" id="event-app-player-name">
+
+        <div style="background:rgba(255,255,255,0.06);padding:12px;border-radius:8px;margin-bottom:14px;font-size:13px;color:#E2E8F0;">
+          📍 Event &amp; Schedule: <strong style="color:var(--gold-light);" id="event-app-sport">Badminton</strong>
+        </div>
+
+        <div class="member-field">
+          <label style="font-size:11px;color:var(--gold-light);display:block;margin-bottom:4px;">Jersey / T-Shirt Size</label>
+          <select id="event-app-tsize" style="width:100%;padding:10px;background:#040C1E;border:1px solid rgba(255,255,255,0.18);border-radius:8px;color:#ffffff;">
+            <option value="S">Small (S)</option>
+            <option value="M" selected>Medium (M)</option>
+            <option value="L">Large (L)</option>
+            <option value="XL">Extra Large (XL)</option>
+          </select>
+        </div>
+
+        <div class="member-field" style="margin-top:10px;">
+          <label style="font-size:11px;color:var(--gold-light);display:block;margin-bottom:4px;">Emergency Contact</label>
+          <input type="tel" id="event-app-contact" required placeholder="10-digit emergency contact" value="9826012345" style="width:100%;padding:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.18);border-radius:8px;color:#ffffff;">
+        </div>
+
+        <button type="submit" style="width:100%;margin-top:16px;padding:12px;background:linear-gradient(120deg,var(--gold),var(--gold-deep));color:#041029;font-weight:800;border:none;border-radius:8px;cursor:pointer;font-family:'IBM Plex Mono',monospace;">Confirm Event Entry Ticket 🎟️</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    function showAppView(viewName) {
+      document.querySelectorAll('.app-screen-view').forEach(v => v.classList.remove('active'));
+      document.getElementById('view-' + viewName)?.classList.add('active');
+    }
+
+    function openAppTab(name) {
+      document.querySelectorAll('.app-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.app-form-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('apptab-' + name)?.classList.add('active');
+      document.getElementById('apppanel-' + name)?.classList.add('active');
+    }
+
+    function handleAppSubmit(e, formType) {
+      return handleSubmit(e, formType);
+    }
+  </script>
+</body>
+</html>

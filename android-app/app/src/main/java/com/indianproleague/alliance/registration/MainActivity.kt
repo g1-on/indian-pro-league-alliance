@@ -13,8 +13,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var webView: WebView
     private lateinit var progressBar: ProgressBar
 
-    // Dedicated Mobile Registration App URL
-    private val appRegistrationUrl = "https://g1-on.github.io/indian-pro-league-alliance/app.html"
+    // Dedicated Native Bundled Asset URL
+    private val appRegistrationUrl = "file:///android_asset/app.html"
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity() {
         settings.cacheMode = WebSettings.LOAD_DEFAULT
         settings.allowFileAccess = true
         settings.allowContentAccess = true
+        settings.allowFileAccessFromFileURLs = true
+        settings.allowUniversalAccessFromFileURLs = true
         settings.setSupportMultipleWindows(false)
         settings.mediaPlaybackRequiresUserGesture = false
     }
