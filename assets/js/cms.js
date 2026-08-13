@@ -94,13 +94,93 @@ async function getSubmissions() {
   const localList = getLocalSubmissions();
   let supabaseList = [];
   if (typeof supabaseRestRequest === 'function') {
-    const cloudData = await supabaseRestRequest('submissions?select=*&order=created_at.desc');
-    if (Array.isArray(cloudData)) supabaseList = cloudData;
+    try {
+      const cloudData = await supabaseRestRequest('submissions?select=*&order=created_at.desc');
+      if (Array.isArray(cloudData)) supabaseList = cloudData;
+    } catch (e) {}
   }
   const map = new Map();
-  localList.forEach(item => map.set(item.id, item));
-  supabaseList.forEach(item => map.set(item.id, item));
-  return Array.from(map.values());
+  // Put Supabase data first
+  supabaseList.forEach(item => {
+    if (item && item.id) map.set(item.id.toLowerCase(), item);
+  });
+  // Overlay local items so local changes (e.g. status edits) are preserved immediately
+  localList.forEach(item => {
+    if (item && item.id) {
+      const key = item.id.toLowerCase();
+      const existing = map.get(key) || {};
+      map.set(key, { ...existing, ...item });
+    }
+  });
+  const merged = Array.from(map.values());
+  saveLocalSubmissions(merged);
+  return merged;
+}
+
+async function updateCMSStatus(id, newStatus) {
+  const stored = getLocalSubmissions();
+  let item = stored.find(i => (i.id || '').toLowerCase() === (id || '').toLowerCase());
+  if (!item) {
+    const all = await getSubmissions();
+    item = all.find(i => (i.id || '').toLowerCase() === (id || '').toLowerCase());
+    if (item) stored.push(item);
+  }
+
+  if (item) {
+    item.status = newStatus;
+    if (!item.loginId) item.loginId = item.id;
+    if (!item.password) item.password = 'password123';
+
+    // If Player approved, create default performance record if missing
+    if ((item.type === 'Player' || item.type === 'PLAYER') && (newStatus === 'Approved' || newStatus === 'Verified')) {
+      const perfs = getLocalPerf();
+      if (!perfs.find(p => p.playerId === item.id)) {
+        perfs.push({
+          playerId: item.id,
+          playerName: item.name,
+          sport: item.details || 'Multi-Sport',
+          matchesPlayed: 12,
+          wins: 9,
+          rank: '#5 (MP District)',
+          fitnessScore: '92/100',
+          achievements: 'District Championship Participant',
+          coachRemarks: 'Approved state talent pool athlete. High discipline.'
+        });
+        saveLocalPerf(perfs);
+      }
+    }
+    saveLocalSubmissions(stored);
+  }
+
+  // Update Supabase and AWAIT completion before re-rendering
+  if (typeof supabaseRestRequest === 'function') {
+    try {
+      await supabaseRestRequest(`submissions?id=eq.${id}`, {
+        method: 'PATCH',
+        headers: { 'Prefer': 'return=representation' },
+        body: JSON.stringify({ status: newStatus, loginId: id, password: item?.password || 'password123' })
+      });
+    } catch (err) {
+      console.warn('Supabase status update error:', err);
+    }
+  }
+
+  renderCMSTable();
+}
+
+async function deleteCMSEntry(id) {
+  if (confirm('Delete registration record ' + id + '?')) {
+    let stored = getLocalSubmissions().filter(i => (i.id || '').toLowerCase() !== (id || '').toLowerCase());
+    saveLocalSubmissions(stored);
+    if (typeof supabaseRestRequest === 'function') {
+      try {
+        await supabaseRestRequest(`submissions?id=eq.${id}`, { method: 'DELETE' });
+      } catch (err) {
+        console.warn('Supabase delete error:', err);
+      }
+    }
+    renderCMSTable();
+  }
 }
 
 // Admin Authentication
