@@ -169,18 +169,106 @@ function closeMemberLoginModal() {
   if (modal) modal.style.display = 'none';
 }
 
-function handleMemberLogin(e) {
+function normalizeSubmissionRecord(item) {
+  if (!item || typeof item !== 'object') return null;
+  const id = item.id || item.login_id || item.loginId || '';
+  const loginId = item.loginId || item.login_id || id;
+  const password = item.password || item.pwd || 'password123';
+  const type = item.type || item.role || item.account_type || 'Player';
+  const name = item.name || item.full_name || item.contact_person || '';
+  const mobile = String(item.mobile || item.phone || item.contact || '').trim();
+  const location = item.location || item.city || '';
+  const details = item.details || item.sport || '';
+  const notes = item.notes || item.background || '';
+  const status = item.status || 'Pending Review';
+  const timestamp = item.timestamp || item.created_at || new Date().toLocaleString();
+
+  return {
+    ...item,
+    id,
+    loginId,
+    password,
+    type,
+    name,
+    mobile,
+    location,
+    details,
+    notes,
+    status,
+    timestamp
+  };
+}
+
+async function syncSupabaseSubmissions() {
+  let localList = getSubmissions().map(normalizeSubmissionRecord).filter(Boolean);
+  if (typeof supabaseRestRequest === 'function') {
+    try {
+      const cloudData = await supabaseRestRequest('submissions?select=*&order=created_at.desc');
+      if (Array.isArray(cloudData) && cloudData.length > 0) {
+        const normalizedCloud = cloudData.map(normalizeSubmissionRecord).filter(Boolean);
+        const map = new Map();
+        localList.forEach(item => map.set(item.id.toLowerCase(), item));
+        normalizedCloud.forEach(item => map.set(item.id.toLowerCase(), item));
+        const merged = Array.from(map.values());
+        saveSubmissions(merged);
+        return merged;
+      }
+    } catch (err) {
+      console.warn('Supabase background sync notice:', err);
+    }
+  }
+  return localList;
+}
+
+async function handleMemberLogin(e) {
   e.preventDefault();
-  const idInput = document.getElementById('member-id')?.value.trim() || '';
-  const pwdInput = document.getElementById('member-password')?.value.trim() || '';
-  const roleInput = document.getElementById('member-role')?.value || 'Player';
+  const idInput = (document.getElementById('member-id')?.value || '').trim();
+  const pwdInput = (document.getElementById('member-password')?.value || '').trim();
+  const roleInput = (document.getElementById('member-role')?.value || 'Player').trim();
   const errBox = document.getElementById('member-login-error');
 
-  const subs = getSubmissions();
-  const user = subs.find(u => (u.id.toLowerCase() === idInput.toLowerCase() || u.mobile === idInput) && u.type === roleInput);
+  if (errBox) {
+    errBox.style.display = 'block';
+    errBox.style.background = 'rgba(59, 130, 246, 0.2)';
+    errBox.style.borderColor = '#3B82F6';
+    errBox.style.color = '#93C5FD';
+    errBox.textContent = 'Verifying credentials with database...';
+  }
+
+  const subs = await syncSupabaseSubmissions();
+  const searchId = idInput.toLowerCase();
+  const searchRole = roleInput.toLowerCase();
+
+  // Flexible matching for ID, Mobile, and Role
+  let user = subs.find(u => {
+    if (!u) return false;
+    const uId = (u.id || '').toLowerCase();
+    const uLoginId = (u.loginId || '').toLowerCase();
+    const uMobile = (u.mobile || '').toLowerCase();
+    const uType = (u.type || '').toLowerCase();
+
+    const idMatches = (uId === searchId || uLoginId === searchId || uMobile === searchId);
+    const roleMatches = (uType === searchRole || uType.includes(searchRole) || searchRole.includes(uType));
+
+    return idMatches && roleMatches;
+  });
+
+  // Fallback: If unique ID or mobile matches, accept match even if type formatting differs
+  if (!user) {
+    user = subs.find(u => {
+      if (!u) return false;
+      const uId = (u.id || '').toLowerCase();
+      const uLoginId = (u.loginId || '').toLowerCase();
+      const uMobile = (u.mobile || '').toLowerCase();
+      return (uId === searchId || uLoginId === searchId || uMobile === searchId);
+    });
+  }
 
   if (!user) {
     if (errBox) {
+      errBox.style.background = 'rgba(239, 68, 68, 0.2)';
+      errBox.style.borderColor = '#EF4444';
+      errBox.style.color = '#FCA5A5';
       errBox.textContent = `No ${roleInput} account found with ID or Mobile: "${idInput}". Check your ID or fill the registration form.`;
       errBox.style.display = 'block';
     } else {
@@ -189,9 +277,15 @@ function handleMemberLogin(e) {
     return false;
   }
 
-  if (user.status !== 'Approved' && user.status !== 'Verified') {
+  const statusLower = (user.status || '').toLowerCase();
+  const isApproved = (statusLower === 'approved' || statusLower === 'verified' || statusLower === 'active');
+
+  if (!isApproved) {
     if (errBox) {
-      errBox.textContent = `Your ${roleInput} registration (${user.id}) is currently pending review by CMS. Access will be unlocked once approved by Admin.`;
+      errBox.style.background = 'rgba(245, 158, 11, 0.2)';
+      errBox.style.borderColor = '#F59E0B';
+      errBox.style.color = '#FDE68A';
+      errBox.textContent = `Your ${user.type || roleInput} registration (${user.id}) is currently pending review by Admin in CMS. Access will be unlocked once approved.`;
       errBox.style.display = 'block';
     } else {
       alert(`Registration (${user.id}) is pending review by CMS.`);
@@ -199,9 +293,12 @@ function handleMemberLogin(e) {
     return false;
   }
 
-  const expectedPwd = user.password || 'password123';
+  const expectedPwd = (user.password || 'password123').trim();
   if (pwdInput !== expectedPwd) {
     if (errBox) {
+      errBox.style.background = 'rgba(239, 68, 68, 0.2)';
+      errBox.style.borderColor = '#EF4444';
+      errBox.style.color = '#FCA5A5';
       errBox.textContent = `Incorrect password for ${user.id}. Default password is "password123".`;
       errBox.style.display = 'block';
     } else {
@@ -225,6 +322,7 @@ function handleLogoutMember() {
 }
 
 function checkUserSession() {
+  syncSupabaseSubmissions();
   const sessionStr = sessionStorage.getItem('ipl_logged_user');
   if (sessionStr) {
     try {
